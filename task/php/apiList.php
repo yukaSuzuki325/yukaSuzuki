@@ -7,8 +7,18 @@ error_reporting(E_ALL);
 
 $executionStartTime = microtime(true);
 
+$url = '';
+$username = "kl888"; // Replace with your actual username
 
-$url = 'http://api.geonames.org/oceanJSON?lat=' . $_REQUEST['oceanLat'] . '&lng=' . $_REQUEST['oceanLng'] . '&username=kl888';
+// Validate inputs and build URL
+if (!empty($_REQUEST['oceanLat']) && !empty($_REQUEST['oceanLng'])) {
+    $url = "http://api.geonames.org/oceanJSON?lat={$_REQUEST['oceanLat']}&lng={$_REQUEST['oceanLng']}&username={$username}";
+} elseif (!empty($_REQUEST['neighbourLat']) && !empty($_REQUEST['neighbourLng'])) {
+    $url = "http://api.geonames.org/neighbourhoodJSON?lat={$_REQUEST['neighbourLat']}&lng={$_REQUEST['neighbourLng']}&username={$username}";
+} elseif (!empty($_REQUEST['populatedLat']) && !empty($_REQUEST['populatedLng'])) {
+    $url = "http://api.geonames.org/findNearbyPlaceNameJSON?lat={$_REQUEST['populatedLat']}&lng={$_REQUEST['populatedLng']}&username={$username}";
+}
+
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -33,9 +43,3 @@ foreach ($decode as $key => $value) {
 header('Content-Type: application/json; charset=UTF-8');
 
 echo json_encode($output);
-
-
-// if ($_REQUEST['oceanLat'] && $_REQUEST['oceanLng']) {
-//     $url = 'http://api.geonames.org/oceanJSON?lat=' . $_REQUEST['oceanLat'] . '&lng=' . $_REQUEST['oceanLng'] . '&username=kl888';
-// } elseif ($_REQUEST['oceanLat'] && $_REQUEST['oceanLng']) {
-// }

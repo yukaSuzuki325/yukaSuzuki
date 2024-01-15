@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  //Event handler for Ocean API
   $('#ocean-submit').click(function () {
     $.ajax({
       url: 'php/apiList.php',
@@ -9,7 +10,6 @@ $(document).ready(function () {
         oceanLng: $('#ocean-longitude').val(),
       },
       success: function (result) {
-        console.log('success');
         console.log(JSON.stringify(result));
 
         if (result.status.name == 'ok') {
@@ -22,7 +22,49 @@ $(document).ready(function () {
     });
   });
 
-  //   $('#neighbourhood-submit').click(function () {});
+  //Event handler for neighbourhood API
+  $('#neighbourhood-submit').click(function () {
+    $.ajax({
+      url: 'php/apiList.php',
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        neighbourLat: $('#neighbourhood-latitude').val(),
+        neighbourLng: $('#neighbourhood-longitude').val(),
+      },
+      success: function (result) {
+        console.log(JSON.stringify(result));
 
-  //   $('neighbourhood-submit').click(function () {});
+        if (result.status.name == 'ok') {
+          $('#txtNeighbour').html(result['data']['city']);
+        }
+      },
+      error: function (jqXHR, textStatus, error) {
+        console.log('Error occured:' + error);
+      },
+    });
+  });
+
+  //Event handler for findNearbyPlaceName API
+  $('#populated-submit').click(function () {
+    $.ajax({
+      url: 'php/apiList.php',
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        populatedLat: $('#populated-latitude').val(),
+        populatedLng: $('#populated-longitude').val(),
+      },
+      success: function (result) {
+        console.log(JSON.stringify(result));
+
+        if (result.status.name == 'ok') {
+          $('#txtPopulatedPlace').html(result['data'][0]['name']);
+        }
+      },
+      error: function (jqXHR, textStatus, error) {
+        console.log('Error occured:' + error);
+      },
+    });
+  });
 });
