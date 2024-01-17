@@ -4,101 +4,104 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
-
     <title>API List</title>
   </head>
   <body>
-    <table>
-      <tr>
-        <th>API name</th>
-        <th>API description</th>
-        <th>Action</th>
-      </tr>
-      <tr>
-        <td>1. Ocean</td>
-        <td>
-          <p>Returns the ocean or sea for the given latitude/longitude.</p>
-          Latitude:
-          <input
-            type="text"
-            id="ocean-latitude"
-            name="latitude"
-            placeholder="40.78343"
-          />
-          Longitude:
-          <input
-            type="text"
-            id="ocean-longitude"
-            name="longitude"
-            placeholder="-43.96625"
-          />
-        </td>
-        <td><button type="button" id="ocean-submit">Submit</button></td>
-      </tr>
-      <tr>
-        <td>2. Neighbourhood</td>
-        <td>
-          <p>Returns the neighbourhood for the given latitude/longitude.</p>
-          Latitude:
-          <input
-            type="text"
-            id="neighbourhood-latitude"
-            name="latitude"
-            placeholder="40.78343"
-          />
-          Longitude:
-          <input
-            type="text"
-            id="neighbourhood-longitude"
-            name="longitude"
-            placeholder="-73.96625"
-          />
-        </td>
-        <td><button type="button" id="neighbourhood-submit">Submit</button></td>
-      </tr>
-      <tr>
-        <td>3. findNearbyPlaceName</td>
-        <td>
-          <p>
-            Returns a nearby populated place name for the given
-            latitude/longitude.
-          </p>
-          Latitude:
-          <input
-            type="text"
-            id="populated-latitude"
-            name="latitude"
-            placeholder="47.3"
-          />
-          Longitude:
-          <input
-            type="text"
-            id="populated-longitude"
-            name="longitude"
-            placeholder="9"
-          />
-        </td>
-        <td><button type="button" id="populated-submit">Submit</button></td>
-      </tr>
-    </table>
+    <div class="container">
+      <table>
+        <tr>
+          <th>API name</th>
+          <th>API description</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>1. Ocean</td>
+          <td>
+            <p>Returns the ocean or sea for the given latitude/longitude.</p>
+            Latitude:
+            <input
+              type="text"
+              id="ocean-latitude"
+              name="latitude"
+              placeholder="40.78343"
+            />
+            Longitude:
+            <input
+              type="text"
+              id="ocean-longitude"
+              name="longitude"
+              placeholder="-43.96625"
+            />
+          </td>
+          <td><button type="button" id="ocean-submit">Submit</button></td>
+        </tr>
+        <tr>
+          <td>2. Neighbourhood</td>
+          <td>
+            <p>Returns the neighbourhood for the given latitude/longitude.</p>
+            Latitude:
+            <input
+              type="text"
+              id="neighbourhood-latitude"
+              name="latitude"
+              placeholder="40.78343"
+            />
+            Longitude:
+            <input
+              type="text"
+              id="neighbourhood-longitude"
+              name="longitude"
+              placeholder="-73.96625"
+            />
+          </td>
+          <td>
+            <button type="button" id="neighbourhood-submit">Submit</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3. findNearbyPlaceName</td>
+          <td>
+            <p>
+              Returns a nearby populated place name for the given
+              latitude/longitude.
+            </p>
+            Latitude:
+            <input
+              type="text"
+              id="populated-latitude"
+              name="latitude"
+              placeholder="47.3"
+            />
+            Longitude:
+            <input
+              type="text"
+              id="populated-longitude"
+              name="longitude"
+              placeholder="9"
+            />
+          </td>
+          <td><button type="button" id="populated-submit">Submit</button></td>
+        </tr>
+      </table>
 
-    <table>
-      <tr>
-        <td><strong>RESULTS</strong></td>
-      </tr>
-      <tr>
-        <td>Ocean:</td>
-        <td id="txtOcean"></td>
-      </tr>
-      <tr>
-        <td>Neighbourhood city:</td>
-        <td id="txtNeighbour"></td>
-      </tr>
-      <tr>
-        <td>Nearby populated place:</td>
-        <td id="txtPopulatedPlace"></td>
-      </tr>
-    </table>
+      <table class="results">
+        <tr>
+          <td><strong>Results</strong></td>
+        </tr>
+        <tr>
+          <td>Ocean:</td>
+          <td id="txtOcean"></td>
+        </tr>
+        <tr>
+          <td>Neighbourhood city:</td>
+          <td id="txtNeighbour"></td>
+        </tr>
+        <tr>
+          <td>Nearby populated place:</td>
+          <td id="txtPopulatedPlace"></td>
+        </tr>
+      </table>
+    </div>
 
     <script src="libs/jquery-3.7.1.min.js"></script>
     <script src="js/script.js"></script>
