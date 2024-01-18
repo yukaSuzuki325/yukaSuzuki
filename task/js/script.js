@@ -17,13 +17,22 @@ $(document).ready(function () {
         }
       },
       error: function (jqXHR, textStatus, error) {
-        console.log('Error occured:' + error);
+        if (jqXHR.status === 400) {
+          alert(
+            'Bad request: ' +
+              jqXHR.responseJSON.status.description +
+              ' Please enter values.'
+          );
+        } else {
+          console.log('Error occured:' + error);
+        }
       },
     });
   });
 
   //Event handler for neighbourhood API
   $('#neighbourhood-submit').click(function () {
+    console.log($('#neighbourhood-latitude').val());
     $.ajax({
       url: 'php/apiList.php',
       type: 'POST',
@@ -40,7 +49,15 @@ $(document).ready(function () {
         }
       },
       error: function (jqXHR, textStatus, error) {
-        console.log('Error occured:' + error);
+        if (jqXHR.status === 400) {
+          alert(
+            'Bad request: ' +
+              jqXHR.responseJSON.status.description +
+              ' Please enter valid values.'
+          );
+        } else {
+          console.log('Error occured:' + error);
+        }
       },
     });
   });
@@ -63,7 +80,15 @@ $(document).ready(function () {
         }
       },
       error: function (jqXHR, textStatus, error) {
-        console.log('Error occured:' + error);
+        if (jqXHR.status === 400) {
+          alert(
+            'Bad request: ' +
+              jqXHR.responseJSON.status.description +
+              ' Please enter values.'
+          );
+        } else {
+          console.log('Error occured:' + error);
+        }
       },
     });
   });

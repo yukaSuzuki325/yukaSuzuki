@@ -17,8 +17,18 @@ if (!empty($_REQUEST['oceanLat']) && !empty($_REQUEST['oceanLng'])) {
     $url = "http://api.geonames.org/neighbourhoodJSON?lat={$_REQUEST['neighbourLat']}&lng={$_REQUEST['neighbourLng']}&username={$username}";
 } elseif (!empty($_REQUEST['populatedLat']) && !empty($_REQUEST['populatedLng'])) {
     $url = "http://api.geonames.org/findNearbyPlaceNameJSON?lat={$_REQUEST['populatedLat']}&lng={$_REQUEST['populatedLng']}&username={$username}";
+} else {
+    http_response_code(400);
+    echo json_encode([
+        'status' => [
+            'code' => 400,
+            'name' => 'error',
+            'description' => 'Missing required parameters.'
+        ],
+        'executionTime' => microtime(true) - $executionStartTime
+    ]);
+    exit;
 }
-
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -30,6 +40,20 @@ $result = curl_exec($ch);
 curl_close($ch);
 
 $decode = json_decode($result, true);
+
+if (isset(($decode['status'])) && $decode['status']['value'] == 14) {
+    http_response_code(400);
+    echo json_encode([
+        'status' => [
+            'code' => 400,
+            'name' => 'error',
+            'description' => 'Invalid latitude or longitude.'
+        ],
+        'executionTime' => microtime(true) - $executionStartTime
+    ]);
+    exit;
+}
+
 $output = [];
 
 $output['status']['code'] = "200";
