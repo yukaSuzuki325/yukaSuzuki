@@ -54,7 +54,7 @@ L.easyButton('fa-info', function (btn, map) {
   });
 }).addTo(map);
 
-// Function to update the modal and show it
+// Function to update the Wikipedia modal and show it
 function updateWikiModal(summary, wikiUrl) {
   $('#txtSummary').text(summary); // Update the summary text
   $('#txtWiki').html(
@@ -88,10 +88,6 @@ L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
   });
 }).addTo(map);
 
-// L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
-//   $('#wikiModal').modal('show');
-// }).addTo(map);
-
 L.easyButton('fa-cloud-sun', function (btn, map) {
   $('#weatherModal').modal('show');
 }).addTo(map);
@@ -120,6 +116,7 @@ $.ajax({
   },
 });
 
+//Add country border on change
 var countryBorderLayer;
 
 $('#countrySelect').on('change', function () {
