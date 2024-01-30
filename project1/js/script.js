@@ -49,21 +49,47 @@ L.easyButton('fa-info', function (btn, map) {
       }
     },
     error: function (jqXHR, textStatus, error) {
-      if (jqXHR.status === 400) {
-        alert(
-          'Bad request: ' +
-            jqXHR.responseJSON.status.description +
-            ' Please enter values.'
-        );
-      } else {
-        console.log('Error occured:' + error);
-      }
+      alert(jqXHR.textStatus);
     },
   });
 }).addTo(map);
 
-// L.easyButton('fa-info', function (btn, map) {
-//   $('#infoModal').modal('show');
+// Function to update the modal and show it
+function updateWikiModal(summary, wikiUrl) {
+  $('#txtSummary').text(summary); // Update the summary text
+  $('#txtWiki').html(
+    '<a href="https://' + wikiUrl + '" target="_blank">Wikipedia Link</a>'
+  ); // Update the Wikipedia URL text
+  $('#wikiModal').modal('show'); // Show the modal
+}
+
+// Wikipedia easyButton click event
+L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
+  var countryName = $('#countrySelect option:selected').text();
+
+  $.ajax({
+    url: './php/getWikiPage.php',
+    type: 'GET',
+    dataType: 'json',
+    data: { countryName: countryName },
+    success: function (result) {
+      if (result.status.code === '200' && result.data) {
+        updateWikiModal(result.data.summary, result.data.wikipediaUrl); // Call the function to update and show the modal
+      } else {
+        console.error(
+          'Error fetching Wikipedia data:',
+          result.status.description
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, error) {
+      alert('AJAX error:', textStatus, error);
+    },
+  });
+}).addTo(map);
+
+// L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
+//   $('#wikiModal').modal('show');
 // }).addTo(map);
 
 L.easyButton('fa-cloud-sun', function (btn, map) {
@@ -74,17 +100,13 @@ L.easyButton('fa-sterling-sign', function (btn, map) {
   $('#currencyModal').modal('show');
 }).addTo(map);
 
-L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
-  $('#wikiModal').modal('show');
-}).addTo(map);
-
 L.easyButton('fa-clock', function (btn, map) {
   $('#timeZoneModal').modal('show');
 }).addTo(map);
 
 //Populate country options in select element
 $.ajax({
-  url: './php/getCountryCode.php',
+  url: './php/getCountryOptions.php',
   type: 'GET',
   dataType: 'json',
   success: function (result) {
