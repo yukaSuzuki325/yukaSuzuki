@@ -24,6 +24,21 @@ var map = L.map('map', {
 
 var layerControl = L.control.layers(basemaps).addTo(map);
 
+$.ajax({
+  url: './php/getCountryCode.php',
+  type: 'GET',
+  dataType: 'json',
+  success: function (data) {
+    var select = $('#countrySelect');
+    $.each(data, function (index, country) {
+      select.append($('<option>').val(country.iso_a2).text(country.name));
+    });
+  },
+  error: function (jqXHR, textStatus, errorThrown) {
+    console.log('AJAX error:', textStatus, errorThrown);
+  },
+});
+
 L.easyButton('fa-info', function (btn, map) {
   $('#exampleModal').modal('show');
 }).addTo(map);
