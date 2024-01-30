@@ -24,13 +24,36 @@ var map = L.map('map', {
 
 var layerControl = L.control.layers(basemaps).addTo(map);
 
+//Easy Buttons
+
+L.easyButton('fa-info', function (btn, map) {
+  $('#infoModal').modal('show');
+}).addTo(map);
+
+L.easyButton('fa-cloud-sun', function (btn, map) {
+  $('#weatherModal').modal('show');
+}).addTo(map);
+
+L.easyButton('fa-sterling-sign', function (btn, map) {
+  $('#currencyModal').modal('show');
+}).addTo(map);
+
+L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
+  $('#wikiModal').modal('show');
+}).addTo(map);
+
+L.easyButton('fa-clock', function (btn, map) {
+  $('#timeZoneModal').modal('show');
+}).addTo(map);
+
+//Populate country options in select element
 $.ajax({
   url: './php/getCountryCode.php',
   type: 'GET',
   dataType: 'json',
-  success: function (data) {
+  success: function (result) {
     var select = $('#countrySelect');
-    $.each(data, function (index, country) {
+    $.each(result, function (index, country) {
       select.append($('<option>').val(country.iso_a2).text(country.name));
     });
   },
@@ -38,7 +61,3 @@ $.ajax({
     console.log('AJAX error:', textStatus, errorThrown);
   },
 });
-
-L.easyButton('fa-info', function (btn, map) {
-  $('#exampleModal').modal('show');
-}).addTo(map);
