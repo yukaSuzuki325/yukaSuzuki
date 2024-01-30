@@ -27,8 +27,44 @@ var layerControl = L.control.layers(basemaps).addTo(map);
 //Easy Buttons
 
 L.easyButton('fa-info', function (btn, map) {
-  $('#infoModal').modal('show');
+  var countryCode = $('#countrySelect').val();
+
+  $.ajax({
+    url: './php/getCountryInfo.php',
+    type: 'GET',
+    data: { countryCode: countryCode },
+    dataType: 'json',
+    success: function (result) {
+      if (result && result['data'] && result['data'][0]) {
+        $('#txtContinent').html(result['data'][0]['continentName']);
+        $('#txtCapital').html(result['data'][0]['capital']);
+        $('#txtCurrencyCode').html(result['data'][0]['currencyCode']);
+        $('#txtPopulation').html(result['data'][0]['population']);
+        $('#txtArea').html(result['data'][0]['areaInSqKm']);
+
+        // Show the modal
+        $('#infoModal').modal('show');
+      } else {
+        console.error('Invalid data structure received:', result);
+      }
+    },
+    error: function (jqXHR, textStatus, error) {
+      if (jqXHR.status === 400) {
+        alert(
+          'Bad request: ' +
+            jqXHR.responseJSON.status.description +
+            ' Please enter values.'
+        );
+      } else {
+        console.log('Error occured:' + error);
+      }
+    },
+  });
 }).addTo(map);
+
+// L.easyButton('fa-info', function (btn, map) {
+//   $('#infoModal').modal('show');
+// }).addTo(map);
 
 L.easyButton('fa-cloud-sun', function (btn, map) {
   $('#weatherModal').modal('show');
@@ -60,4 +96,40 @@ $.ajax({
   error: function (jqXHR, textStatus, errorThrown) {
     console.log('AJAX error:', textStatus, errorThrown);
   },
+});
+
+var countryBorderLayer;
+
+$('#countrySelect').on('change', function () {
+  // Get the selected country code
+  var countryCode = $(this).val();
+
+  // Clear the existing country border layer if it exists
+  if (countryBorderLayer) {
+    map.removeLayer(countryBorderLayer);
+  }
+
+  // Get the new country's border data
+  $.ajax({
+    url: './php/getCountryBorders.php',
+    type: 'GET',
+    dataType: 'json',
+    data: {
+      countryCode: countryCode,
+    },
+    success: function (data) {
+      countryBorderLayer = L.geoJSON(data, {
+        style: {
+          color: '#FF7F50',
+          weight: 2,
+          opacity: 1,
+        },
+      }).addTo(map);
+
+      map.fitBounds(countryBorderLayer.getBounds());
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert(textStatus);
+    },
+  });
 });
