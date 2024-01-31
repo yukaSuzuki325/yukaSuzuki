@@ -27,65 +27,11 @@ var layerControl = L.control.layers(basemaps).addTo(map);
 //Easy Buttons
 
 L.easyButton('fa-info', function (btn, map) {
-  var countryCode = $('#countrySelect').val();
-
-  $.ajax({
-    url: './php/getCountryInfo.php',
-    type: 'GET',
-    data: { countryCode: countryCode },
-    dataType: 'json',
-    success: function (result) {
-      if (result && result['data'] && result['data'][0]) {
-        $('#txtContinent').html(result['data'][0]['continentName']);
-        $('#txtCapital').html(result['data'][0]['capital']);
-        $('#txtCurrencyCode').html(result['data'][0]['currencyCode']);
-        $('#txtPopulation').html(result['data'][0]['population']);
-        $('#txtArea').html(result['data'][0]['areaInSqKm']);
-
-        // Show the modal
-        $('#infoModal').modal('show');
-      } else {
-        console.error('Invalid data structure received:', result);
-      }
-    },
-    error: function (jqXHR, textStatus, error) {
-      alert(jqXHR.textStatus);
-    },
-  });
+  $('#infoModal').modal('show');
 }).addTo(map);
 
-// Function to update the Wikipedia modal and show it
-function updateWikiModal(summary, wikiUrl) {
-  $('#txtSummary').text(summary); // Update the summary text
-  $('#txtWiki').html(
-    '<a href="https://' + wikiUrl + '" target="_blank">Wikipedia Link</a>'
-  ); // Update the Wikipedia URL text
-  $('#wikiModal').modal('show'); // Show the modal
-}
-
-// Wikipedia easyButton click event
 L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
-  var countryName = $('#countrySelect option:selected').text();
-
-  $.ajax({
-    url: './php/getWikiPage.php',
-    type: 'GET',
-    dataType: 'json',
-    data: { countryName: countryName },
-    success: function (result) {
-      if (result.status.code === '200' && result.data) {
-        updateWikiModal(result.data.summary, result.data.wikipediaUrl); // Call the function to update and show the modal
-      } else {
-        console.error(
-          'Error fetching Wikipedia data:',
-          result.status.description
-        );
-      }
-    },
-    error: function (jqXHR, textStatus, error) {
-      alert('AJAX error:', textStatus, error);
-    },
-  });
+  $('#wikiModal').modal('show');
 }).addTo(map);
 
 L.easyButton('fa-cloud-sun', function (btn, map) {
@@ -99,6 +45,68 @@ L.easyButton('fa-sterling-sign', function (btn, map) {
 L.easyButton('fa-clock', function (btn, map) {
   $('#timeZoneModal').modal('show');
 }).addTo(map);
+
+// L.easyButton('fa-info', function (btn, map) {
+//   var countryCode = $('#countrySelect').val();
+
+//   $.ajax({
+//     url: './php/getCountryInfo.php',
+//     type: 'GET',
+//     data: { countryCode: countryCode },
+//     dataType: 'json',
+//     success: function (result) {
+//       if (result && result['data'] && result['data'][0]) {
+//         $('#txtContinent').html(result['data'][0]['continentName']);
+//         $('#txtCapital').html(result['data'][0]['capital']);
+//         $('#txtCurrencyCode').html(result['data'][0]['currencyCode']);
+//         $('#txtPopulation').html(result['data'][0]['population']);
+//         $('#txtArea').html(result['data'][0]['areaInSqKm']);
+
+//         // Show the modal
+//         $('#infoModal').modal('show');
+//       } else {
+//         console.error('Invalid data structure received:', result);
+//       }
+//     },
+//     error: function (jqXHR, textStatus, error) {
+//       alert(jqXHR.textStatus);
+//     },
+//   });
+// }).addTo(map);
+
+// // Function to update the Wikipedia modal and show it
+// function updateWikiModal(summary, wikiUrl) {
+//   $('#txtSummary').text(summary); // Update the summary text
+//   $('#txtWiki').html(
+//     '<a href="https://' + wikiUrl + '" target="_blank">Wikipedia Link</a>'
+//   ); // Update the Wikipedia URL text
+//   $('#wikiModal').modal('show'); // Show the modal
+// }
+
+// // Wikipedia easyButton click event
+// L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
+//   var countryName = $('#countrySelect option:selected').text();
+
+//   $.ajax({
+//     url: './php/getWikiPage.php',
+//     type: 'GET',
+//     dataType: 'json',
+//     data: { countryName: countryName },
+//     success: function (result) {
+//       if (result.status.code === '200' && result.data) {
+//         updateWikiModal(result.data.summary, result.data.wikipediaUrl); // Call the function to update and show the modal
+//       } else {
+//         console.error(
+//           'Error fetching Wikipedia data:',
+//           result.status.description
+//         );
+//       }
+//     },
+//     error: function (jqXHR, textStatus, error) {
+//       alert('AJAX error:', textStatus, error);
+//     },
+//   });
+// }).addTo(map);
 
 //Populate country options in select element
 $.ajax({
