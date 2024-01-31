@@ -1,31 +1,27 @@
 <?php
-// Assuming you have received 'country' and 'city' via GET parameters
-$countryCode = $_GET['country'] ?? '';
-$capitalCity = $_GET['city'] ?? '';
-$apiKey = 'your_api_key'; // Replace with your actual API key
+
+$countryCode = $_REQUEST['country'] ?? '';
+$capitalCity = $_REQUEST['city'] ?? '';
+$apiKey = 'cbff9a6a10d344cba33f0d82a83274a1';
 
 $url = "http://api.weatherbit.io/v2.0/forecast/daily?city={$capitalCity}&country={$countryCode}&key={$apiKey}";
 
-// Initialize cURL session
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$response = curl_exec($ch);
+$result = curl_exec($ch);
 curl_close($ch);
 
-if (!$response) {
-    // Handle error; the API call was unsuccessful
+if (!$result) {
     echo json_encode(['error' => 'Failed to retrieve weather data']);
     exit;
 }
 
-// Decode the response and extract the needed data
-$responseData = json_decode($response, true);
-$forecastData = array_slice($responseData['data'], 0, 4); // Get only the first 4 days
+$decode = json_decode($result, true);
+$forecastData = array_slice($decode['data'], 0, 4); // Get only the first 4 days
 
-// Construct the output to send back to the client
 $output = [
-    'city' => $responseData['city_name'],
+    'city' => $decode['city_name'],
     'forecast' => $forecastData
 ];
 

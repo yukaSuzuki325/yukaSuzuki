@@ -201,13 +201,14 @@ function updateWeatherModal(countryCode, capital) {
       city: capital,
     },
     success: function (response) {
+      console.log(response);
       let forecastHtml = '';
       for (let i = 0; i < 4; i++) {
-        const dayForecast = response.data[i];
+        const dayForecast = response.forecast[i];
         forecastHtml += `<div class="forecast-day">
           <h5>${dayForecast.datetime}</h5>
-          <p>Max Temp: ${dayForecast.max_temp}°C</p>
-          <p>Min Temp: ${dayForecast.min_temp}°C</p>
+          <p>Max Temp: ${dayForecast.app_max_temp}°C</p>
+          <p>Min Temp: ${dayForecast.app_min_temp}°C</p>
           <p>${dayForecast.weather.description}</p>
         </div>`;
       }
