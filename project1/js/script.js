@@ -96,12 +96,14 @@ function getUserLocation() {
   }
 }
 
-//On change, add country border, update map, update modals
 var countryBorderLayer;
+var countryCode;
+var capital;
 
+//On change, add country border, update map, update modals
 $('#countrySelect').on('change', function () {
   // Get the selected country code
-  var countryCode = $(this).val();
+  countryCode = $(this).val();
 
   // Clear the existing country border layer if it exists
   if (countryBorderLayer) {
@@ -136,7 +138,6 @@ $('#countrySelect').on('change', function () {
 });
 
 function updateInfoModal() {
-  var countryCode = $('#countrySelect').val();
   $.ajax({
     url: './php/getCountryInfo.php',
     type: 'GET',
@@ -144,11 +145,14 @@ function updateInfoModal() {
     dataType: 'json',
     success: function (result) {
       if (result && result['data'] && result['data'][0]) {
+        capital = result['data'][0]['capital'];
         $('#txtContinent').html(result['data'][0]['continentName']);
-        $('#txtCapital').html(result['data'][0]['capital']);
+        $('#txtCapital').html(capital);
         $('#txtCurrencyCode').html(result['data'][0]['currencyCode']);
         $('#txtPopulation').html(result['data'][0]['population']);
         $('#txtArea').html(result['data'][0]['areaInSqKm']);
+
+        updateWeatherModal(countryCode, capital);
       } else {
         console.error('Invalid data structure received:', result);
       }
@@ -183,6 +187,37 @@ function updateWikiModal() {
     },
     error: function (jqXHR, textStatus, error) {
       alert('AJAX error:', textStatus, error);
+    },
+  });
+}
+
+function updateWeatherModal(countryCode, capital) {
+  $.ajax({
+    url: './php/getWeatherForecast.php',
+    type: 'GET',
+    dataType: 'json',
+    data: {
+      countryCode: countryCode,
+      city: capital,
+    },
+    success: function (response) {
+      let forecastHtml = '';
+      for (let i = 0; i < 4; i++) {
+        const dayForecast = response.data[i];
+        forecastHtml += `<div class="forecast-day">
+          <h5>${dayForecast.datetime}</h5>
+          <p>Max Temp: ${dayForecast.max_temp}°C</p>
+          <p>Min Temp: ${dayForecast.min_temp}°C</p>
+          <p>${dayForecast.weather.description}</p>
+        </div>`;
+      }
+      $('#weatherInfo').html(forecastHtml);
+    },
+    error: function (xhr, status, error) {
+      console.error(
+        'An error occurred while fetching the weather forecast:',
+        error
+      );
     },
   });
 }

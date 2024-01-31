@@ -151,7 +151,45 @@
 
     <!--Weather Modal-->
 
-    <div id="weatherModal" class="modal" data-bs-backdrop="false" tabindex="-1">
+    <!-- Weather Forecast Modal -->
+    <div
+      class="modal fade"
+      id="weatherModal"
+      tabindex="-1"
+      aria-labelledby="weatherModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="weatherModalLabel">Weather Forecast</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Weather information will be loaded here -->
+            <div id="weatherInfo">
+              <!-- Dynamically loaded weather content -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div id="weatherModal" class="modal" data-bs-backdrop="false" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content shadow">
           <div class="modal-header bg-success bg-gradient text-white">
@@ -241,7 +279,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!--Currency Modal-->
 
@@ -344,11 +382,13 @@
 
     <!--News Modal-->
 
+    <!-- Breaking News Modal -->
+
     <div id="newsModal" class="modal" data-bs-backdrop="false" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content shadow">
           <div class="modal-header bg-success bg-gradient text-white">
-            <h5 class="modal-title">Breaking News</h5>
+            <h5 class="modal-title">BREAKING NEWS</h5>
             <button
               type="button"
               class="btn-close btn-close-white"
@@ -357,71 +397,38 @@
             ></button>
           </div>
           <div class="modal-body">
-            <table class="table table-striped">
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-street-view fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-heart fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-car fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-book fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-bath fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-bell fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-anchor fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-            </table>
+            <!-- News Article 1 -->
+            <div class="mb-3">
+              <h6 class="fw-bold">Headline 1</h6>
+              <p class="text-muted">Publisher Name 1</p>
+              <a href="link-to-article-1" class="btn btn-sm btn-light-green"
+                >Read more</a
+              >
+            </div>
+            <!-- News Article 2 -->
+            <div class="mb-3">
+              <h6 class="fw-bold">Headline 2</h6>
+              <p class="text-muted">Publisher Name 2</p>
+              <a href="link-to-article-2" class="btn btn-primary btn-sm"
+                >Read more</a
+              >
+            </div>
+            <!-- News Article 3 -->
+            <div class="mb-3">
+              <h6 class="fw-bold">Headline 3</h6>
+              <p class="text-muted">Publisher Name 3</p>
+              <a href="link-to-article-3" class="btn btn-primary btn-sm"
+                >Read more</a
+              >
+            </div>
+            <!-- News Article 4 -->
+            <div class="mb-3">
+              <h6 class="fw-bold">Headline 4</h6>
+              <p class="text-muted">Publisher Name 4</p>
+              <a href="link-to-article-4" class="btn btn-primary btn-sm"
+                >Read more</a
+              >
+            </div>
           </div>
           <div class="modal-footer">
             <button

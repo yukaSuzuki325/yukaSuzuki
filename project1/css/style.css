@@ -23,3 +23,13 @@ body {
   width: 200px;
   margin: 0 auto;
 }
+
+.btn-light-green {
+  background-color: #90ee90; /* This is light green */
+  border-color: #90ee90; /* Set the border to the same color */
+}
+
+.btn-light-green:hover {
+  background-color: #76c76b; /* A slightly darker green for hover effect */
+  border-color: #76c76b;
+}
