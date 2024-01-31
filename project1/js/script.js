@@ -42,8 +42,8 @@ L.easyButton('fa-sterling-sign', function (btn, map) {
   $('#currencyModal').modal('show');
 }).addTo(map);
 
-L.easyButton('fa-clock', function (btn, map) {
-  $('#timeZoneModal').modal('show');
+L.easyButton('fa-radio', function (btn, map) {
+  $('#newsModal').modal('show');
 }).addTo(map);
 
 //Populate country options in select element
@@ -61,6 +61,8 @@ $.ajax({
     console.log('AJAX error:', textStatus, errorThrown);
   },
 });
+
+getUserLocation();
 
 function getUserLocation() {
   if ('geolocation' in navigator) {
@@ -94,9 +96,7 @@ function getUserLocation() {
   }
 }
 
-getUserLocation();
-
-//Add country border on change
+//On change, add country border, update map, update modals
 var countryBorderLayer;
 
 $('#countrySelect').on('change', function () {
