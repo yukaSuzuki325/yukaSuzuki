@@ -124,6 +124,40 @@ $.ajax({
   },
 });
 
+function getUserLocation() {
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+
+        $.ajax({
+          url: './php/getCountryCode.php',
+          data: {
+            lat: lat,
+            lng: lng,
+          },
+          success: function (result) {
+            var userCountryCode = result.data.countryCode;
+            // Update dropdown list
+            $('#countrySelect').val(userCountryCode).trigger('change');
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.error('error:', textStatus, errorThrown);
+          },
+        });
+      },
+      function (error) {
+        console.error('Error Code = ' + error.code + ' - ' + error.message);
+      }
+    );
+  } else {
+    console.log('Geolocation is not supported.');
+  }
+}
+
+getUserLocation();
+
 //Add country border on change
 var countryBorderLayer;
 
@@ -135,7 +169,6 @@ $('#countrySelect').on('change', function () {
   if (countryBorderLayer) {
     map.removeLayer(countryBorderLayer);
   }
-
   // Get the new country's border data
   $.ajax({
     url: './php/getCountryBorders.php',
