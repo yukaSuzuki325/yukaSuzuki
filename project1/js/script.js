@@ -121,7 +121,7 @@ $('#countrySelect').on('change', function () {
       countryBorderLayer = L.geoJSON(data, {
         style: {
           color: '#FF7F50',
-          weight: 2,
+          weight: 4,
           opacity: 1,
         },
       }).addTo(map);
@@ -218,6 +218,9 @@ function updateWeatherModal(countryCode, capital) {
       console.error(
         'An error occurred while fetching the weather forecast:',
         error
+      );
+      $('#weatherInfo').html(
+        '<div class="weather-unavailable">Weather forecast is unavailable.</div>'
       );
     },
   });
