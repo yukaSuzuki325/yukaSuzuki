@@ -132,12 +132,11 @@ $('#countrySelect').on('change', function () {
   });
 
   updateInfoModal();
-  // updateWikiModal();
+  updateWikiModal();
 });
 
 function updateInfoModal() {
   var countryCode = $('#countrySelect').val();
-
   $.ajax({
     url: './php/getCountryInfo.php',
     type: 'GET',
@@ -160,6 +159,30 @@ function updateInfoModal() {
   });
 }
 
-// function updateWikiModal() {
-
-// }
+function updateWikiModal() {
+  var countryName = $('#countrySelect option:selected').text();
+  $.ajax({
+    url: './php/getWikiPage.php',
+    type: 'GET',
+    dataType: 'json',
+    data: { countryName: countryName },
+    success: function (result) {
+      if (result.status.code === '200' && result.data) {
+        $('#txtSummary').text(result.data.summary);
+        $('#txtWiki').html(
+          '<a href="https://' +
+            result.data.wikipediaUrl +
+            '" target="_blank">Wikipedia Link</a>'
+        );
+      } else {
+        console.error(
+          'Error fetching Wikipedia data:',
+          result.status.description
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, error) {
+      alert('AJAX error:', textStatus, error);
+    },
+  });
+}
