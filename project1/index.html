@@ -159,10 +159,34 @@
       </div>
     </div>
 
-    <!--Weather Modal-->
+    <!-- Weather Modal -->
+    
+    <div class="modal fade" id="weatherModal" tabindex="-1" aria-labelledby="weatherModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-success bg-gradient text-white">
+            <h5 class="modal-title" id="weatherModalLabel">Weather Forecast</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Today's Weather -->
+            <div id="todayWeather" class="today-weather">
+              <!-- Dynamically loaded today's weather content -->
+            </div>
+            <!-- Three Day Forecast -->
+            <div id="forecastRow" class="row">
+              <!-- Dynamically loaded three-day forecast content -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-success btn-sm" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <!-- Weather Forecast Modal -->
-    <div
+
+    <!-- <div
       class="modal fade"
       id="weatherModal"
       tabindex="-1"
@@ -196,7 +220,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!--Currency Modal-->
 
