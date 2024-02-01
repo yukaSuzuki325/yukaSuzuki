@@ -34,8 +34,9 @@ body {
 
 /* News */
 
-/* .news-image {
-  width: 50%;
+.news-image {
+  max-width: 80%;
   height: auto;
   object-fit: contain;
-} */
+  display: block;
+}

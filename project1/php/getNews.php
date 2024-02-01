@@ -22,6 +22,7 @@ if (empty($_REQUEST['countryCode'])) {
 $countryCode = $_REQUEST['countryCode'];
 $apiKey = 'pub_375074a321222bcbf4980cfee047283067ac8';
 $url = "https://newsdata.io/api/1/news?apikey={$apiKey}&country={$countryCode}";
+$defaultNewsImage = '../assets/images/newspaper.jpg';
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -32,10 +33,6 @@ $result = curl_exec($ch);
 curl_close($ch);
 
 $decoded = json_decode($result, true);
-
-// echo '<pre>';
-// var_dump($decoded);
-// echo '</pre>';
 
 $output = [
     'status' => [
@@ -51,7 +48,7 @@ if ($decoded['status'] === 'success') {
     foreach ($decoded['results'] as $article) {
         $output['data'][] = [
             'title' => $article['title'],
-            'image_url' => $article['image_url'] ?? '../assets/images/newspaper.jpg',
+            'image_url' => $article['image_url'] ?? $defaultNewsImage,
             'description' => $article['description'] ?? 'No description available.',
             'article_link' => $article['link']
         ];

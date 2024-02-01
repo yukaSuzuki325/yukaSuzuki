@@ -269,7 +269,6 @@ function updateWeatherModal(countryCode, city) {
 }
 
 function updateNewsModal(countryCode) {
-  console.log('called');
   $.ajax({
     url: './php/getNews.php',
     type: 'GET',
@@ -278,26 +277,30 @@ function updateNewsModal(countryCode) {
     success: function (result) {
       console.log(result);
       if (result.status.description === 'success') {
-        var articlesHtml = '';
-        for (var i = 0; i < 5; i++) {
-          var article = result.data[i];
-          articlesHtml +=
-            '<div class="news-item">' +
-            '<h4 class="news-title">' +
-            article.title +
-            '</h4>' +
-            '<img src="' +
-            article.image_url +
-            '" alt="News Image" class="news-image">' +
-            '<p class="news-description">' +
-            article.description +
-            '</p>' +
-            '<a href="' +
-            article.link +
-            '" target="_blank" class="news-link">Read more</a>' +
-            '</div>';
+        if (result.data.length > 0) {
+          var articlesHtml = '';
+          for (var i = 0; i < 5; i++) {
+            var article = result.data[i];
+            articlesHtml +=
+              '<div class="news-item">' +
+              '<h4 class="news-title">' +
+              article.title +
+              '</h4>' +
+              '<img src="' +
+              article.image_url +
+              '" alt="News Image" class="news-image">' +
+              '<p class="news-description">' +
+              article.description +
+              '</p>' +
+              '<a href="' +
+              article.link +
+              '" target="_blank" class="news-link">Read more</a>' +
+              '</div>';
+          }
+          $('#newsArticles').html(articlesHtml);
         }
-        $('#newsArticles').html(articlesHtml);
+      } else {
+        $('#newsArticles').html('<p>No news articles available.</p>');
       }
     },
     error: function (xhr, status, error) {
