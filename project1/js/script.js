@@ -287,18 +287,18 @@ function updateNewsModal(countryCode) {
           for (var i = 0; i < result.data.length; i++) {
             var article = result.data[i];
             articlesHtml +=
-              '<div class="news-item">' +
+              '<div class="news-item mb-3">' +
               '<h4 class="news-title">' +
               article.title +
               '</h4>' +
               '<img src="' +
               article.image_url +
-              '" alt="News Image" class="news-image">' +
+              '" alt="News Image" class="news-image mx-auto d-block">' +
               '<p class="news-description">' +
               article.description +
               '</p>' +
               '<a href="' +
-              article.article_link +
+              article.link +
               '" target="_blank" class="news-link">Read more</a>' +
               '</div>';
           }
