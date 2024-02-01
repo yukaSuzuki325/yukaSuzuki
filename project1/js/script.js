@@ -200,17 +200,23 @@ function updateWeatherModal(countryCode, capital) {
       countryCode: countryCode,
       city: capital,
     },
-    success: function (response) {
-      console.log(response);
+    success: function (result) {
       let forecastHtml = '';
+
       for (let i = 0; i < 4; i++) {
-        const dayForecast = response.forecast[i];
-        forecastHtml += `<div class="forecast-day">
-          <h5>${dayForecast.datetime}</h5>
-          <p>Max Temp: ${dayForecast.app_max_temp}°C</p>
-          <p>Min Temp: ${dayForecast.app_min_temp}°C</p>
-          <p>${dayForecast.weather.description}</p>
-        </div>`;
+        const dayForecast = result.forecast[i];
+        const iconFileName = dayForecast.weather.icon + '.png';
+        const iconPath = `./assets/weatherbit-icons/${iconFileName}`;
+
+        forecastHtml += `
+          <div class="forecast-day">
+            <h5>${dayForecast.datetime}</h5>
+            <img src="${iconPath}" alt="${dayForecast.weather.description}" />
+            <p>Max Temp: ${dayForecast.app_max_temp}°C</p>
+            <p>Min Temp: ${dayForecast.app_min_temp}°C</p>
+            <p>${dayForecast.weather.description}</p>
+          </div>
+        `;
       }
       $('#weatherInfo').html(forecastHtml);
     },

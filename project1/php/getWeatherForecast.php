@@ -1,7 +1,11 @@
 <?php
 
+// Remove this line for production
+ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
 $countryCode = $_REQUEST['country'] ?? '';
-$capitalCity = $_REQUEST['city'] ?? '';
+$capitalCity = urlencode($_REQUEST['city']) ?? '';
 $apiKey = 'cbff9a6a10d344cba33f0d82a83274a1';
 
 $url = "http://api.weatherbit.io/v2.0/forecast/daily?city={$capitalCity}&country={$countryCode}&key={$apiKey}";
@@ -18,6 +22,7 @@ if (!$result) {
 }
 
 $decode = json_decode($result, true);
+
 $forecastData = array_slice($decode['data'], 0, 4); // Get only the first 4 days
 
 $output = [
@@ -25,6 +30,5 @@ $output = [
     'forecast' => $forecastData
 ];
 
-// Send JSON response back to the client
 header('Content-Type: application/json');
 echo json_encode($output);

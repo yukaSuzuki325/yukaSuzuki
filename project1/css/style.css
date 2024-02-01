@@ -24,12 +24,16 @@ body {
   margin: 0 auto;
 }
 
+.bg-success {
+  background-color: #f2f2f2;
+}
+
 .btn-light-green {
-  background-color: #90ee90; /* This is light green */
-  border-color: #90ee90; /* Set the border to the same color */
+  background-color: #90ee90;
+  border-color: #90ee90;
 }
 
 .btn-light-green:hover {
-  background-color: #76c76b; /* A slightly darker green for hover effect */
+  background-color: #76c76b;
   border-color: #76c76b;
 }
