@@ -209,17 +209,20 @@
     </div>
 
     <!--Currency Modal-->
-
+    <!-- Currency Converter Modal -->
     <div
-      id="currencyModal"
       class="modal fade"
-      data-bs-backdrop="false"
+      id="currencyModal"
       tabindex="-1"
+      aria-labelledby="currencyModalLabel"
+      aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content shadow">
           <div class="modal-header bg-success bg-gradient text-white">
-            <h5 class="modal-title">Currency Converter</h5>
+            <h5 class="modal-title" id="currencyModalLabel">
+              Currency Converter
+            </h5>
             <button
               type="button"
               class="btn-close btn-close-white"
@@ -228,71 +231,36 @@
             ></button>
           </div>
           <div class="modal-body">
-            <table class="table table-striped">
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-street-view fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-heart fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-car fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-book fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-bath fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-bell fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-anchor fa-xl text-success"></i>
-                </td>
-
-                <td>Attribute</td>
-
-                <td class="text-end">value</td>
-              </tr>
-            </table>
+            <form id="currencyConverterForm">
+              <div class="mb-3">
+                <label for="amountInput" class="form-label"
+                  >Amount in USD:</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="amountInput"
+                  placeholder="Enter amount in USD"
+                  value="1"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="currencyOutput" class="form-label"
+                  >Converted Amount:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="currencyOutput"
+                  readonly
+                />
+              </div>
+              <input
+                type="hidden"
+                id="selectedCountryCurrency"
+                value="CurrencyCodeOfSelectedCountry"
+              />
+            </form>
           </div>
           <div class="modal-footer">
             <button
@@ -307,10 +275,7 @@
       </div>
     </div>
 
-    <!--News Modal-->
-
-    <!-- Breaking News Modal -->
-
+    <!-- News Modal -->
     <div
       id="newsModal"
       class="modal fade"
@@ -329,39 +294,11 @@
             ></button>
           </div>
           <div class="modal-body">
-            <!-- News Article 1 -->
-            <div class="mb-3">
-              <h6 class="fw-bold">Headline 1</h6>
-              <p class="text-muted">Publisher Name 1</p>
-              <a href="link-to-article-1" class="btn btn-sm btn-light-green"
-                >Read more</a
-              >
-            </div>
-            <!-- News Article 2 -->
-            <div class="mb-3">
-              <h6 class="fw-bold">Headline 2</h6>
-              <p class="text-muted">Publisher Name 2</p>
-              <a href="link-to-article-2" class="btn btn-primary btn-sm"
-                >Read more</a
-              >
-            </div>
-            <!-- News Article 3 -->
-            <div class="mb-3">
-              <h6 class="fw-bold">Headline 3</h6>
-              <p class="text-muted">Publisher Name 3</p>
-              <a href="link-to-article-3" class="btn btn-primary btn-sm"
-                >Read more</a
-              >
-            </div>
-            <!-- News Article 4 -->
-            <div class="mb-3">
-              <h6 class="fw-bold">Headline 4</h6>
-              <p class="text-muted">Publisher Name 4</p>
-              <a href="link-to-article-4" class="btn btn-primary btn-sm"
-                >Read more</a
-              >
+            <div id="newsArticles" class="news-articles">
+              <!-- Dynamic content -->
             </div>
           </div>
+
           <div class="modal-footer">
             <button
               type="button"

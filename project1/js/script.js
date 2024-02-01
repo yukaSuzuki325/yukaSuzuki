@@ -135,6 +135,7 @@ $('#countrySelect').on('change', function () {
 
   updateInfoModal();
   updateWikiModal();
+  updateNewsModal(countryCode);
 });
 
 function updateInfoModal() {
@@ -193,7 +194,7 @@ function updateWikiModal() {
 
 function updateWeatherModal(countryCode, city) {
   $.ajax({
-    url: './php/getWeatherForecast.php',
+    url: './php/testWeather.php',
     type: 'GET',
     dataType: 'json',
     data: {
@@ -225,8 +226,6 @@ function updateWeatherModal(countryCode, city) {
 
       $('#todayWeather').html(todayWeatherHtml);
 
-      // ... rest of your code above
-
       // Three-day forecast
       for (let i = 1; i < 4; i++) {
         const forecast = result.forecast[i];
@@ -252,8 +251,6 @@ function updateWeatherModal(countryCode, city) {
   `;
       }
 
-      // ... rest of your code below
-
       $('#forecastRow').html(
         `<div class="d-flex justify-content-between">${forecastHtml}</div>`
       );
@@ -267,6 +264,45 @@ function updateWeatherModal(countryCode, city) {
       $('#weatherInfo').html(
         '<div class="weather-unavailable">Weather forecast is unavailable.</div>'
       );
+    },
+  });
+}
+
+function updateNewsModal(countryCode) {
+  console.log('called');
+  $.ajax({
+    url: './php/getNews.php',
+    type: 'GET',
+    data: { countryCode: countryCode },
+    dataType: 'json',
+    success: function (result) {
+      console.log(result);
+      if (result.status.description === 'success') {
+        var articlesHtml = '';
+        for (var i = 0; i < 5; i++) {
+          var article = result.data[i];
+          articlesHtml +=
+            '<div class="news-item">' +
+            '<h4 class="news-title">' +
+            article.title +
+            '</h4>' +
+            '<img src="' +
+            article.image_url +
+            '" alt="News Image" class="news-image">' +
+            '<p class="news-description">' +
+            article.description +
+            '</p>' +
+            '<a href="' +
+            article.link +
+            '" target="_blank" class="news-link">Read more</a>' +
+            '</div>';
+        }
+        $('#newsArticles').html(articlesHtml);
+      }
+    },
+    error: function (xhr, status, error) {
+      console.log(error);
+      $('#newsArticles').html('<p>Error loading news articles.</p>');
     },
   });
 }
