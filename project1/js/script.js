@@ -269,6 +269,7 @@ function updateWeatherModal(countryCode, city) {
 }
 
 function updateNewsModal(countryCode) {
+  console.log('called');
   $.ajax({
     url: './php/getNews.php',
     type: 'GET',
@@ -277,9 +278,13 @@ function updateNewsModal(countryCode) {
     success: function (result) {
       console.log(result);
       if (result.status.description === 'success') {
-        if (result.data.length > 0) {
+        if (result.data.length === 0) {
+          // No articles found
+          $('#newsArticles').html('<p>No news articles available.</p>');
+        } else {
+          // Articles found
           var articlesHtml = '';
-          for (var i = 0; i < 5; i++) {
+          for (var i = 0; i < result.data.length; i++) {
             var article = result.data[i];
             articlesHtml +=
               '<div class="news-item">' +
@@ -293,14 +298,16 @@ function updateNewsModal(countryCode) {
               article.description +
               '</p>' +
               '<a href="' +
-              article.link +
+              article.article_link +
               '" target="_blank" class="news-link">Read more</a>' +
               '</div>';
           }
           $('#newsArticles').html(articlesHtml);
         }
       } else {
-        $('#newsArticles').html('<p>No news articles available.</p>');
+        $('#newsArticles').html(
+          '<p>Error: ' + result.status.description + '</p>'
+        );
       }
     },
     error: function (xhr, status, error) {
