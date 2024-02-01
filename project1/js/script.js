@@ -193,7 +193,7 @@ function updateWikiModal() {
 
 function updateWeatherModal(countryCode, city) {
   $.ajax({
-    url: './php/testWeather.php',
+    url: './php/getWeatherForecast.php',
     type: 'GET',
     dataType: 'json',
     data: {
@@ -218,12 +218,14 @@ function updateWeatherModal(countryCode, city) {
       <p>${todayForecast.weather.description}</p>
       <p>Max Temp: ${todayForecast.app_max_temp}°C</p>
       <p>Min Temp: ${todayForecast.app_min_temp}°C</p>
-      <p>Wind Speed: ${todayForecast.wind_spd} m/s</p>
+      <p class="text-nowrap">Wind Speed: ${todayForecast.wind_spd} m/s</p>
     </div>
   </div>
 `;
 
       $('#todayWeather').html(todayWeatherHtml);
+
+      // ... rest of your code above
 
       // Three-day forecast
       for (let i = 1; i < 4; i++) {
@@ -234,21 +236,23 @@ function updateWeatherModal(countryCode, city) {
         let forecastDate = new Date(today);
         forecastDate.setDate(today.getDate() + i);
 
+        // Options for toLocaleDateString to format date as 'Fri 2 Feb'
+        const options = { weekday: 'short', day: 'numeric', month: 'short' };
+        const formattedDate = forecastDate.toLocaleDateString('en-EN', options);
+
         forecastHtml += `
-          <div class="col">
-            <div class="forecast-day">
-              <h6><strong>${
-                dayNames[forecastDate.getDay()]
-              } ${forecastDate.toLocaleDateString()}</strong></h6>
-              <img src="${iconPath}" alt="${
-          forecast.weather.description
-        }" class="weather-icon" />
-              <p>Max Temp: ${forecast.app_max_temp}°C</p>
-              <p>Min Temp: ${forecast.app_min_temp}°C</p>
-            </div>
-          </div>
-        `;
+    <div class="col">
+      <div class="forecast-day">
+        <h6><strong>${formattedDate}</strong></h6>
+        <img src="${iconPath}" alt="${forecast.weather.description}" class="weather-icon" />
+        <p>Max Temp: ${forecast.app_max_temp}°C</p>
+        <p>Min Temp: ${forecast.app_min_temp}°C</p>
+      </div>
+    </div>
+  `;
       }
+
+      // ... rest of your code below
 
       $('#forecastRow').html(
         `<div class="d-flex justify-content-between">${forecastHtml}</div>`
