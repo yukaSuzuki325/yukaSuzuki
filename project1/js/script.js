@@ -193,7 +193,7 @@ function updateWikiModal() {
 
 function updateWeatherModal(countryCode, city) {
   $.ajax({
-    url: './php/getWeatherForecast.php',
+    url: './php/testWeather.php',
     type: 'GET',
     dataType: 'json',
     data: {
@@ -209,32 +209,40 @@ function updateWeatherModal(countryCode, city) {
       // Today's weather
       const todayForecast = result.forecast[0];
       const todayIconFileName = todayForecast.weather.icon + '.png';
-      const todayIconPath = `./assets/weatherbit-icons/${todayIconFileName}`;
-      todayWeatherHtml += `
-        <div class="today-forecast">
-          <h5>Today</h5>
-          <img src="${todayIconPath}" alt="${todayForecast.weather.description}" />
-          <p>Max Temp: ${todayForecast.app_max_temp}°C</p>
-          <p>Min Temp: ${todayForecast.app_min_temp}°C</p>
-          <p>${todayForecast.weather.description}</p>
-          <p>Wind Speed: ${todayForecast.wind_spd} m/s</p>
-        </div>
-      `;
+      const todayIconPath = './assets/weatherbit-icons/' + todayIconFileName;
+
+      todayWeatherHtml = `
+  <div class="today-forecast d-flex align-items-center">
+    <img src="${todayIconPath}" alt="${todayForecast.weather.description}" class="weather-icon me-3" />
+    <div class="d-flex flex-column align-items-start">
+      <p>${todayForecast.weather.description}</p>
+      <p>Max Temp: ${todayForecast.app_max_temp}°C</p>
+      <p>Min Temp: ${todayForecast.app_min_temp}°C</p>
+      <p>Wind Speed: ${todayForecast.wind_spd} m/s</p>
+    </div>
+  </div>
+`;
+
+      $('#todayWeather').html(todayWeatherHtml);
 
       // Three-day forecast
       for (let i = 1; i < 4; i++) {
         const forecast = result.forecast[i];
         const iconFileName = forecast.weather.icon + '.png';
-        const iconPath = `./assets/weatherbit-icons/${iconFileName}`;
+        const iconPath = './assets/weatherbit-icons/' + iconFileName;
+
         let forecastDate = new Date(today);
         forecastDate.setDate(today.getDate() + i);
+
         forecastHtml += `
           <div class="col">
             <div class="forecast-day">
-              <h6>${
+              <h6><strong>${
                 dayNames[forecastDate.getDay()]
-              } ${forecastDate.toLocaleDateString()}</h6>
-              <img src="${iconPath}" alt="${forecast.weather.description}" />
+              } ${forecastDate.toLocaleDateString()}</strong></h6>
+              <img src="${iconPath}" alt="${
+          forecast.weather.description
+        }" class="weather-icon" />
               <p>Max Temp: ${forecast.app_max_temp}°C</p>
               <p>Min Temp: ${forecast.app_min_temp}°C</p>
             </div>
@@ -242,9 +250,11 @@ function updateWeatherModal(countryCode, city) {
         `;
       }
 
-      $('#todayWeather').html(todayWeatherHtml);
-      $('#forecastRow').html(forecastHtml);
+      $('#forecastRow').html(
+        `<div class="d-flex justify-content-between">${forecastHtml}</div>`
+      );
     },
+
     error: function (xhr, status, error) {
       console.error(
         'An error occurred while fetching the weather forecast:',
@@ -256,44 +266,3 @@ function updateWeatherModal(countryCode, city) {
     },
   });
 }
-
-// function updateWeatherModal(countryCode, capital) {
-//   $.ajax({
-//     url: './php/getWeatherForecast.php',
-//     type: 'GET',
-//     dataType: 'json',
-//     data: {
-//       countryCode: countryCode,
-//       city: capital,
-//     },
-//     success: function (result) {
-//       let forecastHtml = '';
-
-//       for (let i = 0; i < 4; i++) {
-//         const dayForecast = result.forecast[i];
-//         const iconFileName = dayForecast.weather.icon + '.png';
-//         const iconPath = `./assets/weatherbit-icons/${iconFileName}`;
-
-//         forecastHtml += `
-//           <div class="forecast-day">
-//             <h5>${dayForecast.datetime}</h5>
-//             <img src="${iconPath}" alt="${dayForecast.weather.description}" />
-//             <p>Max Temp: ${dayForecast.app_max_temp}°C</p>
-//             <p>Min Temp: ${dayForecast.app_min_temp}°C</p>
-//             <p>${dayForecast.weather.description}</p>
-//           </div>
-//         `;
-//       }
-//       $('#weatherInfo').html(forecastHtml);
-//     },
-//     error: function (xhr, status, error) {
-//       console.error(
-//         'An error occurred while fetching the weather forecast:',
-//         error
-//       );
-//       $('#weatherInfo').html(
-//         '<div class="weather-unavailable">Weather forecast is unavailable.</div>'
-//       );
-//     },
-//   });
-// }

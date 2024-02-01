@@ -160,33 +160,8 @@
     </div>
 
     <!-- Weather Modal -->
-    
-    <div class="modal fade" id="weatherModal" tabindex="-1" aria-labelledby="weatherModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header bg-success bg-gradient text-white">
-            <h5 class="modal-title" id="weatherModalLabel">Weather Forecast</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <!-- Today's Weather -->
-            <div id="todayWeather" class="today-weather">
-              <!-- Dynamically loaded today's weather content -->
-            </div>
-            <!-- Three Day Forecast -->
-            <div id="forecastRow" class="row">
-              <!-- Dynamically loaded three-day forecast content -->
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-success btn-sm" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
-
-    <!-- <div
+    <div
       class="modal fade"
       id="weatherModal"
       tabindex="-1"
@@ -205,8 +180,19 @@
             ></button>
           </div>
           <div class="modal-body">
-            <div id="weatherInfo">
-              <!-- Dynamically loaded weather content -->
+            <!-- Today's Weather -->
+            <div>
+              <h5><strong>Today</strong></h5>
+            </div>
+            <div
+              id="todayWeather"
+              class="today-weather d-flex align-items-center justify-content-center"
+            >
+              <!-- Dynamically loaded today's weather content -->
+            </div>
+            <!-- Three Day Forecast -->
+            <div id="forecastRow" class="row forecast-row mt-3">
+              <!-- Dynamically loaded three-day forecast content -->
             </div>
           </div>
           <div class="modal-footer">
@@ -220,7 +206,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!--Currency Modal-->
 

@@ -24,16 +24,10 @@ body {
   margin: 0 auto;
 }
 
-.bg-success {
-  background-color: #f2f2f2;
-}
+/* Weather */
 
-.btn-light-green {
-  background-color: #90ee90;
-  border-color: #90ee90;
-}
-
-.btn-light-green:hover {
-  background-color: #76c76b;
-  border-color: #76c76b;
+.weather-icon {
+  width: 50%;
+  height: auto;
+  object-fit: contain;
 }
