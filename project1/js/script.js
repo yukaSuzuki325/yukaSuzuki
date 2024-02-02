@@ -38,12 +38,12 @@ L.easyButton('fa-cloud-sun', function (btn, map) {
   $('#weatherModal').modal('show');
 }).addTo(map);
 
-L.easyButton('fa-sterling-sign', function (btn, map) {
-  $('#currencyModal').modal('show');
-}).addTo(map);
-
 L.easyButton('fa-radio', function (btn, map) {
   $('#newsModal').modal('show');
+}).addTo(map);
+
+L.easyButton('fa-sterling-sign', function (btn, map) {
+  $('#currencyModal').modal('show');
 }).addTo(map);
 
 //Populate country options in select element
