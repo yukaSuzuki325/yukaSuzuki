@@ -35,12 +35,17 @@ $output = [
 
 if (isset($decoded) && !empty($decoded)) {
     foreach ($decoded as $country) {
+        $languages = array_values((array) $country['languages']);
+        $currencies = array_keys((array) $country['currencies']);
+        $currencyName = $country['currencies'][$currencies[0]]['name'] ?? '';
+        $currencySymbol = $country['currencies'][$currencies[0]]['symbol'] ?? '';
+
         $output['data'][] = [
             'commonName' => $country['name']['common'] ?? '',
             'officialName' => $country['name']['official'] ?? '',
             'capital' => $country['capital'][0] ?? '',
             'region' => $country['region'] ?? '',
-            'languages' => $country['languages'] ?? [],
+            'languages' => $languages,
             'latlng' => $country['latlng'] ?? [],
             'demonyms' => $country['demonyms'] ?? [],
             'flags' => $country['flags'] ?? [],
@@ -48,10 +53,12 @@ if (isset($decoded) && !empty($decoded)) {
             'timezones' => $country['timezones'] ?? [],
             'continents' => $country['continents'] ?? [],
             'capitalInfo' => $country['capitalInfo'] ?? [],
-            'area' => $country['area'] ?? []
+            'area' => $country['area'] ?? '',
+            'currencyCode' => $currencies[0] ?? '',
+            'currencyName' => $currencyName,
+            'currencySymbol' => $currencySymbol,
         ];
     }
 }
-
 header('Content-Type: application/json; charset=UTF-8');
 echo json_encode($output);

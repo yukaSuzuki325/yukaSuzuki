@@ -153,7 +153,8 @@ function updateInfoModal() {
         $('#txtCapital').html(result['data'][0]['capital']);
         $('#txtPopulation').html(result['data'][0]['population']);
         $('#txtArea').html(result['data'][0]['area']);
-        $('#txtLanguage').html(result['data'][0]['languages'].eng);
+        $('#txtLanguage').html(result['data'][0]['languages']);
+        $('#txtCurrencyCode').html(result['data'][0]['currencyCode']);
 
         updateWeatherModal(countryCode, capital);
       } else {
