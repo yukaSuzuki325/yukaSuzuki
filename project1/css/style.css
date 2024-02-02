@@ -38,7 +38,7 @@ body {
 
 .btn-custom:hover {
   color: #fff;
-  background-image: linear-gradient(180deg, #206e7c 0%, #1b5f6b 100%);
+  background-image: linear-gradient(180deg, #32818f 0%, #206e7c 100%);
   border-color: #206e7c;
 }
 
