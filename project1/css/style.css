@@ -62,3 +62,12 @@ body {
   object-fit: contain;
   display: block;
 }
+
+/* Recipes */
+
+.recipe-image {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}

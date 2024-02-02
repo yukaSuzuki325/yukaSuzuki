@@ -30,16 +30,20 @@ L.easyButton('fa-info', function (btn, map) {
   $('#infoModal').modal('show');
 }).addTo(map);
 
-L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
-  $('#wikiModal').modal('show');
-}).addTo(map);
-
 L.easyButton('fa-cloud-sun', function (btn, map) {
   $('#weatherModal').modal('show');
 }).addTo(map);
 
 L.easyButton('fa-radio', function (btn, map) {
   $('#newsModal').modal('show');
+}).addTo(map);
+
+L.easyButton('fa-utensils', function (btn, map) {
+  $('#recipeModal').modal('show');
+}).addTo(map);
+
+L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
+  $('#wikiModal').modal('show');
 }).addTo(map);
 
 L.easyButton('fa-sterling-sign', function (btn, map) {
@@ -99,6 +103,7 @@ function getUserLocation() {
 var countryBorderLayer;
 var countryCode;
 var capital;
+var demonym;
 
 //On change, add country border, update map, update modals
 $('#countrySelect').on('change', function () {
@@ -145,9 +150,11 @@ function updateInfoModal() {
     data: { countryCode: countryCode },
     dataType: 'json',
     success: function (result) {
-      console.log(result);
+      // console.log(result);
       if (result && result['data'] && result['data'][0]) {
         capital = result['data'][0]['capital'];
+        demonym = result['data'][0]['demonyms'].eng.f;
+
         $('#txtOfficialName').html(result['data'][0]['officialName']);
         $('#txtContinent').html(result['data'][0]['continents']);
         $('#txtCapital').html(result['data'][0]['capital']);
@@ -157,6 +164,7 @@ function updateInfoModal() {
         $('#txtCurrencyCode').html(result['data'][0]['currencyCode']);
 
         updateWeatherModal(countryCode, capital);
+        updateRecipeModal(demonym);
       } else {
         console.error('Invalid data structure received:', result);
       }
@@ -314,6 +322,52 @@ function updateNewsModal(countryCode) {
     error: function (xhr, status, error) {
       console.log(error);
       $('#newsArticles').html('<p>Error loading news articles.</p>');
+    },
+  });
+}
+
+function updateRecipeModal(demonym) {
+  $.ajax({
+    url: './php/getRecipes.php',
+    type: 'GET',
+    data: { demonym: demonym },
+    dataType: 'json',
+    success: function (result) {
+      console.log(result);
+      if (result.status.description === 'success') {
+        if (result.data.length === 0) {
+          // No recipes found
+          $('#recipes').html('<p>No recipes available.</p>');
+        } else {
+          // Recipes found
+          var recipesHtml = '';
+          for (var i = 0; i < 5; i++) {
+            var recipe = result.data[i];
+            recipesHtml +=
+              '<div class="recipe-item mb-3">' +
+              '<h4 class="recipe-title">' +
+              recipe.title +
+              '</h4>' +
+              '<img src="' +
+              recipe.image +
+              '" alt="Recipe Image" class="recipe-image mx-auto d-block">' +
+              '<p class="recipe-servings">' +
+              recipe.servings +
+              '</p>' +
+              '<p class="recipe-instructions">' +
+              recipe.instructions +
+              '</p>' +
+              '</div>';
+          }
+          $('#recipes').html(recipesHtml);
+        }
+      } else {
+        $('#recipes').html('<p>Error: ' + result.status.description + '</p>');
+      }
+    },
+    error: function (xhr, status, error) {
+      console.log(error);
+      $('#recipes').html('<p>Error loading recipes.</p>');
     },
   });
 }
