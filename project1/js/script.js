@@ -145,6 +145,7 @@ function updateInfoModal() {
     data: { countryCode: countryCode },
     dataType: 'json',
     success: function (result) {
+      console.log(result);
       if (result && result['data'] && result['data'][0]) {
         capital = result['data'][0]['capital'];
         $('#txtContinent').html(result['data'][0]['continentName']);
@@ -152,6 +153,7 @@ function updateInfoModal() {
         $('#txtCurrencyCode').html(result['data'][0]['currencyCode']);
         $('#txtPopulation').html(result['data'][0]['population']);
         $('#txtArea').html(result['data'][0]['areaInSqKm']);
+        $('#txtLanguage').html(result['data'][0]['languages']);
 
         updateWeatherModal(countryCode, capital);
       } else {
@@ -269,14 +271,12 @@ function updateWeatherModal(countryCode, city) {
 }
 
 function updateNewsModal(countryCode) {
-  console.log('called');
   $.ajax({
     url: './php/getNews.php',
     type: 'GET',
     data: { countryCode: countryCode },
     dataType: 'json',
     success: function (result) {
-      console.log(result);
       if (result.status.description === 'success') {
         if (result.data.length === 0) {
           // No articles found

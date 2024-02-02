@@ -6,22 +6,8 @@ error_reporting(E_ALL);
 
 $executionStartTime = microtime(true);
 
-$url = '';
-
-if (!empty($_REQUEST['countryCode'])) {
-    $url = 'http://api.geonames.org/countryInfoJSON?formatted=true&lang=en&country=' . $_REQUEST['countryCode'] . '&username=kl888';
-} else {
-    http_response_code(400);
-    echo json_encode([
-        'status' => [
-            'code' => 400,
-            'name' => 'error',
-            'description' => 'Missing required parameters.'
-        ],
-        'executionTime' => microtime(true) - $executionStartTime
-    ]);
-    exit;
-}
+$countryCode = $_REQUEST['countryCode'];
+$url = "https://restcountries.com/v3.1/alpha/" . $countryCode;
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -29,18 +15,42 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_URL, $url);
 
 $result = curl_exec($ch);
-
 curl_close($ch);
 
-$decode = json_decode($result, true);
-$output = [];
+$decoded = json_decode($result, true);
 
-$output['status']['code'] = "200";
-$output['status']['name'] = "ok";
-$output['status']['description'] = "success";
-$output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
-foreach ($decode as $key => $value) {
-    $output['data'] = $value;
+// echo '<pre>';
+// var_dump($decode);
+// echo '</pre>';
+
+$output = [
+    'status' => [
+        'code' => 200,
+        'name' => 'ok',
+        'description' => 'success',
+    ],
+    'executionTime' => intval((microtime(true) - $executionStartTime) * 1000) . " ms",
+    'data' => []
+];
+
+if (isset($decoded) && !empty($decoded)) {
+    foreach ($decoded as $country) {
+        $output['data'][] = [
+            'commonName' => $country['name']['common'] ?? '',
+            'officialName' => $country['name']['official'] ?? '',
+            'currencies' => $country['currencies'] ?? [],
+            'capital' => $country['capital'][0] ?? '',
+            'region' => $country['region'] ?? '',
+            'languages' => $country['languages'] ?? [],
+            'latlng' => $country['latlng'] ?? [],
+            'demonyms' => $country['demonyms'] ?? [],
+            'flags' => $country['flags'] ?? [],
+            'population' => $country['population'] ?? '',
+            'timezones' => $country['timezones'] ?? [],
+            'continents' => $country['continents'] ?? [],
+            'capitalInfo' => $country['capitalInfo'] ?? []
+        ];
+    }
 }
 
 header('Content-Type: application/json; charset=UTF-8');
