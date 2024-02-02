@@ -49,10 +49,10 @@ $assignedImages = [
     'spice2.jpg'
 ];
 
-// Check if there are enough assigned images for the recipes
-if (count($assignedImages) < count($recipes)) {
-    die("Not enough assigned images for the recipes.");
-}
+// // Check if there are enough assigned images for the recipes
+// if (count($assignedImages) < count($recipes)) {
+//     die("Not enough assigned images for the recipes.");
+// }
 
 // Add the image property to each recipe
 foreach ($recipes as $key => $recipe) {

@@ -46,9 +46,9 @@ L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
   $('#wikiModal').modal('show');
 }).addTo(map);
 
-// L.easyButton('fa-sterling-sign', function (btn, map) {
-//   $('#currencyModal').modal('show');
-// }).addTo(map);
+L.easyButton('fa-sterling-sign', function (btn, map) {
+  $('#currencyModal').modal('show');
+}).addTo(map);
 
 //Populate country options in select element
 $.ajax({
@@ -141,6 +141,7 @@ $('#countrySelect').on('change', function () {
   updateInfoModal();
   updateWikiModal();
   updateNewsModal(countryCode);
+  updateCurrencyModal();
 });
 
 function updateInfoModal() {
@@ -333,7 +334,7 @@ function updateRecipeModal(demonym) {
     data: { demonym: demonym },
     dataType: 'json',
     success: function (result) {
-      console.log(result);
+      // console.log(result);
       if (result.status.description === 'success') {
         if (result.data.length === 0) {
           // No recipes found
@@ -368,6 +369,31 @@ function updateRecipeModal(demonym) {
     error: function (xhr, status, error) {
       console.log(error);
       $('#recipes').html('<p>Error loading recipes.</p>');
+    },
+  });
+}
+
+function updateCurrencyModal() {
+  $.ajax({
+    url: './php/getCurrencyRates.php',
+    type: 'GET',
+    dataType: 'json',
+    success: function (result) {
+      console.log(result);
+      if (result && result.data.rates) {
+        var currencySelect = $('#currencySelect');
+        currencySelect.empty();
+        $.each(result.data.rates, function (currencyCode, rate) {
+          currencySelect.append(
+            $('<option></option>')
+              .val(currencyCode)
+              .html(currencyCode + ' - ' + rate)
+          );
+        });
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log('An error occurred: ' + textStatus);
     },
   });
 }
