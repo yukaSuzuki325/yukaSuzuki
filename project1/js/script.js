@@ -46,9 +46,9 @@ L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
   $('#wikiModal').modal('show');
 }).addTo(map);
 
-L.easyButton('fa-sterling-sign', function (btn, map) {
-  $('#currencyModal').modal('show');
-}).addTo(map);
+// L.easyButton('fa-sterling-sign', function (btn, map) {
+//   $('#currencyModal').modal('show');
+// }).addTo(map);
 
 //Populate country options in select element
 $.ajax({
