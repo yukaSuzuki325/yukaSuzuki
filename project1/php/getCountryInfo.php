@@ -38,7 +38,6 @@ if (isset($decoded) && !empty($decoded)) {
         $output['data'][] = [
             'commonName' => $country['name']['common'] ?? '',
             'officialName' => $country['name']['official'] ?? '',
-            'currencies' => $country['currencies'] ?? [],
             'capital' => $country['capital'][0] ?? '',
             'region' => $country['region'] ?? '',
             'languages' => $country['languages'] ?? [],
@@ -48,7 +47,8 @@ if (isset($decoded) && !empty($decoded)) {
             'population' => $country['population'] ?? '',
             'timezones' => $country['timezones'] ?? [],
             'continents' => $country['continents'] ?? [],
-            'capitalInfo' => $country['capitalInfo'] ?? []
+            'capitalInfo' => $country['capitalInfo'] ?? [],
+            'area' => $country['area'] ?? []
         ];
     }
 }

@@ -148,12 +148,12 @@ function updateInfoModal() {
       console.log(result);
       if (result && result['data'] && result['data'][0]) {
         capital = result['data'][0]['capital'];
-        $('#txtContinent').html(result['data'][0]['continentName']);
-        $('#txtCapital').html(capital);
-        $('#txtCurrencyCode').html(result['data'][0]['currencyCode']);
+        $('#txtOfficialName').html(result['data'][0]['officialName']);
+        $('#txtContinent').html(result['data'][0]['continents']);
+        $('#txtCapital').html(result['data'][0]['capital']);
         $('#txtPopulation').html(result['data'][0]['population']);
-        $('#txtArea').html(result['data'][0]['areaInSqKm']);
-        $('#txtLanguage').html(result['data'][0]['languages']);
+        $('#txtArea').html(result['data'][0]['area']);
+        $('#txtLanguage').html(result['data'][0]['languages'].eng);
 
         updateWeatherModal(countryCode, capital);
       } else {
