@@ -24,6 +24,28 @@ body {
   margin: 0 auto;
 }
 
+/*Modal theme colour*/
+
+.bg-custom {
+  background-color: #206e7c;
+}
+
+.btn-custom {
+  background-color: white;
+  border-color: #206e7c;
+  color: #206e7c;
+}
+
+.btn-custom:hover {
+  color: #fff;
+  background-image: linear-gradient(180deg, #206e7c 0%, #1b5f6b 100%);
+  border-color: #206e7c;
+}
+
+.fa-icon {
+  color: #206e7c;
+}
+
 /* Weather */
 
 .weather-icon {
