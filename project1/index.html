@@ -322,7 +322,34 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body"></div>
+          <div class="modal-body">
+            <form id="convertForm">
+              <div class="mb-3">
+                <label for="amount" class="form-label">Amount</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="amount"
+                  value="0"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="fromCurrency" class="form-label">From</label>
+                <select id="fromCurrency" class="form-select"></select>
+              </div>
+              <div class="mb-3">
+                <label for="toCurrency" class="form-label">To</label>
+                <select id="toCurrency" class="form-select"></select>
+              </div>
+              <button
+                type="button"
+                class="btn btn-convert bg-gradient mt-3 mb-3"
+              >
+                Convert
+              </button>
+            </form>
+            <div id="convertResult"></div>
+          </div>
           <div class="modal-footer">
             <button
               type="button"

@@ -29,6 +29,7 @@ if ($decoded) {
         'data' => $decoded
     ];
 } else {
+    http_response_code(500);
     echo json_encode(['error' => 'Unable to fetch data']);
 }
 

@@ -102,8 +102,6 @@ function getUserLocation() {
 
 var countryBorderLayer;
 var countryCode;
-var capital;
-var demonym;
 
 //On change, add country border, update map, update modals
 $('#countrySelect').on('change', function () {
@@ -141,7 +139,6 @@ $('#countrySelect').on('change', function () {
   updateInfoModal();
   updateWikiModal();
   updateNewsModal(countryCode);
-  updateCurrencyModal();
 });
 
 function updateInfoModal() {
@@ -153,19 +150,21 @@ function updateInfoModal() {
     success: function (result) {
       // console.log(result);
       if (result && result['data'] && result['data'][0]) {
-        capital = result['data'][0]['capital'];
-        demonym = result['data'][0]['demonyms'].eng.f;
+        var capital = result['data'][0]['capital'];
+        var demonym = result['data'][0]['demonyms'].eng.f;
+        var currencyCode = result['data'][0]['currencyCode'];
 
         $('#txtOfficialName').html(result['data'][0]['officialName']);
         $('#txtContinent').html(result['data'][0]['continents']);
-        $('#txtCapital').html(result['data'][0]['capital']);
+        $('#txtCapital').html(capital);
         $('#txtPopulation').html(result['data'][0]['population']);
         $('#txtArea').html(result['data'][0]['area']);
         $('#txtLanguage').html(result['data'][0]['languages']);
-        $('#txtCurrencyCode').html(result['data'][0]['currencyCode']);
+        $('#txtCurrencyCode').html(currencyCode);
 
         updateWeatherModal(countryCode, capital);
         updateRecipeModal(demonym);
+        updateCurrencyModal(currencyCode);
       } else {
         console.error('Invalid data structure received:', result);
       }
@@ -247,7 +246,6 @@ function updateWeatherModal(countryCode, city) {
         let forecastDate = new Date(today);
         forecastDate.setDate(today.getDate() + i);
 
-        // Options for toLocaleDateString to format date as 'Fri 2 Feb'
         const options = { weekday: 'short', day: 'numeric', month: 'short' };
         const formattedDate = forecastDate.toLocaleDateString('en-EN', options);
 
@@ -373,23 +371,37 @@ function updateRecipeModal(demonym) {
   });
 }
 
-function updateCurrencyModal() {
+function updateCurrencyModal(currencyCode) {
   $.ajax({
     url: './php/getCurrencyRates.php',
     type: 'GET',
     dataType: 'json',
     success: function (result) {
-      console.log(result);
-      if (result && result.data.rates) {
-        var currencySelect = $('#currencySelect');
-        currencySelect.empty();
-        $.each(result.data.rates, function (currencyCode, rate) {
-          currencySelect.append(
+      if (result.status.code === 200) {
+        var currenciesCodes = Object.keys(result['data']['rates']);
+        var currencies = result['data']['rates'];
+        console.log(currenciesCodes);
+        console.log(currencies);
+        var fromCurrencySelect = $('#fromCurrency');
+        var toCurrencySelect = $('#toCurrency');
+        fromCurrencySelect.empty();
+        toCurrencySelect.empty();
+
+        for (let i = 0; i < currenciesCodes.length; i++) {
+          fromCurrencySelect.append(
             $('<option></option>')
-              .val(currencyCode)
-              .html(currencyCode + ' - ' + rate)
+              .val(currenciesCodes[i])
+              .html(currenciesCodes[i])
+              .prop('selected', currenciesCodes[i] === 'GBP')
           );
-        });
+
+          toCurrencySelect.append(
+            $('<option></option>')
+              .val(currenciesCodes[i])
+              .html(currenciesCodes[i])
+              .prop('selected', currenciesCodes[i] === currencyCode)
+          );
+        }
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
