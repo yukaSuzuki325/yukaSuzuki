@@ -249,7 +249,6 @@ function updateWeatherModal(countryCode, city) {
       let today = new Date();
       let todayWeatherHtml = '';
       let forecastHtml = '';
-      let dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
       // Today's weather
       const todayForecast = result.forecast[0];
