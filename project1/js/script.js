@@ -102,6 +102,7 @@ function getUserLocation() {
 
 var countryBorderLayer;
 var countryCode;
+var ratesObj;
 
 //On change, add country border, update map, update modals
 $('#countrySelect').on('change', function () {
@@ -377,11 +378,12 @@ function updateCurrencyModal(currencyCode) {
     type: 'GET',
     dataType: 'json',
     success: function (result) {
+      console.log(result);
       if (result.status.code === 200) {
         var currenciesCodes = Object.keys(result['data']['rates']);
-        var currencies = result['data']['rates'];
+        ratesObj = result['data']['rates'];
         console.log(currenciesCodes);
-        console.log(currencies);
+        console.log(ratesObj);
         var fromCurrencySelect = $('#fromCurrency');
         var toCurrencySelect = $('#toCurrency');
         fromCurrencySelect.empty();
@@ -408,4 +410,24 @@ function updateCurrencyModal(currencyCode) {
       console.log('An error occurred: ' + textStatus);
     },
   });
+}
+
+$('.btn-convert').on('click', convertCurrency);
+
+function convertCurrency() {
+  var amount = parseFloat($('#amount').val());
+
+  var fromCurrency = $('#fromCurrency').val();
+  var toCurrency = $('#toCurrency').val();
+
+  var fromRate = ratesObj[fromCurrency];
+  var toRate = ratesObj[toCurrency];
+
+  var convertedAmount = (amount / fromRate) * toRate;
+
+  $('#convertResult').html(
+    `<strong>${amount} ${fromCurrency} = ${convertedAmount.toFixed(
+      2
+    )} ${toCurrency}</strong>`
+  );
 }
