@@ -74,12 +74,6 @@ body {
 
 /* Currency Modal */
 
-/* #convertForm > div {
-  display: flex;
-  flex-direction: column;
-  margin: 10px 0;
-} */
-
 .btn-convert {
   background-color: #206e7c;
   border-color: #206e7c;

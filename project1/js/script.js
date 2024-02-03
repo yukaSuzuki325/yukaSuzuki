@@ -26,29 +26,53 @@ var layerControl = L.control.layers(basemaps).addTo(map);
 
 //Easy Buttons
 
-L.easyButton('fa-info', function (btn, map) {
-  $('#infoModal').modal('show');
-}).addTo(map);
+L.easyButton(
+  'fa-info',
+  function (btn, map) {
+    $('#infoModal').modal('show');
+  },
+  'Contry overview'
+).addTo(map);
 
-L.easyButton('fa-cloud-sun', function (btn, map) {
-  $('#weatherModal').modal('show');
-}).addTo(map);
+L.easyButton(
+  'fa-cloud-sun',
+  function (btn, map) {
+    $('#weatherModal').modal('show');
+  },
+  'Weather forecast'
+).addTo(map);
 
-L.easyButton('fa-radio', function (btn, map) {
-  $('#newsModal').modal('show');
-}).addTo(map);
+L.easyButton(
+  'fa-radio',
+  function (btn, map) {
+    $('#newsModal').modal('show');
+  },
+  'Latest local news'
+).addTo(map);
 
-L.easyButton('fa-utensils', function (btn, map) {
-  $('#recipeModal').modal('show');
-}).addTo(map);
+L.easyButton(
+  'fa-utensils',
+  function (btn, map) {
+    $('#recipeModal').modal('show');
+  },
+  'Recipes of local dishes'
+).addTo(map);
 
-L.easyButton('fa-brands fa-wikipedia-w', function (btn, map) {
-  $('#wikiModal').modal('show');
-}).addTo(map);
+L.easyButton(
+  'fa-sterling-sign',
+  function (btn, map) {
+    $('#currencyModal').modal('show');
+  },
+  'Currency converter'
+).addTo(map);
 
-L.easyButton('fa-sterling-sign', function (btn, map) {
-  $('#currencyModal').modal('show');
-}).addTo(map);
+L.easyButton(
+  'fa-brands fa-wikipedia-w',
+  function (btn, map) {
+    $('#wikiModal').modal('show');
+  },
+  'Wikipedia link'
+).addTo(map);
 
 //Populate country options in select element
 $.ajax({
@@ -138,8 +162,8 @@ $('#countrySelect').on('change', function () {
   });
 
   updateInfoModal();
-  updateWikiModal();
   updateNewsModal(countryCode);
+  updateWikiModal();
 });
 
 function updateInfoModal() {
@@ -149,18 +173,26 @@ function updateInfoModal() {
     data: { countryCode: countryCode },
     dataType: 'json',
     success: function (result) {
-      // console.log(result);
       if (result && result['data'] && result['data'][0]) {
         var capital = result['data'][0]['capital'];
         var demonym = result['data'][0]['demonyms'].eng.f;
         var currencyCode = result['data'][0]['currencyCode'];
+
+        var languages = result['data'][0]['languages'];
+        console.log(languages);
+        var languageHtml = languages[0];
+        if (languages.length > 1) {
+          for (let i = 1; i < languages.length; i++) {
+            languageHtml += `, ${languages[i]}`;
+          }
+        }
 
         $('#txtOfficialName').html(result['data'][0]['officialName']);
         $('#txtContinent').html(result['data'][0]['continents']);
         $('#txtCapital').html(capital);
         $('#txtPopulation').html(result['data'][0]['population']);
         $('#txtArea').html(result['data'][0]['area']);
-        $('#txtLanguage').html(result['data'][0]['languages']);
+        $('#txtLanguage').html(languageHtml);
         $('#txtCurrencyCode').html(currencyCode);
 
         updateWeatherModal(countryCode, capital);
@@ -206,7 +238,7 @@ function updateWikiModal() {
 
 function updateWeatherModal(countryCode, city) {
   $.ajax({
-    url: './php/testWeatherForecast.php',
+    url: './php/getWeatherForecast.php',
     type: 'GET',
     dataType: 'json',
     data: {
@@ -228,7 +260,7 @@ function updateWeatherModal(countryCode, city) {
   <div class="today-forecast d-flex align-items-center">
     <img src="${todayIconPath}" alt="${todayForecast.weather.description}" class="weather-icon me-3" />
     <div class="d-flex flex-column align-items-start">
-      <p>${todayForecast.weather.description}</p>
+      <p class="fw-semibold">${todayForecast.weather.description}</p>
       <p>Max Temp: ${todayForecast.app_max_temp}°C</p>
       <p>Min Temp: ${todayForecast.app_min_temp}°C</p>
       <p class="text-nowrap">Wind Speed: ${todayForecast.wind_spd} m/s</p>
@@ -237,6 +269,7 @@ function updateWeatherModal(countryCode, city) {
 `;
 
       $('#todayWeather').html(todayWeatherHtml);
+      $('#weatherCity').html(city);
 
       // Three-day forecast
       for (let i = 1; i < 4; i++) {
@@ -334,32 +367,27 @@ function updateRecipeModal(demonym) {
     dataType: 'json',
     success: function (result) {
       // console.log(result);
-      if (result.status.description === 'success') {
-        if (result.data.length === 0) {
-          // No recipes found
-          $('#recipes').html('<p>No recipes available.</p>');
-        } else {
-          // Recipes found
+      if (result.status && result.status.code === 200) {
+        if (result.data.length > 0) {
           var recipesHtml = '';
-          for (var i = 0; i < 5; i++) {
-            var recipe = result.data[i];
+          result.data.forEach(function (recipe, index) {
             recipesHtml +=
               '<div class="recipe-item mb-3">' +
               '<h4 class="recipe-title">' +
               recipe.title +
               '</h4>' +
-              '<img src="' +
-              recipe.image +
-              '" alt="Recipe Image" class="recipe-image mx-auto d-block">' +
               '<p class="recipe-servings">' +
               recipe.servings +
               '</p>' +
-              '<p class="recipe-instructions">' +
+              '<h6>Instructions</h6><p class="recipe-instructions">' +
               recipe.instructions +
               '</p>' +
               '</div>';
-          }
+          });
           $('#recipes').html(recipesHtml);
+        } else {
+          // No recipes found
+          $('#recipes').html('<p>No recipes available.</p>');
         }
       } else {
         $('#recipes').html('<p>Error: ' + result.status.description + '</p>');
@@ -382,8 +410,8 @@ function updateCurrencyModal(currencyCode) {
       if (result.status.code === 200) {
         var currenciesCodes = Object.keys(result['data']['rates']);
         ratesObj = result['data']['rates'];
-        console.log(currenciesCodes);
-        console.log(ratesObj);
+        // console.log(currenciesCodes);
+        // console.log(ratesObj);
         var fromCurrencySelect = $('#fromCurrency');
         var toCurrencySelect = $('#toCurrency');
         fromCurrencySelect.empty();

@@ -128,55 +128,6 @@
       </div>
     </div>
 
-    <!--Wikipedia Modal-->
-    <div
-      id="wikiModal"
-      class="modal fade"
-      data-bs-backdrop="false"
-      tabindex="-1"
-    >
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content shadow">
-          <div class="modal-header bg-custom bg-gradient text-white">
-            <h5 class="modal-title">Wikipedia Page</h5>
-            <button
-              type="button"
-              class="btn-close btn-close-white"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <table class="table">
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-pen fa-xl fa-icon"></i>
-                </td>
-
-                <td class="text-start" id="txtSummary"></td>
-              </tr>
-              <tr>
-                <td class="text-center">
-                  <i class="fa-solid fa-link fa-xl fa-icon"></i>
-                </td>
-
-                <td class="text-end" id="txtWiki"></td>
-              </tr>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-custom btn-sm"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Weather Modal -->
 
     <div
@@ -201,6 +152,7 @@
             <!-- Today's Weather -->
             <div>
               <h5><strong>Today</strong></h5>
+              <h5 id="weatherCity" class="mt-3 ms-4 text-dark"></h5>
             </div>
             <div
               id="todayWeather"
@@ -282,6 +234,11 @@
             ></button>
           </div>
           <div class="modal-body">
+            <img
+              src="assets/recipe-images/spice3.jpg"
+              alt="image of spices"
+              class="recipe-image mb-3"
+            />
             <div id="recipes" class="recipes">
               <!-- Dynamic content -->
             </div>
@@ -355,6 +312,55 @@
               </button>
             </form>
             <div id="convertResult"></div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-custom btn-sm"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Wikipedia Modal-->
+    <div
+      id="wikiModal"
+      class="modal fade"
+      data-bs-backdrop="false"
+      tabindex="-1"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content shadow">
+          <div class="modal-header bg-custom bg-gradient text-white">
+            <h5 class="modal-title">Wikipedia Page</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <table class="table">
+              <tr>
+                <td class="text-center">
+                  <i class="fa-solid fa-pen fa-xl fa-icon"></i>
+                </td>
+
+                <td class="text-start" id="txtSummary"></td>
+              </tr>
+              <tr>
+                <td class="text-center">
+                  <i class="fa-solid fa-link fa-xl fa-icon"></i>
+                </td>
+
+                <td class="text-end" id="txtWiki"></td>
+              </tr>
+            </table>
           </div>
           <div class="modal-footer">
             <button

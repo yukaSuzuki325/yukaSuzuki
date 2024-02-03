@@ -33,41 +33,36 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, [
 $result = curl_exec($ch);
 curl_close($ch);
 
-$decoded = json_decode($result, true);
-$recipes = array_slice($decoded, 0, 5);
+if ($result) {
+    $decoded = json_decode($result, true);
+    // Pick 3 random recipe items from the decoded array
+    $randomKeys = array_rand($decoded, 3);
+    $randomRecipes = [];
 
-// echo '<pre>';
-// var_dump($decoded);
-// echo '</pre>';
+    foreach ($randomKeys as $key) {
+        $randomRecipes[] = $decoded[$key];
+    }
 
-$imageDir = './assets/recipe-images';
-$assignedImages = [
-    'cooking.jpg',
-    'lemon.jpg',
-    'salad.jpg',
-    'spice1.jpg',
-    'spice2.jpg'
-];
-
-// // Check if there are enough assigned images for the recipes
-// if (count($assignedImages) < count($recipes)) {
-//     die("Not enough assigned images for the recipes.");
-// }
-
-// Add the image property to each recipe
-foreach ($recipes as $key => $recipe) {
-    $recipes[$key]['image'] = $imageDir . '/' . $assignedImages[$key];
+    $output = [
+        'status' => [
+            'code' => 200,
+            'name' => 'ok',
+            'description' => 'success',
+        ],
+        'executionTime' => microtime(true) - $executionStartTime,
+        'data' => $randomRecipes
+    ];
+} else {
+    $output = [
+        'status' => [
+            'code' => 500,
+            'name' => 'error',
+            'description' => 'Unable to fetch data'
+        ],
+        'executionTime' => microtime(true) - $executionStartTime,
+        'data' => []
+    ];
 }
-
-$output = [
-    'status' => [
-        'code' => 200,
-        'name' => 'ok',
-        'description' => 'success',
-    ],
-    'executionTime' => microtime(true) - $executionStartTime,
-    'data' => $recipes
-];
 
 header('Content-Type: application/json; charset=UTF-8');
 echo json_encode($output);
