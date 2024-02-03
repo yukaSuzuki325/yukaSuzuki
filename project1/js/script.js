@@ -426,8 +426,8 @@ function convertCurrency() {
   var convertedAmount = (amount / fromRate) * toRate;
 
   $('#convertResult').html(
-    `<strong>${amount} ${fromCurrency} = ${convertedAmount.toFixed(
+    `<h4><strong>${amount} ${fromCurrency} = ${convertedAmount.toFixed(
       2
-    )} ${toCurrency}</strong>`
+    )} ${toCurrency}</strong></h4>`
   );
 }
