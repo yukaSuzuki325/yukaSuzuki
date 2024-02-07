@@ -76,8 +76,17 @@ L.easyButton(
 
 //Markers
 var cityMarker = L.ExtraMarkers.icon({
-  icon: 'fa-city',
-  markerColor: 'green-dark',
+  icon: 'fa-tree-city',
+  markerColor: 'orange',
+  iconColor: 'orange',
+  shape: 'square',
+  prefix: 'fa',
+});
+
+var airportMarker = L.ExtraMarkers.icon({
+  icon: 'fa-plane',
+  markerColor: 'green',
+  iconColor: 'green',
   shape: 'square',
   prefix: 'fa',
 });
@@ -180,10 +189,36 @@ $('#countrySelect').on('change', function () {
     },
     success: function (result) {
       if (result.status.code === 200 && result.data) {
-        console.log(result.data);
+        // console.log(result.data);
         result.data.forEach(function (city) {
           var marker = L.marker([city.lat, city.lng], { icon: cityMarker });
           marker.bindPopup(city.name);
+          markers.addLayer(marker);
+        });
+
+        map.addLayer(markers);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert(textStatus);
+    },
+  });
+
+  $.ajax({
+    url: './php/getAirports.php',
+    type: 'GET',
+    dataType: 'json',
+    data: {
+      countryCode: countryCode,
+    },
+    success: function (result) {
+      if (result.status.code === 200 && result.data) {
+        console.log(result.data);
+        result.data.forEach(function (airport) {
+          var marker = L.marker([airport.lat, airport.lng], {
+            icon: airportMarker,
+          });
+          marker.bindPopup(airport.name);
           markers.addLayer(marker);
         });
 

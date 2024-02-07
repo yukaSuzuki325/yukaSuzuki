@@ -10,7 +10,7 @@ $countryCode = $_REQUEST['countryCode'];
 $username = 'kl888';
 $maxRows = 50;
 
-$url = "http://api.geonames.org/searchJSON?formatted=true&q=city&country={$countryCode}&maxRows={$maxRows}&lang=en&username={$username}&style=full";
+$url = "http://api.geonames.org/searchJSON?formatted=true&q=airport&country={$countryCode}&maxRows={$maxRows}&lang=en&username={$username}&style=full";
 
 $ch = curl_init();
 
@@ -25,11 +25,11 @@ curl_close($ch);
 
 $data = json_decode($response, true);
 
-$cities = [];
+$airports = [];
 
 
 foreach ($data['geonames'] as $geoname) {
-    $cities[] = [
+    $airports[] = [
         'name' => $geoname['toponymName'],
         'lat' => $geoname['lat'],
         'lng' => $geoname['lng']
@@ -43,7 +43,7 @@ $output = [
         'description' => 'success',
     ],
     'executionTime' => intval((microtime(true) - $executionStartTime) * 1000) . " ms",
-    'data' => $cities
+    'data' => $airports
 ];
 
 header('Content-Type: application/json; charset=UTF-8');
