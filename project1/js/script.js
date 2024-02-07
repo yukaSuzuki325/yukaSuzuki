@@ -74,6 +74,16 @@ L.easyButton(
   'Wikipedia link'
 ).addTo(map);
 
+//Markers
+var cityMarker = L.ExtraMarkers.icon({
+  icon: 'fa-city',
+  markerColor: 'green-dark',
+  shape: 'square',
+  prefix: 'fa',
+});
+
+var markers = L.markerClusterGroup();
+
 //Populate country options in select element
 $.ajax({
   url: './php/getCountryOptions.php',
@@ -161,6 +171,30 @@ $('#countrySelect').on('change', function () {
     },
   });
 
+  $.ajax({
+    url: './php/getCities.php',
+    type: 'GET',
+    dataType: 'json',
+    data: {
+      countryCode: countryCode,
+    },
+    success: function (result) {
+      if (result.status.code === 200 && result.data) {
+        console.log(result.data);
+        result.data.forEach(function (city) {
+          var marker = L.marker([city.lat, city.lng], { icon: cityMarker });
+          marker.bindPopup(city.name);
+          markers.addLayer(marker);
+        });
+
+        map.addLayer(markers);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert(textStatus);
+    },
+  });
+
   updateInfoModal();
   updateNewsModal(countryCode);
   updateWikiModal();
@@ -179,7 +213,7 @@ function updateInfoModal() {
         var currencyCode = result['data'][0]['currencyCode'];
 
         var languages = result['data'][0]['languages'];
-        console.log(languages);
+        // console.log(languages);
         var languageHtml = languages[0];
         if (languages.length > 1) {
           for (let i = 1; i < languages.length; i++) {
@@ -405,7 +439,7 @@ function updateCurrencyModal(currencyCode) {
     type: 'GET',
     dataType: 'json',
     success: function (result) {
-      console.log(result);
+      // console.log(result);
       if (result.status.code === 200) {
         var currenciesCodes = Object.keys(result['data']['rates']);
         ratesObj = result['data']['rates'];
