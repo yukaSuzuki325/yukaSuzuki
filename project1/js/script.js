@@ -93,6 +93,15 @@ var cityMarker = L.ExtraMarkers.icon({
 var airportMarker = L.ExtraMarkers.icon({
   icon: 'fa-solid fa-plane',
   svg: true,
+  markerColor: '#7CB9E8',
+  iconColor: '#00308F',
+  shape: 'circle',
+  prefix: 'fa',
+});
+
+var museumMarker = L.ExtraMarkers.icon({
+  icon: 'fa-solid fa-building-columns',
+  svg: true,
   markerColor: '#f5bcc6',
   iconColor: '#b0376d',
   shape: 'circle',
@@ -156,12 +165,15 @@ var countryCode;
 var ratesObj;
 var cityMarkers = L.layerGroup().addTo(map);
 var airportMarkers = L.layerGroup().addTo(map);
+var museumMarkers = L.layerGroup().addTo(map);
 var cityMarkersCluster = L.markerClusterGroup();
 var airportMarkersCluster = L.markerClusterGroup();
+var museumMarkersCluster = L.markerClusterGroup();
 
 // Initialize the clusters on the map
 map.addLayer(cityMarkersCluster);
 map.addLayer(airportMarkersCluster);
+map.addLayer(museumMarkersCluster);
 
 //On change, add country border, update map, markers and modals
 $('#countrySelect').on('change', function () {
@@ -234,6 +246,29 @@ $('#countrySelect').on('change', function () {
           airportMarkersCluster,
           airportMarker,
           'Airports'
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert(textStatus);
+    },
+  });
+
+  // Fetch and update museum markers
+  $.ajax({
+    url: './php/getMuseums.php',
+    type: 'GET',
+    dataType: 'json',
+    data: {
+      countryCode: countryCode,
+    },
+    success: function (result) {
+      if (result.status.code === 200 && result.data) {
+        clearAndAddMarkers(
+          result.data,
+          museumMarkersCluster,
+          museumMarker,
+          'Museums'
         );
       }
     },
