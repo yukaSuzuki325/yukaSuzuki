@@ -1,3 +1,9 @@
+$(window).on('load', function () {
+  $('.loader-container').fadeOut(1500, function () {
+    $(this).css('display', 'none');
+  });
+});
+
 var streets = L.tileLayer(
   'https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=QSXp2dr5QTfe0499gvor',
   {
@@ -76,18 +82,20 @@ L.easyButton(
 
 //Markers
 var cityMarker = L.ExtraMarkers.icon({
-  icon: 'fa-tree-city',
-  markerColor: 'blue',
-  iconColor: 'blue',
-  shape: 'square',
+  icon: 'fa-solid fa-tree-city',
+  svg: true,
+  markerColor: '#b7d6b9',
+  iconColor: '#0e7c61',
+  shape: 'circle',
   prefix: 'fa',
 });
 
 var airportMarker = L.ExtraMarkers.icon({
-  icon: 'fa-plane',
-  markerColor: 'green',
-  iconColor: 'green',
-  shape: 'square',
+  icon: 'fa-solid fa-plane',
+  svg: true,
+  markerColor: '#f5bcc6',
+  iconColor: '#b0376d',
+  shape: 'circle',
   prefix: 'fa',
 });
 
@@ -328,7 +336,7 @@ function updateWikiModal() {
 
 function updateWeatherModal(countryCode, city) {
   $.ajax({
-    url: './php/getWeatherForecast.php',
+    url: './php/testWeatherForecast.php',
     type: 'GET',
     dataType: 'json',
     data: {
