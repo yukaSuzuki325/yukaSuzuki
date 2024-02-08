@@ -3,8 +3,6 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
-$testing = true;
-
 // Hardcoded response data for testing
 $testData = [
     "city_name" => "London",
@@ -57,8 +55,6 @@ $testData = [
     ],
 ];
 
-if ($testing) {
-    header('Content-Type: application/json');
-    echo json_encode($testData);
-    exit;
-}
+
+header('Content-Type: application/json');
+echo json_encode($testData);
