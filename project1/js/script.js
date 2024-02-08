@@ -198,7 +198,12 @@ $('#countrySelect').on('change', function () {
     },
     success: function (result) {
       if (result.status.code === 200 && result.data) {
-        clearAndAddMarkers(result.data, cityMarkersCluster, cityMarker);
+        clearAndAddMarkers(
+          result.data,
+          cityMarkersCluster,
+          cityMarker,
+          'Cities'
+        );
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -216,7 +221,12 @@ $('#countrySelect').on('change', function () {
     },
     success: function (result) {
       if (result.status.code === 200 && result.data) {
-        clearAndAddMarkers(result.data, airportMarkersCluster, airportMarker);
+        clearAndAddMarkers(
+          result.data,
+          airportMarkersCluster,
+          airportMarker,
+          'Airports'
+        );
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -229,8 +239,9 @@ $('#countrySelect').on('change', function () {
   updateWikiModal();
 });
 
-function clearAndAddMarkers(data, markerClusterGroup, markerIcon) {
-  // Clear existing markers
+function clearAndAddMarkers(data, markerClusterGroup, markerIcon, overlayName) {
+  // Clear existing overlays and markers
+  layerControl.removeLayer(markerClusterGroup);
   markerClusterGroup.clearLayers();
 
   // Create markers and add them to the cluster group
@@ -240,8 +251,9 @@ function clearAndAddMarkers(data, markerClusterGroup, markerIcon) {
     markerClusterGroup.addLayer(marker);
   });
 
-  // Add the cluster group with new markers to the map
+  // Add the cluster group and overlay
   map.addLayer(markerClusterGroup);
+  layerControl.addOverlay(markerClusterGroup, overlayName);
 }
 
 function updateInfoModal() {
