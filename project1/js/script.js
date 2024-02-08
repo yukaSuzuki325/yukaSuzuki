@@ -1,7 +1,5 @@
-$(window).on('load', function () {
-  $('.loader-container').fadeOut(1500, function () {
-    $(this).css('display', 'none');
-  });
+$('.loader-container').fadeOut(2500, function () {
+  $(this).css('display', 'none');
 });
 
 var streets = L.tileLayer(
@@ -81,8 +79,8 @@ L.easyButton(
 ).addTo(map);
 
 //Markers
-var cityMarker = L.ExtraMarkers.icon({
-  icon: 'fa-solid fa-tree-city',
+var parkMarker = L.ExtraMarkers.icon({
+  icon: 'fa-solid fa-tree',
   svg: true,
   markerColor: '#b7d6b9',
   iconColor: '#0e7c61',
@@ -93,7 +91,7 @@ var cityMarker = L.ExtraMarkers.icon({
 var airportMarker = L.ExtraMarkers.icon({
   icon: 'fa-solid fa-plane',
   svg: true,
-  markerColor: '#7CB9E8',
+  markerColor: '#9dc1d1',
   iconColor: '#00308F',
   shape: 'circle',
   prefix: 'fa',
@@ -163,15 +161,15 @@ function getUserLocation() {
 var countryBorderLayer;
 var countryCode;
 var ratesObj;
-var cityMarkers = L.layerGroup().addTo(map);
+var parkMarkers = L.layerGroup().addTo(map);
 var airportMarkers = L.layerGroup().addTo(map);
 var museumMarkers = L.layerGroup().addTo(map);
-var cityMarkersCluster = L.markerClusterGroup();
+var parkMarkersCluster = L.markerClusterGroup();
 var airportMarkersCluster = L.markerClusterGroup();
 var museumMarkersCluster = L.markerClusterGroup();
 
 // Initialize the clusters on the map
-map.addLayer(cityMarkersCluster);
+map.addLayer(parkMarkersCluster);
 map.addLayer(airportMarkersCluster);
 map.addLayer(museumMarkersCluster);
 
@@ -208,9 +206,9 @@ $('#countrySelect').on('change', function () {
     },
   });
 
-  // Fetch and update city markers
+  // Fetch and update park markers
   $.ajax({
-    url: './php/getCities.php',
+    url: './php/getParks.php',
     type: 'GET',
     dataType: 'json',
     data: {
@@ -220,9 +218,9 @@ $('#countrySelect').on('change', function () {
       if (result.status.code === 200 && result.data) {
         clearAndAddMarkers(
           result.data,
-          cityMarkersCluster,
-          cityMarker,
-          'Cities'
+          parkMarkersCluster,
+          parkMarker,
+          'Parks'
         );
       }
     },

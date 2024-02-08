@@ -8,7 +8,7 @@ $executionStartTime = microtime(true);
 
 $countryCode = $_REQUEST['countryCode'];
 $username = 'kl888';
-$maxRows = 50;
+$maxRows = 10;
 
 $url = "http://api.geonames.org/searchJSON?formatted=true&q=airport&country={$countryCode}&maxRows={$maxRows}&lang=en&username={$username}&style=full";
 
