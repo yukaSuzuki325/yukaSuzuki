@@ -77,8 +77,8 @@ L.easyButton(
 //Markers
 var cityMarker = L.ExtraMarkers.icon({
   icon: 'fa-tree-city',
-  markerColor: 'orange',
-  iconColor: 'orange',
+  markerColor: 'blue',
+  iconColor: 'blue',
   shape: 'square',
   prefix: 'fa',
 });
@@ -146,13 +146,21 @@ function getUserLocation() {
 var countryBorderLayer;
 var countryCode;
 var ratesObj;
+var cityMarkers = L.layerGroup().addTo(map);
+var airportMarkers = L.layerGroup().addTo(map);
+var cityMarkersCluster = L.markerClusterGroup();
+var airportMarkersCluster = L.markerClusterGroup();
 
-//On change, add country border, update map, update modals
+// Initialize the clusters on the map
+map.addLayer(cityMarkersCluster);
+map.addLayer(airportMarkersCluster);
+
+//On change, add country border, update map, markers and modals
 $('#countrySelect').on('change', function () {
   // Get the selected country code
   countryCode = $(this).val();
 
-  // Clear the existing country border layer if it exists
+  // Clear the existing country border layer
   if (countryBorderLayer) {
     map.removeLayer(countryBorderLayer);
   }
@@ -180,6 +188,7 @@ $('#countrySelect').on('change', function () {
     },
   });
 
+  // Fetch and update city markers
   $.ajax({
     url: './php/getCities.php',
     type: 'GET',
@@ -189,14 +198,7 @@ $('#countrySelect').on('change', function () {
     },
     success: function (result) {
       if (result.status.code === 200 && result.data) {
-        // console.log(result.data);
-        result.data.forEach(function (city) {
-          var marker = L.marker([city.lat, city.lng], { icon: cityMarker });
-          marker.bindPopup(city.name);
-          markers.addLayer(marker);
-        });
-
-        map.addLayer(markers);
+        clearAndAddMarkers(result.data, cityMarkersCluster, cityMarker);
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -204,6 +206,7 @@ $('#countrySelect').on('change', function () {
     },
   });
 
+  // Fetch and update airport markers
   $.ajax({
     url: './php/getAirports.php',
     type: 'GET',
@@ -213,16 +216,7 @@ $('#countrySelect').on('change', function () {
     },
     success: function (result) {
       if (result.status.code === 200 && result.data) {
-        console.log(result.data);
-        result.data.forEach(function (airport) {
-          var marker = L.marker([airport.lat, airport.lng], {
-            icon: airportMarker,
-          });
-          marker.bindPopup(airport.name);
-          markers.addLayer(marker);
-        });
-
-        map.addLayer(markers);
+        clearAndAddMarkers(result.data, airportMarkersCluster, airportMarker);
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -234,6 +228,21 @@ $('#countrySelect').on('change', function () {
   updateNewsModal(countryCode);
   updateWikiModal();
 });
+
+function clearAndAddMarkers(data, markerClusterGroup, markerIcon) {
+  // Clear existing markers
+  markerClusterGroup.clearLayers();
+
+  // Create markers and add them to the cluster group
+  data.forEach(function (item) {
+    var marker = L.marker([item.lat, item.lng], { icon: markerIcon });
+    marker.bindPopup(item.name);
+    markerClusterGroup.addLayer(marker);
+  });
+
+  // Add the cluster group with new markers to the map
+  map.addLayer(markerClusterGroup);
+}
 
 function updateInfoModal() {
   $.ajax({
