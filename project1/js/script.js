@@ -175,6 +175,9 @@ map.addLayer(parkMarkersCluster);
 map.addLayer(airportMarkersCluster);
 map.addLayer(museumMarkersCluster);
 
+$('#amount').on('keyup', calcResult);
+$('#fromCurrency, #toCurrency').on('change', calcResult);
+
 //On change, add country border, update map, markers and modals
 $('#countrySelect').on('change', function () {
   // Get the selected country code
@@ -596,9 +599,7 @@ function updateCurrencyModal(currencyCode) {
   });
 }
 
-$('.btn-convert').on('click', convertCurrency);
-
-function convertCurrency() {
+function calcResult() {
   var amount = parseFloat($('#amount').val());
 
   var fromCurrency = $('#fromCurrency').val();
@@ -608,12 +609,9 @@ function convertCurrency() {
   var toRate = ratesObj[toCurrency];
 
   var convertedAmount = (amount / fromRate) * toRate;
+  console.log(convertedAmount);
 
-  $('#convertResult').html(
-    `<h4><strong>${amount} ${fromCurrency} = ${convertedAmount.toFixed(
-      2
-    )} ${toCurrency}</strong></h4>`
-  );
+  $('#resultBox').val(convertedAmount.toFixed(2));
 }
 
 $('.loader-container').fadeOut(2500);

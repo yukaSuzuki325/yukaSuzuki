@@ -118,14 +118,6 @@ body {
 
 /* Currency Modal */
 
-.btn-convert {
-  background-color: #206e7c;
-  border-color: #206e7c;
-  color: white;
-}
-
-.btn-convert:hover {
-  background-color: white;
-  border-color: #206e7c;
-  color: #206e7c;
+.form-floating + .form-floating {
+  margin-top: 1rem;
 }

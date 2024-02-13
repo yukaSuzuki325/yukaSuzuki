@@ -305,37 +305,33 @@
           </div>
           <div class="modal-body">
             <form id="convertForm">
-              <div class="mb-3">
-                <label for="amount" class="form-label fw-semibold"
-                  >Amount</label
-                >
+              <div class="form-floating mb-3">
                 <input
                   type="number"
                   class="form-control"
                   id="amount"
-                  value="100"
+                  value="0"
                 />
+                <label for="amount" class="form-label mb-3">Amount</label>
               </div>
-              <div class="mb-3">
-                <label for="fromCurrency" class="form-label fw-semibold"
-                  >From</label
-                >
+              <div class="form-floating mb-3">
                 <select id="fromCurrency" class="form-select"></select>
+                <label for="fromCurrency" class="form-label">From</label>
               </div>
-              <div class="mb-3">
-                <label for="toCurrency" class="form-label fw-semibold"
-                  >To</label
-                >
+              <div class="form-floating mb-3">
                 <select id="toCurrency" class="form-select"></select>
+                <label for="toCurrency" class="form-label">To</label>
               </div>
-              <button
-                type="button"
-                class="btn btn-convert bg-gradient mt-3 mb-3"
-              >
-                Convert
-              </button>
+              <div class="form-floating mb-3">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="resultBox"
+                  value="0"
+                />
+                <label for="resultBox" class="form-label">Result</label>
+              </div>
             </form>
-            <div id="convertResult"></div>
           </div>
           <div class="modal-footer">
             <button
