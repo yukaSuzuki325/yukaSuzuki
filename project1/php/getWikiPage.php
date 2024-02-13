@@ -30,19 +30,12 @@ if (!empty($_REQUEST['countryName'])) {
     if ($result !== false) {
         $decode = json_decode($result, true);
 
-        if (isset($decode['geonames']) && !empty($decode['geonames'])) {
-            // Only use the first result
-            $firstResult = $decode['geonames'][0];
+        $firstResult = $decode['geonames'][0];
 
-            $output['data'] = [
-                'summary' => $firstResult['summary'],
-                'wikipediaUrl' => $firstResult['wikipediaUrl']
-            ];
-        } else {
-            $output['status']['code'] = "404";
-            $output['status']['name'] = "error";
-            $output['status']['description'] = "No data found";
-        }
+        $output['data'] = [
+            'summary' => $firstResult['summary'],
+            'wikipediaUrl' => $firstResult['wikipediaUrl']
+        ];
     } else {
         $output['status']['code'] = "500";
         $output['status']['name'] = "error";
