@@ -381,7 +381,7 @@ function updateWikiModal() {
 
 function updateWeatherModal(countryCode, city, countryName) {
   $.ajax({
-    url: './php/getWeatherForecast.php',
+    url: './php/testWeatherForecast.php',
     type: 'GET',
     dataType: 'json',
     data: {

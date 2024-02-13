@@ -55,6 +55,15 @@ $testData = [
     ],
 ];
 
+$output = [
+    'status' => [
+        'code' => 200,
+        'name' => 'ok',
+        'description' => 'success',
+    ],
+    'data' => $testData
+];
+
 
 header('Content-Type: application/json');
-echo json_encode($testData);
+echo json_encode($output);
