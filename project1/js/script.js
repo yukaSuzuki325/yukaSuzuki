@@ -161,6 +161,7 @@ function getUserLocation() {
 
 var countryBorderLayer;
 var countryCode;
+var countryName;
 var ratesObj;
 var parkMarkers = L.layerGroup().addTo(map);
 var airportMarkers = L.layerGroup().addTo(map);
@@ -178,6 +179,7 @@ map.addLayer(museumMarkersCluster);
 $('#countrySelect').on('change', function () {
   // Get the selected country code
   countryCode = $(this).val();
+  countryName = $('#countrySelect option:selected').text();
 
   // Clear the existing country border layer
   if (countryBorderLayer) {
@@ -329,7 +331,7 @@ function updateInfoModal() {
         $('#txtLanguage').html(languageHtml);
         $('#txtCurrencyCode').html(currencyCode);
 
-        updateWeatherModal(countryCode, capital);
+        updateWeatherModal(countryCode, capital, countryName);
         updateRecipeModal(demonym);
         updateCurrencyModal(currencyCode);
       } else {
@@ -370,7 +372,7 @@ function updateWikiModal() {
   });
 }
 
-function updateWeatherModal(countryCode, city) {
+function updateWeatherModal(countryCode, city, countryName) {
   $.ajax({
     url: './php/testWeatherForecast.php',
     type: 'GET',
@@ -396,8 +398,8 @@ function updateWeatherModal(countryCode, city) {
     <img src="${todayIconPath}" alt="${
         todayForecast.weather.description
       }" class="weather-icon me-5" />
-    <div class="d-flex flex-column align-items-start">      
-      <h5><strong>${todayForecast.app_max_temp}°C</strong></h5>
+    <div class="d-flex flex-column align-items-center">      
+      <h4><strong>${todayForecast.app_max_temp}°C</strong></h4>
       <p class="mt-2">${todayForecast.app_min_temp}°C</p>
       <p class="text-nowrap">${windSpeedMPH.toFixed(0)} mph</p>
     </div>
@@ -405,7 +407,7 @@ function updateWeatherModal(countryCode, city) {
 `;
 
       $('#todayWeather').html(todayWeatherHtml);
-      $('#weatherModalLabel').html(city);
+      $('#weatherModalLabel').html(city + ', ' + countryName);
       $('#weatherDescription').html(todayForecast.weather.description);
 
       // Three-day forecast
