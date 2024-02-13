@@ -27,29 +27,44 @@ if (!empty($_REQUEST['countryName'])) {
     $result = curl_exec($ch);
     curl_close($ch);
 
+    // Check if the result is not false
     if ($result !== false) {
         $decode = json_decode($result, true);
 
-        $firstResult = $decode['geonames'][0];
+        // Initialize an empty array to hold the country data
+        $countryData = null;
 
-        $output['data'] = [
-            'summary' => $firstResult['summary'],
-            'wikipediaUrl' => $firstResult['wikipediaUrl']
-        ];
+        // Iterate over each 'geonames' entry to find the country's data
+        foreach ($decode['geonames'] as $entry) {
+            // Check if 'title' matches the country name or if 'feature' indicates a country
+            if (
+                strcasecmp($entry['title'], $_REQUEST['countryName']) == 0 ||
+                (isset($entry['feature']) && $entry['feature'] === 'country')
+            ) {
+                $countryData = $entry;
+                break;
+            }
+        }
+
+        // If a country entry was found, populate the 'data' array
+        if ($countryData) {
+            $output['data'] = [
+                'summary' => $countryData['summary'],
+                'wikipediaUrl' => $countryData['wikipediaUrl']
+            ];
+        } else {
+            // No relevant country entry found, return a different status code and message
+            $output['status']['code'] = "404";
+            $output['status']['name'] = "no country found";
+            $output['status']['description'] = "No Wikipedia entry for the country was found";
+        }
     } else {
         $output['status']['code'] = "500";
         $output['status']['name'] = "error";
         $output['status']['description'] = "Failed to fetch data";
     }
-} else {
-    $output['status']['code'] = "400";
-    $output['status']['name'] = "error";
-    $output['status']['description'] = "Missing required parameters";
 }
-
 $output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
 
 header('Content-Type: application/json; charset=UTF-8');
 echo json_encode($output);
-
-exit;
