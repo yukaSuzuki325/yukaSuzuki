@@ -20,6 +20,7 @@ if (empty($_REQUEST['countryCode'])) {
 }
 
 $countryCode = $_REQUEST['countryCode'];
+// $countryCode = 'GB';
 $apiKey = 'pub_375074a321222bcbf4980cfee047283067ac8';
 $url = "https://newsdata.io/api/1/news?apikey={$apiKey}&country={$countryCode}";
 
@@ -51,7 +52,7 @@ if ($decoded['status'] === 'success') {
             'title' => $article['title'],
             'image_url' => !empty($article['image_url']) ? $article['image_url'] : $defaultNewsImage,
             'description' => !empty($article['description']) ? $article['description'] : 'No description available.',
-            'article_link' => $article['link'],
+            'link' => $article['link'],
             'creator' => $article['creator'] ?? ''
         ];
     }
