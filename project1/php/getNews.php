@@ -51,7 +51,8 @@ if ($decoded['status'] === 'success') {
             'title' => $article['title'],
             'image_url' => !empty($article['image_url']) ? $article['image_url'] : $defaultNewsImage,
             'description' => !empty($article['description']) ? $article['description'] : 'No description available.',
-            'article_link' => $article['link']
+            'article_link' => $article['link'],
+            'creator' => $article['creator'] ?? ''
         ];
     }
 }

@@ -462,7 +462,8 @@ function updateNewsModal(countryCode) {
     data: { countryCode: countryCode },
     dataType: 'json',
     success: function (result) {
-      if (result.status.description === 'success') {
+      if (result.status.code === 200) {
+        console.log(result.data);
         if (result.data.length === 0) {
           // No articles found
           $('#newsArticles').html('<p>No news articles available.</p>');
@@ -472,20 +473,32 @@ function updateNewsModal(countryCode) {
           for (var i = 0; i < result.data.length; i++) {
             var article = result.data[i];
             articlesHtml +=
-              '<div class="news-item mb-3">' +
-              '<h4 class="news-title">' +
-              article.title +
-              '</h4>' +
-              '<img src="' +
+              '<table class="table table-borderless">' +
+              '<tr>' +
+              '<td rowspan="2" width="50%">' +
+              '<img class="img-fluid rounded mx-auto d-block" src="' +
               article.image_url +
-              '" alt="News Image" class="news-image mx-auto d-block">' +
-              '<p class="news-description">' +
-              article.description +
-              '</p>' +
+              '" alt="' +
+              article.title +
+              '">' +
+              '</td>' +
+              '<td>' +
               '<a href="' +
               article.link +
-              '" target="_blank" class="news-link">Read more</a>' +
-              '</div>';
+              '" class="fw-bold fs-6 text-black" target="_blank">' +
+              article.title +
+              '</a>' +
+              '</td>' +
+              '</tr>' +
+              '<tr>' +
+              '<td class="align-bottom pb-0">' +
+              '<p class="fw-light fs-6 mb-1">' +
+              article.creator +
+              '</p>' +
+              '</td>' +
+              '</tr>' +
+              '</table>' +
+              '<hr>';
           }
           $('#newsArticles').html(articlesHtml);
         }
