@@ -5,6 +5,8 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
+$executionStartTime = microtime(true);
+
 if (is_null($_REQUEST['countryCode'])) {
     http_response_code(400);
     echo json_encode([
@@ -34,6 +36,11 @@ foreach ($features_array as $feature) {
     };
 };
 
+$output['status']['code'] = "200";
+$output['status']['name'] = "ok";
+$output['status']['executedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
+$output['data'] = $country_feature;
+
 header('Content-Type: application/json; charset=UTF-8');
 
-echo json_encode($country_feature);
+echo json_encode($output);

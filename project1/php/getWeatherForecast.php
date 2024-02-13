@@ -4,6 +4,8 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
+$executionStartTime = microtime(true);
+
 if (is_null($_REQUEST['countryCode'])) {
     http_response_code(400);
     echo json_encode([
@@ -36,11 +38,21 @@ if (!$result) {
 
 $decode = json_decode($result, true);
 
-$forecastData = array_slice($decode['data'], 0, 4); // Get only the first 4 days
+$forecast = array_slice($decode['data'], 0, 4); // Get only the first 4 days
+
+$forecastData = [
+    'city' => $decode['city_name'],
+    'forecast' => $forecast
+];
 
 $output = [
-    'city' => $decode['city_name'],
-    'forecast' => $forecastData
+    'status' => [
+        'code' => 200,
+        'name' => 'ok',
+        'description' => 'success',
+    ],
+    'executionTime' => intval((microtime(true) - $executionStartTime) * 1000) . " ms",
+    'data' => $forecastData
 ];
 
 header('Content-Type: application/json');

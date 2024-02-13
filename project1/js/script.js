@@ -111,7 +111,6 @@ $.ajax({
   dataType: 'json',
   success: function (result) {
     if (result.status.code === '200') {
-      console.log(result);
       var select = $('#countrySelect');
       $.each(result.data, function (index, country) {
         select.append($('<option>').val(country.iso_a2).text(country.name));
@@ -196,16 +195,20 @@ $('#countrySelect').on('change', function () {
     data: {
       countryCode: countryCode,
     },
-    success: function (data) {
-      countryBorderLayer = L.geoJSON(data, {
-        style: {
-          color: '#FF7F50',
-          weight: 4,
-          opacity: 1,
-        },
-      }).addTo(map);
+    success: function (result) {
+      if (result.status.code === '200') {
+        countryBorderLayer = L.geoJSON(result.data, {
+          style: {
+            color: '#FF7F50',
+            weight: 4,
+            opacity: 1,
+          },
+        }).addTo(map);
 
-      map.fitBounds(countryBorderLayer.getBounds());
+        map.fitBounds(countryBorderLayer.getBounds());
+      } else {
+        alert(result.status.description);
+      }
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert(textStatus);
@@ -221,7 +224,7 @@ $('#countrySelect').on('change', function () {
       countryCode: countryCode,
     },
     success: function (result) {
-      if (result.status.code === 200 && result.data) {
+      if (result.status.code === 200) {
         clearAndAddMarkers(
           result.data,
           parkMarkersCluster,
@@ -244,7 +247,7 @@ $('#countrySelect').on('change', function () {
       countryCode: countryCode,
     },
     success: function (result) {
-      if (result.status.code === 200 && result.data) {
+      if (result.status.code === 200) {
         clearAndAddMarkers(
           result.data,
           airportMarkersCluster,
@@ -267,7 +270,7 @@ $('#countrySelect').on('change', function () {
       countryCode: countryCode,
     },
     success: function (result) {
-      if (result.status.code === 200 && result.data) {
+      if (result.status.code === 200) {
         clearAndAddMarkers(
           result.data,
           museumMarkersCluster,
@@ -310,7 +313,7 @@ function updateInfoModal() {
     data: { countryCode: countryCode },
     dataType: 'json',
     success: function (result) {
-      if (result && result['data'] && result['data'][0]) {
+      if (result.status.code === 200) {
         var capital = result['data'][0]['capital'];
         var demonym = result['data'][0]['demonyms'].eng.f;
         var currencyCode = result['data'][0]['currencyCode'];
@@ -386,21 +389,22 @@ function updateWeatherModal(countryCode, city, countryName) {
       city: city,
     },
     success: function (result) {
-      let today = new Date();
-      let todayWeatherHtml = '';
-      let forecastHtml = '';
+      if (result.status.code === 200) {
+        let today = new Date();
+        let todayWeatherHtml = '';
+        let forecastHtml = '';
 
-      // Today's weather
-      const todayForecast = result.forecast[0];
-      const todayIconFileName = todayForecast.weather.icon + '.png';
-      const todayIconPath = './assets/weatherbit-icons/' + todayIconFileName;
-      const windSpeedMPH = todayForecast.wind_spd * 2.23694;
+        // Today's weather
+        const todayForecast = result.data.forecast[0];
+        const todayIconFileName = todayForecast.weather.icon + '.png';
+        const todayIconPath = './assets/weatherbit-icons/' + todayIconFileName;
+        const windSpeedMPH = todayForecast.wind_spd * 2.23694;
 
-      todayWeatherHtml = `
+        todayWeatherHtml = `
   <div class="today-forecast d-flex align-items-center">
     <img src="${todayIconPath}" alt="${
-        todayForecast.weather.description
-      }" class="weather-icon me-5" />
+          todayForecast.weather.description
+        }" class="weather-icon me-5" />
     <div class="d-flex flex-column align-items-center">      
       <h4><strong>${todayForecast.app_max_temp}°C</strong></h4>
       <p class="mt-2">${todayForecast.app_min_temp}°C</p>
@@ -409,35 +413,38 @@ function updateWeatherModal(countryCode, city, countryName) {
   </div>
 `;
 
-      $('#todayWeather').html(todayWeatherHtml);
-      $('#weatherModalLabel').html(city + ', ' + countryName);
-      $('#weatherDescription').html(todayForecast.weather.description);
+        $('#todayWeather').html(todayWeatherHtml);
+        $('#weatherModalLabel').html(city + ', ' + countryName);
+        $('#weatherDescription').html(todayForecast.weather.description);
 
-      // Three-day forecast
-      for (let i = 1; i < 4; i++) {
-        const forecast = result.forecast[i];
-        const iconFileName = forecast.weather.icon + '.png';
-        const iconPath = './assets/weatherbit-icons/' + iconFileName;
+        // Three-day forecast
+        for (let i = 1; i < 4; i++) {
+          const forecast = result.data.forecast[i];
+          const iconFileName = forecast.weather.icon + '.png';
+          const iconPath = './assets/weatherbit-icons/' + iconFileName;
 
-        forecastHtml += `
+          forecastHtml += `
     <div class="col">
       <div class="forecast-day">
         <h6><strong>${Date.parse(forecast.datetime).toString(
           'ddd dS'
         )}</strong></h6>
         <img src="${iconPath}" alt="${
-          forecast.weather.description
-        }" class="weather-icon" />
+            forecast.weather.description
+          }" class="weather-icon" />
         <p class="fw-semibold">${forecast.app_max_temp}°C</p>
         <p>${forecast.app_min_temp}°C</p>
       </div>
     </div>
   `;
-      }
+        }
 
-      $('#forecastRow').html(
-        `<div class="d-flex justify-content-between">${forecastHtml}</div>`
-      );
+        $('#forecastRow').html(
+          `<div class="d-flex justify-content-between">${forecastHtml}</div>`
+        );
+      } else {
+        alert(result.status.description);
+      }
     },
 
     error: function (xhr, status, error) {
@@ -518,7 +525,7 @@ function updateRecipeModal(demonym) {
     data: { demonym: demonym },
     dataType: 'json',
     success: function (result) {
-      if (result.status && result.status.code === 200) {
+      if (result.status.code === 200) {
         if (result.data.length > 0) {
           var recipesHtml = '';
           result.data.forEach(function (recipe, index) {
