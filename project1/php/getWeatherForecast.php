@@ -4,7 +4,20 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
-$countryCode = $_REQUEST['country'] ?? '';
+if (is_null($_REQUEST['countryCode'])) {
+    http_response_code(400);
+    echo json_encode([
+        'status' => [
+            'code' => 400,
+            'name' => 'error',
+            'description' => 'Missing required parameters.'
+        ],
+        'executionTime' => microtime(true) - $executionStartTime
+    ]);
+    exit;
+}
+
+$countryCode = $_REQUEST['countryCode'] ?? '';
 $capitalCity = urlencode($_REQUEST['city']) ?? '';
 $apiKey = 'cbff9a6a10d344cba33f0d82a83274a1';
 

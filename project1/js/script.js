@@ -316,7 +316,6 @@ function updateInfoModal() {
         var currencyCode = result['data'][0]['currencyCode'];
 
         var languages = result['data'][0]['languages'];
-        // console.log(languages);
         var languageHtml = languages[0];
         if (languages.length > 1) {
           for (let i = 1; i < languages.length; i++) {
@@ -379,7 +378,7 @@ function updateWikiModal() {
 
 function updateWeatherModal(countryCode, city, countryName) {
   $.ajax({
-    url: './php/testWeatherForecast.php',
+    url: './php/getWeatherForecast.php',
     type: 'GET',
     dataType: 'json',
     data: {
@@ -387,7 +386,6 @@ function updateWeatherModal(countryCode, city, countryName) {
       city: city,
     },
     success: function (result) {
-      console.log(result);
       let today = new Date();
       let todayWeatherHtml = '';
       let forecastHtml = '';
@@ -420,12 +418,6 @@ function updateWeatherModal(countryCode, city, countryName) {
         const forecast = result.forecast[i];
         const iconFileName = forecast.weather.icon + '.png';
         const iconPath = './assets/weatherbit-icons/' + iconFileName;
-
-        // let forecastDate = new Date(today);
-        // forecastDate.setDate(today.getDate() + i);
-
-        // const options = { day: 'numeric', weekday: 'short' };
-        // const formattedDate = forecastDate.toLocaleDateString('en-EN', options);
 
         forecastHtml += `
     <div class="col">
@@ -468,7 +460,6 @@ function updateNewsModal(countryCode) {
     dataType: 'json',
     success: function (result) {
       if (result.status.code === 200) {
-        console.log(result.data);
         if (result.data.length === 0) {
           // No articles found
           $('#newsArticles').html('<p>No news articles available.</p>');
@@ -527,7 +518,6 @@ function updateRecipeModal(demonym) {
     data: { demonym: demonym },
     dataType: 'json',
     success: function (result) {
-      // console.log(result);
       if (result.status && result.status.code === 200) {
         if (result.data.length > 0) {
           var recipesHtml = '';
@@ -567,12 +557,9 @@ function updateCurrencyModal(currencyCode) {
     type: 'GET',
     dataType: 'json',
     success: function (result) {
-      // console.log(result);
       if (result.status.code === 200) {
         var currenciesCodes = Object.keys(result['data']['rates']);
         ratesObj = result['data']['rates'];
-        // console.log(currenciesCodes);
-        // console.log(ratesObj);
         var fromCurrencySelect = $('#fromCurrency');
         var toCurrencySelect = $('#toCurrency');
         fromCurrencySelect.empty();
@@ -616,4 +603,8 @@ function calcResult() {
   $('#resultBox').val(convertedAmount.toFixed(2));
 }
 
-$('.loader-container').fadeOut(2500);
+$(window).on('load', function () {
+  setTimeout(function () {
+    $('.loader-container').fadeOut('slow');
+  }, 3000);
+});

@@ -6,6 +6,19 @@ error_reporting(E_ALL);
 
 $executionStartTime = microtime(true);
 
+if (is_null($_REQUEST['countryCode'])) {
+    http_response_code(400);
+    echo json_encode([
+        'status' => [
+            'code' => 400,
+            'name' => 'error',
+            'description' => 'Missing required parameters.'
+        ],
+        'executionTime' => microtime(true) - $executionStartTime
+    ]);
+    exit;
+}
+
 $countryCode = $_REQUEST['countryCode'];
 $url = "https://restcountries.com/v3.1/alpha/" . $countryCode;
 
@@ -18,10 +31,6 @@ $result = curl_exec($ch);
 curl_close($ch);
 
 $decoded = json_decode($result, true);
-
-// echo '<pre>';
-// var_dump($decode);
-// echo '</pre>';
 
 $output = [
     'status' => [

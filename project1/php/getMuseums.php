@@ -6,6 +6,19 @@ error_reporting(E_ALL);
 
 $executionStartTime = microtime(true);
 
+if (is_null($_REQUEST['countryCode'])) {
+    http_response_code(400);
+    echo json_encode([
+        'status' => [
+            'code' => 400,
+            'name' => 'error',
+            'description' => 'Missing required parameters.'
+        ],
+        'executionTime' => microtime(true) - $executionStartTime
+    ]);
+    exit;
+}
+
 $countryCode = $_REQUEST['countryCode'];
 $username = 'kl888';
 $maxRows = 50;
