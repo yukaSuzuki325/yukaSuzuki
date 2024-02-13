@@ -414,19 +414,23 @@ function updateWeatherModal(countryCode, city) {
         const iconFileName = forecast.weather.icon + '.png';
         const iconPath = './assets/weatherbit-icons/' + iconFileName;
 
-        let forecastDate = new Date(today);
-        forecastDate.setDate(today.getDate() + i);
+        // let forecastDate = new Date(today);
+        // forecastDate.setDate(today.getDate() + i);
 
-        const options = { weekday: 'short', day: 'numeric', month: 'short' };
-        const formattedDate = forecastDate.toLocaleDateString('en-EN', options);
+        // const options = { day: 'numeric', weekday: 'short' };
+        // const formattedDate = forecastDate.toLocaleDateString('en-EN', options);
 
         forecastHtml += `
     <div class="col">
       <div class="forecast-day">
-        <h6><strong>${formattedDate}</strong></h6>
-        <img src="${iconPath}" alt="${forecast.weather.description}" class="weather-icon" />
-        <p>Max Temp: ${forecast.app_max_temp}°C</p>
-        <p>Min Temp: ${forecast.app_min_temp}°C</p>
+        <h6><strong>${Date.parse(forecast.datetime).toString(
+          'ddd dS'
+        )}</strong></h6>
+        <img src="${iconPath}" alt="${
+          forecast.weather.description
+        }" class="weather-icon" />
+        <p class="fw-semibold">${forecast.app_max_temp}°C</p>
+        <p>${forecast.app_min_temp}°C</p>
       </div>
     </div>
   `;
