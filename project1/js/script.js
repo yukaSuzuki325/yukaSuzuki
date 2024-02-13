@@ -372,7 +372,7 @@ function updateWikiModal() {
 
 function updateWeatherModal(countryCode, city) {
   $.ajax({
-    url: './php/getWeatherForecast.php',
+    url: './php/testWeatherForecast.php',
     type: 'GET',
     dataType: 'json',
     data: {
@@ -380,6 +380,7 @@ function updateWeatherModal(countryCode, city) {
       city: city,
     },
     success: function (result) {
+      console.log(result);
       let today = new Date();
       let todayWeatherHtml = '';
       let forecastHtml = '';
@@ -388,21 +389,24 @@ function updateWeatherModal(countryCode, city) {
       const todayForecast = result.forecast[0];
       const todayIconFileName = todayForecast.weather.icon + '.png';
       const todayIconPath = './assets/weatherbit-icons/' + todayIconFileName;
+      const windSpeedMPH = todayForecast.wind_spd * 2.23694;
 
       todayWeatherHtml = `
   <div class="today-forecast d-flex align-items-center">
-    <img src="${todayIconPath}" alt="${todayForecast.weather.description}" class="weather-icon me-3" />
-    <div class="d-flex flex-column align-items-start">
-      <p class="fw-semibold">${todayForecast.weather.description}</p>
-      <p>Max Temp: ${todayForecast.app_max_temp}°C</p>
-      <p>Min Temp: ${todayForecast.app_min_temp}°C</p>
-      <p class="text-nowrap">Wind Speed: ${todayForecast.wind_spd} m/s</p>
+    <img src="${todayIconPath}" alt="${
+        todayForecast.weather.description
+      }" class="weather-icon me-5" />
+    <div class="d-flex flex-column align-items-start">      
+      <h5><strong>${todayForecast.app_max_temp}°C</strong></h5>
+      <p class="mt-2">${todayForecast.app_min_temp}°C</p>
+      <p class="text-nowrap">${windSpeedMPH.toFixed(0)} mph</p>
     </div>
   </div>
 `;
 
       $('#todayWeather').html(todayWeatherHtml);
-      $('#weatherCity').html(city);
+      $('#weatherModalLabel').html(city);
+      $('#weatherDescription').html(todayForecast.weather.description);
 
       // Three-day forecast
       for (let i = 1; i < 4; i++) {
