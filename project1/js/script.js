@@ -355,13 +355,15 @@ function updateWikiModal() {
     dataType: 'json',
     data: { countryName: countryName },
     success: function (result) {
-      if (result.status.code === '200' && result.data) {
-        $('#txtSummary').text(result.data.summary);
-        $('#txtWiki').html(
+      if (result.status.code === '200') {
+        var summaryText = result.data.summary;
+
+        var wikipediaLink =
           '<a href="https://' +
-            result.data.wikipediaUrl +
-            '" target="_blank">Wikipedia Link</a>'
-        );
+          result.data.wikipediaUrl +
+          '" target="_blank"> Read more on Wikipedia</a>';
+        summaryText = summaryText + wikipediaLink;
+        $('#txtSummary').html(summaryText);
       } else {
         console.error(
           'Error fetching Wikipedia data:',

@@ -38,8 +38,7 @@ if (!empty($_REQUEST['countryName'])) {
         foreach ($decode['geonames'] as $entry) {
             // Check if 'title' matches the country name or if 'feature' indicates a country
             if (
-                strcasecmp($entry['title'], $_REQUEST['countryName']) == 0 ||
-                (isset($entry['feature']) && $entry['feature'] === 'country')
+                strcasecmp($entry['title'], $_REQUEST['countryName']) == 0
             ) {
                 $countryData = $entry;
                 break;
