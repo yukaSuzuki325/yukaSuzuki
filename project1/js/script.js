@@ -322,8 +322,10 @@ function updateInfoModal() {
         $('#txtOfficialName').html(result['data'][0]['officialName']);
         $('#txtContinent').html(result['data'][0]['continents']);
         $('#txtCapital').html(capital);
-        $('#txtPopulation').html(result['data'][0]['population']);
-        $('#txtArea').html(result['data'][0]['area']);
+        $('#txtPopulation').html(
+          numeral(result['data'][0]['population']).format('0,0')
+        );
+        $('#txtArea').html(numeral(result['data'][0]['area']).format('0,0'));
         $('#txtLanguage').html(languageHtml);
         $('#txtCurrencyCode').html(currencyCode);
 
