@@ -1,7 +1,3 @@
-$('.loader-container').fadeOut(2500, function () {
-  $(this).css('display', 'none');
-});
-
 var streets = L.tileLayer(
   'https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=QSXp2dr5QTfe0499gvor',
   {
@@ -114,10 +110,15 @@ $.ajax({
   type: 'GET',
   dataType: 'json',
   success: function (result) {
-    var select = $('#countrySelect');
-    $.each(result, function (index, country) {
-      select.append($('<option>').val(country.iso_a2).text(country.name));
-    });
+    if (result.status.code === '200') {
+      console.log(result);
+      var select = $('#countrySelect');
+      $.each(result.data, function (index, country) {
+        select.append($('<option>').val(country.iso_a2).text(country.name));
+      });
+    } else {
+      alert('Unable to populate countries');
+    }
   },
   error: function (jqXHR, textStatus, errorThrown) {
     console.log('AJAX error:', textStatus, errorThrown);
@@ -589,3 +590,5 @@ function convertCurrency() {
     )} ${toCurrency}</strong></h4>`
   );
 }
+
+$('.loader-container').fadeOut(2500);
