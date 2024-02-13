@@ -22,16 +22,19 @@ if (is_null($countryData)) {
 } else {
 
     $countryList = [];
-    if (isset($countryData['features'])) {
-        foreach ($countryData['features'] as $feature) {
-            $properties = $feature['properties'];
-            $countryList[] = [
-                'name' => $properties['name'],
-                'iso_a2' => $properties['iso_a2'],
-                'iso_a3' => $properties['iso_a3']
-            ];
-        }
+    foreach ($countryData['features'] as $feature) {
+        $properties = $feature['properties'];
+        $countryList[] = [
+            'name' => $properties['name'],
+            'iso_a2' => $properties['iso_a2'],
+            'iso_a3' => $properties['iso_a3']
+        ];
     }
+
+    // Sort the country list by the 'name' key
+    usort($countryList, function ($item1, $item2) {
+        return $item1['name'] <=> $item2['name'];
+    });
 
     $output['status']['code'] = "200";
     $output['status']['name'] = "ok";
