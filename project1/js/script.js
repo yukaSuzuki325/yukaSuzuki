@@ -186,6 +186,7 @@ $('#fromCurrency, #toCurrency').on('change', calcResult);
 
 //On change, add country border, update map, markers and modals
 $('#countrySelect').on('change', function () {
+  $('.loader-container').show();
   // Get the selected country code
   countryCode = $(this).val();
   countryName = $('#countrySelect option:selected').text();
@@ -294,6 +295,12 @@ $('#countrySelect').on('change', function () {
   updateInfoModal();
   updateNewsModal(countryCode);
   updateWikiModal();
+
+  setTimeout(function () {
+    $('.loader-container').fadeOut(2500, function () {
+      $(this).css('display', 'none');
+    });
+  }, 2500);
 });
 
 function clearAndAddMarkers(data, markerClusterGroup, markerIcon, overlayName) {
@@ -311,12 +318,6 @@ function clearAndAddMarkers(data, markerClusterGroup, markerIcon, overlayName) {
   // Add the cluster group and overlay
   map.addLayer(markerClusterGroup);
   layerControl.addOverlay(markerClusterGroup, overlayName);
-
-  setTimeout(function () {
-    $('.loader-container').fadeOut(2500, function () {
-      $(this).css('display', 'none');
-    });
-  }, 2500);
 }
 
 function updateInfoModal() {
