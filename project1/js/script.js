@@ -381,7 +381,7 @@ function updateWikiModal() {
 
 function updateWeatherModal(countryCode, city, countryName) {
   $.ajax({
-    url: './php/testWeatherForecast.php',
+    url: './php/getWeatherForecast.php',
     type: 'GET',
     dataType: 'json',
     data: {
@@ -406,9 +406,9 @@ function updateWeatherModal(countryCode, city, countryName) {
           todayForecast.weather.description
         }" class="weather-icon me-5" />
     <div class="d-flex flex-column align-items-center">      
-      <h4><strong>${todayForecast.app_max_temp}°C</strong></h4>
-      <p class="mt-2">${todayForecast.app_min_temp}°C</p>
-      <p class="text-nowrap">${windSpeedMPH.toFixed(0)} mph</p>
+      <h3><strong>${todayForecast.app_max_temp}°C</strong></h3>
+      <h5 class="mt-2">${todayForecast.app_min_temp}°C</h5>
+      <h5 class="mt-1 text-nowrap">${windSpeedMPH.toFixed(0)} mph</h5>
     </div>
   </div>
 `;
@@ -426,13 +426,13 @@ function updateWeatherModal(countryCode, city, countryName) {
           forecastHtml += `
     <div class="col">
       <div class="forecast-day">
-        <h6><strong>${Date.parse(forecast.datetime).toString(
+        <h5><strong>${Date.parse(forecast.datetime).toString(
           'ddd dS'
-        )}</strong></h6>
+        )}</strong></h5>
         <img src="${iconPath}" alt="${
             forecast.weather.description
           }" class="weather-icon" />
-        <p class="fw-semibold">${forecast.app_max_temp}°C</p>
+        <h5 class="fw-semibold">${forecast.app_max_temp}°C</h5>
         <p>${forecast.app_min_temp}°C</p>
       </div>
     </div>
