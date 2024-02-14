@@ -295,12 +295,6 @@ $('#countrySelect').on('change', function () {
   updateInfoModal();
   updateNewsModal(countryCode);
   updateWikiModal();
-
-  setTimeout(function () {
-    $('.loader-container').fadeOut(2500, function () {
-      $(this).css('display', 'none');
-    });
-  }, 2500);
 });
 
 function clearAndAddMarkers(data, markerClusterGroup, markerIcon, overlayName) {
@@ -318,6 +312,10 @@ function clearAndAddMarkers(data, markerClusterGroup, markerIcon, overlayName) {
   // Add the cluster group and overlay
   map.addLayer(markerClusterGroup);
   layerControl.addOverlay(markerClusterGroup, overlayName);
+
+  $('.loader-container').fadeOut(2500, function () {
+    $(this).css('display', 'none');
+  });
 }
 
 function updateInfoModal() {
