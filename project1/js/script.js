@@ -26,7 +26,7 @@ var layerControl = L.control.layers(basemaps).addTo(map);
 
 //Easy Buttons
 
-L.easyButton(
+const infoBtn = L.easyButton(
   'fa-info',
   function (btn, map) {
     $('#infoModal').modal('show');
@@ -34,7 +34,7 @@ L.easyButton(
   'Contry overview'
 ).addTo(map);
 
-L.easyButton(
+const weatherBtn = L.easyButton(
   'fa-cloud-sun',
   function (btn, map) {
     $('#weatherModal').modal('show');
@@ -42,7 +42,7 @@ L.easyButton(
   'Weather forecast'
 ).addTo(map);
 
-L.easyButton(
+const newsBtn = L.easyButton(
   'fa-radio',
   function (btn, map) {
     $('#newsModal').modal('show');
@@ -50,7 +50,7 @@ L.easyButton(
   'Latest local news'
 ).addTo(map);
 
-L.easyButton(
+const recipeBtn = L.easyButton(
   'fa-utensils',
   function (btn, map) {
     $('#recipeModal').modal('show');
@@ -58,7 +58,7 @@ L.easyButton(
   'Recipes of local dishes'
 ).addTo(map);
 
-L.easyButton(
+const currencyBtn = L.easyButton(
   'fa-sterling-sign',
   function (btn, map) {
     $('#currencyModal').modal('show');
@@ -66,13 +66,20 @@ L.easyButton(
   'Currency converter'
 ).addTo(map);
 
-L.easyButton(
+const wikiBtn = L.easyButton(
   'fa-brands fa-wikipedia-w',
   function (btn, map) {
     $('#wikiModal').modal('show');
   },
   'Wikipedia link'
 ).addTo(map);
+
+infoBtn.button.style.padding = '0px';
+weatherBtn.button.style.padding = '0px';
+newsBtn.button.style.padding = '0px';
+recipeBtn.button.style.padding = '0px';
+currencyBtn.button.style.padding = '0px';
+wikiBtn.button.style.padding = '0px';
 
 //Markers
 var parkMarker = L.ExtraMarkers.icon({
@@ -304,6 +311,12 @@ function clearAndAddMarkers(data, markerClusterGroup, markerIcon, overlayName) {
   // Add the cluster group and overlay
   map.addLayer(markerClusterGroup);
   layerControl.addOverlay(markerClusterGroup, overlayName);
+
+  setTimeout(function () {
+    $('.loader-container').fadeOut(2500, function () {
+      $(this).css('display', 'none');
+    });
+  }, 2500);
 }
 
 function updateInfoModal() {
@@ -381,7 +394,7 @@ function updateWikiModal() {
 
 function updateWeatherModal(countryCode, city, countryName) {
   $.ajax({
-    url: './php/estWeatherForecast.php',
+    url: './php/testWeatherForecast.php',
     type: 'GET',
     dataType: 'json',
     data: {
@@ -613,9 +626,3 @@ function calcResult() {
 
   $('#resultBox').val(convertedAmount.toFixed(2));
 }
-
-$(window).on('load', function () {
-  setTimeout(function () {
-    $('.loader-container').fadeOut('slow');
-  }, 3000);
-});
