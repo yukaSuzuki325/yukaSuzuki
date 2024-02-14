@@ -381,7 +381,7 @@ function updateWikiModal() {
 
 function updateWeatherModal(countryCode, city, countryName) {
   $.ajax({
-    url: './php/getWeatherForecast.php',
+    url: './php/estWeatherForecast.php',
     type: 'GET',
     dataType: 'json',
     data: {
@@ -443,7 +443,10 @@ function updateWeatherModal(countryCode, city, countryName) {
           `<div class="d-flex justify-content-between">${forecastHtml}</div>`
         );
       } else {
-        alert(result.status.description);
+        $('#today-text').hide();
+        $('#weatherDescription').html(
+          '<div class="weather-unavailable">Weather forecast is unavailable.</div>'
+        );
       }
     },
 
@@ -452,7 +455,8 @@ function updateWeatherModal(countryCode, city, countryName) {
         'An error occurred while fetching the weather forecast:',
         error
       );
-      $('#weatherInfo').html(
+      $('#today-text').hide();
+      $('#weatherDescription').html(
         '<div class="weather-unavailable">Weather forecast is unavailable.</div>'
       );
     },
