@@ -1,8 +1,8 @@
 <?php
 
 // Remove this line for production
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
+// ini_set('display_errors', 'On');
+// error_reporting(E_ALL);
 
 $executionStartTime = microtime(true);
 
@@ -38,22 +38,35 @@ if (!$result) {
 
 $decode = json_decode($result, true);
 
-$forecast = array_slice($decode['data'], 0, 4); // Get only the first 4 days
+if (isset($decode['data'])) {
+    $forecast = array_slice($decode['data'], 0, 4); // Get only the first 4 days
 
-$forecastData = [
-    'city' => $decode['city_name'],
-    'forecast' => $forecast
-];
+    $forecastData = [
+        'city' => $decode['city_name'],
+        'forecast' => $forecast
+    ];
 
-$output = [
-    'status' => [
-        'code' => 200,
-        'name' => 'ok',
-        'description' => 'success',
-    ],
-    'executionTime' => intval((microtime(true) - $executionStartTime) * 1000) . " ms",
-    'data' => $forecastData
-];
+    $output = [
+        'status' => [
+            'code' => 200,
+            'name' => 'ok',
+            'description' => 'success',
+        ],
+        'executionTime' => intval((microtime(true) - $executionStartTime) * 1000) . " ms",
+        'data' => $forecastData
+    ];
+} else {
+    echo json_encode([
+        'status' => [
+            'code' => 500,
+            'name' => 'error',
+            'description' => 'Weather data unavailable.'
+        ],
+        'executionTime' => microtime(true) - $executionStartTime
+    ]);
+}
+
+
 
 header('Content-Type: application/json');
 echo json_encode($output);
