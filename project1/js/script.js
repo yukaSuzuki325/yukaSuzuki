@@ -169,17 +169,16 @@ var countryBorderLayer;
 var countryCode;
 var countryName;
 var ratesObj;
-var parkMarkers = L.layerGroup().addTo(map);
-var airportMarkers = L.layerGroup().addTo(map);
-var museumMarkers = L.layerGroup().addTo(map);
-var parkMarkersCluster = L.markerClusterGroup();
-var airportMarkersCluster = L.markerClusterGroup();
-var museumMarkersCluster = L.markerClusterGroup();
+// var parkMarkers = L.layerGroup().addTo(map);
+// var airportMarkers = L.layerGroup().addTo(map);
+// var museumMarkers = L.layerGroup().addTo(map);
+var parkMarkersCluster = L.markerClusterGroup().addTo(map);
+var airportMarkersCluster = L.markerClusterGroup().addTo(map);
+var museumMarkersCluster = L.markerClusterGroup().addTo(map);
 
-// Initialize the clusters on the map
-map.addLayer(parkMarkersCluster);
-map.addLayer(airportMarkersCluster);
-map.addLayer(museumMarkersCluster);
+layerControl.addOverlay(parkMarkersCluster, 'Parks');
+layerControl.addOverlay(airportMarkersCluster, 'Airports');
+layerControl.addOverlay(museumMarkersCluster, 'Museums');
 
 $('#amount').on('keyup', calcResult);
 $('#fromCurrency, #toCurrency').on('change', calcResult);
@@ -308,8 +307,6 @@ function clearAndAddMarkers(data, markerClusterGroup, markerIcon, overlayName) {
     markerClusterGroup.addLayer(marker);
   });
 
-  // Add the cluster group and overlay
-  map.addLayer(markerClusterGroup);
   layerControl.addOverlay(markerClusterGroup, overlayName);
 
   $('.loader-container').fadeOut(2500, function () {
