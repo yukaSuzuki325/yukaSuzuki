@@ -25,43 +25,35 @@ body {
 }
 
 /* Preloader */
-/* This will cover the entire screen with a semi-transparent background while loading */
 .loader-container {
-  position: fixed; /* Fixed position to cover the whole screen */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(
-    5,
-    22,
-    80,
-    0.295
-  ); /* Semi-transparent white background */
-  display: flex; /* Use flexbox for centering */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  z-index: 1000; /* Make sure it's above other elements */
+  background-color: rgba(5, 22, 80, 0.295);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-/* The actual loader element */
 .loader {
-  border: 5px solid #ebaf0b; /* Light grey border */
-  border-top: 5px solid #3a5669; /* Blue color for the top border */
-  border-radius: 50%; /* Circular border */
-  width: 50px; /* Width of the loader */
-  height: 50px; /* Height of the loader */
-  animation: spin 2s linear infinite; /* Spin animation */
+  border: 5px solid #ebaf0b;
+  border-top: 5px solid #3a5669;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
 }
 
-/* Spin animation */
 @keyframes spin {
   0% {
     transform: rotate(0deg);
-  } /* Start position */
+  }
   100% {
     transform: rotate(360deg);
-  } /* End position - full rotation */
+  }
 }
 
 /*Modal theme colour*/

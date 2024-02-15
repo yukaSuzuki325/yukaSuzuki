@@ -169,9 +169,6 @@ var countryBorderLayer;
 var countryCode;
 var countryName;
 var ratesObj;
-// var parkMarkers = L.layerGroup().addTo(map);
-// var airportMarkers = L.layerGroup().addTo(map);
-// var museumMarkers = L.layerGroup().addTo(map);
 var parkMarkersCluster = L.markerClusterGroup().addTo(map);
 var airportMarkersCluster = L.markerClusterGroup().addTo(map);
 var museumMarkersCluster = L.markerClusterGroup().addTo(map);
@@ -311,7 +308,6 @@ function clearAndAddMarkers(data, markerClusterGroup, markerIcon, overlayName) {
 
   $('.loader-container').fadeOut(2500, function () {
     $(this).remove();
-    console.log('Fade out completed');
   });
 }
 
@@ -390,7 +386,7 @@ function updateWikiModal() {
 
 function updateWeatherModal(countryCode, city, countryName) {
   $.ajax({
-    url: './php/testWeatherForecast.php',
+    url: './php/getWeatherForecast.php',
     type: 'GET',
     dataType: 'json',
     data: {
