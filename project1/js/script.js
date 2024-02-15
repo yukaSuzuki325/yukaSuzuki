@@ -186,7 +186,6 @@ $('#fromCurrency, #toCurrency').on('change', calcResult);
 
 //On change, add country border, update map, markers and modals
 $('#countrySelect').on('change', function () {
-  $('.loader-container').show();
   // Get the selected country code
   countryCode = $(this).val();
   countryName = $('#countrySelect option:selected').text();
@@ -314,7 +313,8 @@ function clearAndAddMarkers(data, markerClusterGroup, markerIcon, overlayName) {
   layerControl.addOverlay(markerClusterGroup, overlayName);
 
   $('.loader-container').fadeOut(2500, function () {
-    $(this).css('display', 'none');
+    $(this).remove();
+    console.log('Fade out completed');
   });
 }
 
