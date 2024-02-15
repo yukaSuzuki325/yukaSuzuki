@@ -25,39 +25,43 @@ body {
 }
 
 /* Preloader */
+/* This will cover the entire screen with a semi-transparent background while loading */
 .loader-container {
+  position: fixed; /* Fixed position to cover the whole screen */
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100vh;
-  background-color: #132958;
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 100%;
+  background-color: rgba(
+    5,
+    22,
+    80,
+    0.295
+  ); /* Semi-transparent white background */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  z-index: 1000; /* Make sure it's above other elements */
 }
 
+/* The actual loader element */
 .loader {
-  width: 65px;
-  height: 65px;
-  border: 5px solid;
-  color: #3498db;
-  border-radius: 50%;
-  border-top-color: transparent;
-  animation: loader 1.2s linear infinite;
+  border: 5px solid #ebaf0b; /* Light grey border */
+  border-top: 5px solid #3a5669; /* Blue color for the top border */
+  border-radius: 50%; /* Circular border */
+  width: 50px; /* Width of the loader */
+  height: 50px; /* Height of the loader */
+  animation: spin 2s linear infinite; /* Spin animation */
 }
 
-@keyframes loader {
-  25% {
-    color: #2ecc71;
-  }
-  50% {
-    color: #f1c40f;
-  }
-  75% {
-    color: #e74c3c;
-  }
-  to {
+/* Spin animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  } /* Start position */
+  100% {
     transform: rotate(360deg);
-  }
+  } /* End position - full rotation */
 }
 
 /*Modal theme colour*/
