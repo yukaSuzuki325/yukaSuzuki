@@ -94,9 +94,3 @@ $('#editPersonnelForm').on('submit', function (e) {
 
   // AJAX call to save form data
 });
-
-const test = () => {
-  alert('hey');
-};
-
-test();
