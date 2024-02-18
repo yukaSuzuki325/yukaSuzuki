@@ -14,7 +14,7 @@ const getAllPersonnel = () => {
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                           <div class="card h-100">
                               <div class="card-body">
-                                  <h5 class="card-title">${employee.firstName} ${employee.lastName}</h5>
+                                  <h4 class="card-title mb-3">${employee.lastName}, ${employee.firstName}</h4>
                                   <p class="card-text"><strong>Department:</strong> ${employee.department}</p>
                                   <p class="card-text"><strong>Location:</strong> ${employee.location}</p>
                                   <p class="card-text"><strong>Email:</strong> ${employee.email}</p>
