@@ -44,7 +44,18 @@ const getAllPersonnel = () => {
 getAllPersonnel();
 
 $('#searchInp').on('keyup', function () {
-  // your code
+  const searchTerm = $(this).val().toLowerCase();
+
+  // Filter employee cards based on the name
+  $('.card').each(function () {
+    const name = $(this).find('.card-title').text().toLowerCase();
+
+    if (name.includes(searchTerm)) {
+      $(this).parent().show();
+    } else {
+      $(this).parent().hide();
+    }
+  });
 });
 
 $('#refreshBtn').click(function () {
