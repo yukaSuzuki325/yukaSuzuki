@@ -1,3 +1,48 @@
+const getAllPersonnel = () => {
+  $.ajax({
+    url: 'libs/php/getAll.php',
+    type: 'POST',
+    dataType: 'json',
+    success: function (result) {
+      if (result.status.code == 200) {
+        const data = result.data;
+        const cardsContainer = $('#employee-cards');
+        cardsContainer.empty(); // Clear existing cards
+
+        data.forEach((employee) => {
+          const cardHtml = `
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                          <div class="card h-100">
+                              <div class="card-body">
+                                  <h5 class="card-title">${employee.firstName} ${employee.lastName}</h5>
+                                  <p class="card-text"><strong>Department:</strong> ${employee.department}</p>
+                                  <p class="card-text"><strong>Location:</strong> ${employee.location}</p>
+                                  <p class="card-text"><strong>Email:</strong> ${employee.email}</p>
+                              </div>
+                              <div class="card-footer d-flex justify-content-end">
+                              <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
+                              <i class="fa-solid fa-pencil fa-fw text-success"></i>
+                            </button>
+                            <button type="button" class="btn  deletePersonnelBtn" data-id="23">
+                              <i class="fa-solid fa-trash fa-fw text-success"></i>
+                            </button>
+                              </div>
+                          </div>
+                      </div>
+                  `;
+          cardsContainer.append(cardHtml);
+        });
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+};
+
+getAllPersonnel();
+
 $('#searchInp').on('keyup', function () {
   // your code
 });
