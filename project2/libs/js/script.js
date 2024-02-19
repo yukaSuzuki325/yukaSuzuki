@@ -92,6 +92,53 @@ const getAllDepartments = () => {
 
 getAllDepartments();
 
+const getAllLocations = () => {
+  $.ajax({
+    url: 'libs/php/getAllLocations.php',
+    type: 'POST',
+    dataType: 'json',
+    success: function (result) {
+      if (result.status.code == 200) {
+        const data = result.data;
+        const tableBody = $('#locationsTable tbody');
+        tableBody.empty();
+        const headers = `<tr>        
+        <th>Location</th>
+        <th>Personnel</th>
+        <th>Edit / Delete</th>
+        </tr>`;
+        tableBody.append(headers);
+
+        // Loop through each location and append a row to the table
+        data.forEach((location) => {
+          const rowHtml = `
+                  <tr>                      
+                      <td>${location.Location}</td>
+                      <td>${location.Personnel}</td>
+                      <td>
+                          <button class="btn text-success" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${location.id}>
+                              <i class="fa fa-pencil"></i>
+                          </button>
+                          <button class="btn text-success deleteDepartmentBtn" data-id=${location.id}>
+                              <i class="fa fa-trash"></i>
+                          </button>
+                      </td>
+                  </tr>
+              `;
+          tableBody.append(rowHtml);
+        });
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+};
+
+getAllLocations();
+
 $('#searchInp').on('keyup', function () {
   const searchTerm = $(this).val().toLowerCase();
 
