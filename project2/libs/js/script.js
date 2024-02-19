@@ -12,7 +12,7 @@ const getAllPersonnel = () => {
         data.forEach((employee) => {
           const cardHtml = `
                       <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                          <div class="card h-100">
+                          <div class="card h-100 mx-6">
                               <div class="card-body">
                                   <h4 class="card-title mb-3">${employee.lastName}, ${employee.firstName}</h4>
                                   <p class="card-text"><strong>Department:</strong> ${employee.department}</p>
@@ -20,11 +20,11 @@ const getAllPersonnel = () => {
                                   <p class="card-text"><strong>Email:</strong> ${employee.email}</p>
                               </div>
                               <div class="card-footer d-flex justify-content-end">
-                              <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
-                              <i class="fa-solid fa-pencil fa-fw text-success"></i>
+                              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
+                              <i class="fa-solid fa-pencil fa-fw text-secondary"></i>
                             </button>
-                            <button type="button" class="btn  deletePersonnelBtn" data-id="23">
-                              <i class="fa-solid fa-trash fa-fw text-success"></i>
+                            <button type="button" class="btn btn-lg  deletePersonnelBtn" data-id="23">
+                              <i class="fa-solid fa-trash fa-fw text-secondary"></i>
                             </button>
                               </div>
                           </div>
@@ -69,10 +69,10 @@ const getAllDepartments = () => {
                       <td>${department.Location}</td>
                       <td>${department.Personnel}</td>
                       <td>
-                          <button class="btn btn-lg text-success" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${department.id}>
+                          <button class="btn btn-lg text-secondary" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${department.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn btn-lg text-success deleteDepartmentBtn" data-id=${department.id}>
+                          <button class="btn btn-lg text-secondary deleteDepartmentBtn" data-id=${department.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>
@@ -116,10 +116,10 @@ const getAllLocations = () => {
                       <td>${location.Location}</td>
                       <td>${location.Personnel}</td>
                       <td>
-                          <button class="btn btn-lg text-success" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${location.id}>
+                          <button class="btn btn-lg text-secondary" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${location.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn btn-lg text-success deleteDepartmentBtn" data-id=${location.id}>
+                          <button class="btn btn-lg text-secondary deleteDepartmentBtn" data-id=${location.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>
