@@ -33,7 +33,20 @@ if (mysqli_connect_errno()) {
 
 // SQL does not accept parameters and so is not prepared
 
-$query = "SELECT department.id, department.name AS 'Department', location.name AS 'Location' FROM department LEFT JOIN location ON department.locationID = location.id";
+$query = "SELECT 
+department.id, 
+department.name AS 'Department', 
+location.name AS 'Location', 
+COUNT(personnel.id) AS 'Personnel'
+FROM 
+department
+LEFT JOIN 
+location ON department.locationID = location.id
+LEFT JOIN 
+personnel ON department.id = personnel.departmentID
+GROUP BY 
+department.id;
+";
 
 $result = $conn->query($query);
 

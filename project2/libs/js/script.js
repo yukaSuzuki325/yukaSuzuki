@@ -51,35 +51,38 @@ const getAllDepartments = () => {
     success: function (result) {
       if (result.status.code == 200) {
         const data = result.data;
-        console.log(data);
-        // const cardsContainer = $('#employee-cards');
-        // cardsContainer.empty(); // Clear existing cards
+        const tableBody = $('#departmentTable tbody');
+        tableBody.empty();
+        const headers = `<tr>
+        <th>Department</th>
+        <th>Location</th>
+        <th>Personnel</th>
+        <th>Edit / Delete</th>
+        </tr>`;
+        tableBody.append(headers);
 
-        // data.forEach((employee) => {
-        //   const cardHtml = `
-        //               <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        //                   <div class="card h-100">
-        //                       <div class="card-body">
-        //                           <h4 class="card-title mb-3">${employee.lastName}, ${employee.firstName}</h4>
-        //                           <p class="card-text"><strong>Department:</strong> ${employee.department}</p>
-        //                           <p class="card-text"><strong>Location:</strong> ${employee.location}</p>
-        //                           <p class="card-text"><strong>Email:</strong> ${employee.email}</p>
-        //                       </div>
-        //                       <div class="card-footer d-flex justify-content-end">
-        //                       <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
-        //                       <i class="fa-solid fa-pencil fa-fw text-success"></i>
-        //                     </button>
-        //                     <button type="button" class="btn  deletePersonnelBtn" data-id="23">
-        //                       <i class="fa-solid fa-trash fa-fw text-success"></i>
-        //                     </button>
-        //                       </div>
-        //                   </div>
-        //               </div>
-        //           `;
-        //   cardsContainer.append(cardHtml);
-        // });
+        // Loop through each department and append a row to the table
+        data.forEach((department) => {
+          const rowHtml = `
+                  <tr>
+                      <td>${department.Department}</td>
+                      <td>${department.Location}</td>
+                      <td>${department.Personnel}</td>
+                      <td>
+                          <button class="btn text-success" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${department.id}>
+                              <i class="fa fa-pencil"></i>
+                          </button>
+                          <button class="btn text-success deleteDepartmentBtn" data-id=${department.id}>
+                              <i class="fa fa-trash"></i>
+                          </button>
+                      </td>
+                  </tr>
+              `;
+          tableBody.append(rowHtml);
+        });
       }
     },
+
     error: function (jqXHR, textStatus, errorThrown) {
       console.error(jqXHR);
       alert('Data not available');

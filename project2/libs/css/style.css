@@ -26,3 +26,8 @@ tr {
 }
 
 /*Personnel Tab*/
+
+/*Department Tab*/
+.table tbody th {
+  font-size: 1.2em;
+}
