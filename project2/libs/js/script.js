@@ -57,7 +57,7 @@ const getAllDepartments = () => {
         <th>Department</th>
         <th>Location</th>
         <th>Personnel</th>
-        <th>Edit / Delete</th>
+        <th> Actions</th>
         </tr>`;
         tableBody.append(headers);
 
@@ -69,10 +69,10 @@ const getAllDepartments = () => {
                       <td>${department.Location}</td>
                       <td>${department.Personnel}</td>
                       <td>
-                          <button class="btn text-success" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${department.id}>
+                          <button class="btn btn-lg text-success" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${department.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn text-success deleteDepartmentBtn" data-id=${department.id}>
+                          <button class="btn btn-lg text-success deleteDepartmentBtn" data-id=${department.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>
@@ -105,7 +105,7 @@ const getAllLocations = () => {
         const headers = `<tr>        
         <th>Location</th>
         <th>Personnel</th>
-        <th>Edit / Delete</th>
+        <th> Actions</th>
         </tr>`;
         tableBody.append(headers);
 
@@ -116,10 +116,10 @@ const getAllLocations = () => {
                       <td>${location.Location}</td>
                       <td>${location.Personnel}</td>
                       <td>
-                          <button class="btn text-success" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${location.id}>
+                          <button class="btn btn-lg text-success" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${location.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn text-success deleteDepartmentBtn" data-id=${location.id}>
+                          <button class="btn btn-lg text-success deleteDepartmentBtn" data-id=${location.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>
