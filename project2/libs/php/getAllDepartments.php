@@ -45,7 +45,8 @@ location ON department.locationID = location.id
 LEFT JOIN 
 personnel ON department.id = personnel.departmentID
 GROUP BY 
-department.id;
+department.id
+ORDER BY department.name ASC;
 ";
 
 $result = $conn->query($query);

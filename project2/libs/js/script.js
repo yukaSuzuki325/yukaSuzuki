@@ -154,14 +154,36 @@ $('#searchInp').on('keyup', function () {
   });
 });
 
+//Toggle class 'active' on Personnel, Departments and Locations tabs
+$('#departmentsBtn').click(function () {
+  $('#departmentsBtn').addClass('active');
+  $('#personnelBtn').removeClass('active');
+  $('#locationsBtn').removeClass('active');
+});
+
+$('#locationsBtn').click(function () {
+  $('#locationsBtn').addClass('active');
+  $('#personnelBtn').removeClass('active');
+  $('#departmentsBtn').removeClass('active');
+});
+
+$('#personnelBtn').click(function () {
+  $('#personnelBtn').addClass('active');
+  $('#locationsBtn').removeClass('active');
+  $('#departmentsBtn').removeClass('active');
+});
+
 $('#refreshBtn').click(function () {
   if ($('#personnelBtn').hasClass('active')) {
+    // Refresh personnel table
     getAllPersonnel();
   } else {
     if ($('#departmentsBtn').hasClass('active')) {
       // Refresh department table
+      getAllDepartments();
     } else {
       // Refresh location table
+      getAllLocations();
     }
   }
 });
