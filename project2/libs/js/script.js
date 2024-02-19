@@ -51,6 +51,28 @@ const getAllDepartments = () => {
     success: function (result) {
       if (result.status.code == 200) {
         const data = result.data;
+
+        // Populate department options in the filter options
+        const select = $('#departmentFilter');
+        select.empty();
+
+        select.append(
+          $('<option>', {
+            value: '',
+            text: 'Select department',
+          })
+        );
+
+        $.each(data, function (index, department) {
+          select.append(
+            $('<option>', {
+              value: department.id,
+              text: department.Department,
+            })
+          );
+        });
+
+        //Update Departments tab
         const tableBody = $('#departmentTable tbody');
         tableBody.empty();
         const headers = `<tr>
@@ -100,6 +122,28 @@ const getAllLocations = () => {
     success: function (result) {
       if (result.status.code == 200) {
         const data = result.data;
+
+        //Populate options in the location filter
+        const select = $('#locationFilter');
+        select.empty();
+
+        select.append(
+          $('<option>', {
+            value: '',
+            text: 'Select location',
+          })
+        );
+
+        $.each(data, function (index, location) {
+          select.append(
+            $('<option>', {
+              value: location.id,
+              text: location.Location,
+            })
+          );
+        });
+
+        //Update location tab
         const tableBody = $('#locationsTable tbody');
         tableBody.empty();
         const headers = `<tr>        
