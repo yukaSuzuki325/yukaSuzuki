@@ -7,7 +7,7 @@ const getAllPersonnel = () => {
       if (result.status.code == 200) {
         const data = result.data;
         const cardsContainer = $('#employee-cards');
-        cardsContainer.empty(); // Clear existing cards
+        cardsContainer.empty();
 
         data.forEach((employee) => {
           const cardHtml = `
@@ -43,6 +43,52 @@ const getAllPersonnel = () => {
 
 getAllPersonnel();
 
+const getAllDepartments = () => {
+  $.ajax({
+    url: 'libs/php/getAllDepartments.php',
+    type: 'POST',
+    dataType: 'json',
+    success: function (result) {
+      if (result.status.code == 200) {
+        const data = result.data;
+        console.log(data);
+        // const cardsContainer = $('#employee-cards');
+        // cardsContainer.empty(); // Clear existing cards
+
+        // data.forEach((employee) => {
+        //   const cardHtml = `
+        //               <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        //                   <div class="card h-100">
+        //                       <div class="card-body">
+        //                           <h4 class="card-title mb-3">${employee.lastName}, ${employee.firstName}</h4>
+        //                           <p class="card-text"><strong>Department:</strong> ${employee.department}</p>
+        //                           <p class="card-text"><strong>Location:</strong> ${employee.location}</p>
+        //                           <p class="card-text"><strong>Email:</strong> ${employee.email}</p>
+        //                       </div>
+        //                       <div class="card-footer d-flex justify-content-end">
+        //                       <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
+        //                       <i class="fa-solid fa-pencil fa-fw text-success"></i>
+        //                     </button>
+        //                     <button type="button" class="btn  deletePersonnelBtn" data-id="23">
+        //                       <i class="fa-solid fa-trash fa-fw text-success"></i>
+        //                     </button>
+        //                       </div>
+        //                   </div>
+        //               </div>
+        //           `;
+        //   cardsContainer.append(cardHtml);
+        // });
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+};
+
+getAllDepartments();
+
 $('#searchInp').on('keyup', function () {
   const searchTerm = $(this).val().toLowerCase();
 
@@ -60,7 +106,7 @@ $('#searchInp').on('keyup', function () {
 
 $('#refreshBtn').click(function () {
   if ($('#personnelBtn').hasClass('active')) {
-    // Refresh personnel table
+    getAllPersonnel();
   } else {
     if ($('#departmentsBtn').hasClass('active')) {
       // Refresh department table
