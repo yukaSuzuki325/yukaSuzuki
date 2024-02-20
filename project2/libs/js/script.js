@@ -87,7 +87,6 @@ const getAllDepartments = () => {
         </tr>`;
         tableBody.append(headers);
 
-        // Loop through each department and append a row to the table
         data.forEach((department) => {
           const rowHtml = `
                   <tr>
@@ -140,6 +139,19 @@ const getAllLocations = () => {
 
         $.each(data, function (index, location) {
           select.append(
+            $('<option>', {
+              value: location.id,
+              text: location.Location,
+            })
+          );
+        });
+
+        //Populate locations in add department modal
+        const addDepartmentSelect = $('#addDepartmentSelect');
+        addDepartmentSelect.empty();
+
+        $.each(data, function (index, location) {
+          addDepartmentSelect.append(
             $('<option>', {
               value: location.id,
               text: location.Location,
@@ -310,7 +322,49 @@ const getFilteredPersonnel = (departmentSelect, locationSelect) => {
 };
 
 $('#addBtn').click(function () {
-  // Replicate the logic of the refresh button click to open the add modal for the table that is currently on display
+  if ($('#personnelBtn').hasClass('active')) {
+  } else {
+    if ($('#departmentsBtn').hasClass('active')) {
+      $('#addDepartmentModal').modal('show');
+    } else {
+    }
+  }
+});
+
+$('#addDepartmentForm').submit(function (e) {
+  e.preventDefault();
+  const name = $('#addDepartmentName').val();
+  const locationID = $('#addDepartmentSelect').val();
+  $.ajax({
+    url: 'libs/php/insertDepartment.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      name,
+      locationID,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        $('#addDepartmentModal').modal('hide');
+        getAllDepartments();
+        // Clear the input field
+        $('#addDepartmentName').val('');
+        // Reset the dropdown by setting its value to the first option
+        $('#addDepartmentSelect').val(
+          $('#addDepartmentSelect option:first').val()
+        );
+      } else {
+        alert(
+          'We are unable to process your request at the moment. Please try again later'
+        );
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
 });
 
 $('#personnelBtn').click(function () {

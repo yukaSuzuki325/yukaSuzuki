@@ -96,28 +96,9 @@
             
             <div class="m-5">
                 <table class="table" id="departmentTable">              
-                    <tbody>
+                    <tbody>                    
                         
-                        
-                    </tbody>
-                  
-                  <!-- <tr>
-                    <td class="align-middle text-nowrap">
-                      Human resources
-                    </td>
-                    <td class="align-middle text-nowrap d-none d-md-table-cell">
-                      London
-                    </td>
-                    <td class="align-middle text-end text-nowrap">
-                      <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal" data-id="1">
-                        <i class="fa-solid fa-pencil fa-fw"></i>
-                      </button>
-                      <button type="button" class="btn btn-success btn-sm deleteDepartmentBtn" data-id="1">
-                        <i class="fa-solid fa-trash fa-fw"></i>
-                      </button>
-                    </td>
-                  </tr>  -->
-          
+                    </tbody>                                           
                 </table>
             </div>
           </div>
@@ -128,23 +109,7 @@
             <div class="m-5">
                 <table class="table" id="locationsTable">              
                     <tbody>
-                        
-                       <!-- <tr>
-                <td class="align-middle text-nowrap">
-                  London
-                </td>
-                <td class="align-middle text-end text-nowrap">
-                  <button type="button" class="btn btn-success btn-sm">
-                    <i class="fa-solid fa-pencil fa-fw"></i>
-                  </button>
-                  <button type="button" class="btn btn-success btn-sm">
-                    <i class="fa-solid fa-trash fa-fw"></i>
-                  </button>
-                </td>
-              </tr> --> 
-                    </tbody>            
-                  
-          
+                    </tbody>                                   
                 </table>
             </div>              
                    
@@ -159,15 +124,12 @@
         </footer
       
       </section>
-          
-      <div id="editPersonnelModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        
-        <!--   the last two classes centre the modal and, if the content is too long, ensures  -->
-        <!--   that the header and footer are always on display by making the body scroll -->
+       <!--Edit personnel modal-->   
+      <div id="editPersonnelModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">        
         
         <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">             
           <div class="modal-content shadow">             
-            <div class="modal-header bg-secondary bg-gradient text-white">
+            <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
               <h5 class="modal-title">Edit employee</h5>
               <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -202,11 +164,49 @@
             <div class="modal-footer">
               <button type="submit" form="editPersonnelForm" class="btn btn-outline-secondary btn-sm myBtn">SAVE</button>
               <button type="button" class="btn btn-outline-secondary btn-sm myBtn" data-bs-dismiss="modal">CANCEL</button>
+            </div>       
+          </div>          
+        </div>       
+        
+      </div>
+
+      <!--Add department modal-->
+
+      <div id="addDepartmentModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" aria-labelledby="addDepartmentModalLabel" aria-hidden="true">        
+        
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">             
+          <div class="modal-content shadow">             
+            <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+              <h5 class="modal-title">Add a department</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+      
+            <div class="modal-body">                
+              <form id="addDepartmentForm">      
+                <input type="hidden" id="">      
+                               
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="addDepartmentName" placeholder="Department name" required>
+                  <label for="addDepartmentName">Department name</label>
+                </div>          
+                <div class="form-floating">
+                  <select class="form-select" id="addDepartmentSelect">
+                  </select>
+                  <label for="addDepartmentLocation">Location</label>
+                </div>        
+              </form>      
+            </div>
+      
+            <div class="modal-footer">
+              <button type="submit" form="addDepartmentForm" class="btn btn-outline-secondary btn-sm myBtn" id="addDepartment-submit">SAVE</button>
+              <button type="button" class="btn btn-outline-secondary btn-sm myBtn" data-bs-dismiss="modal">CANCEL</button>
             </div>
        
           </div>
           
         </div>
+
+        
         
       </div>
           
