@@ -263,8 +263,9 @@ const getFilteredPersonnel = (departmentSelect, locationSelect) => {
       location: locationSelect,
     },
     success: function (result) {
-      if (result.status.code == 200) {
+      if (result.status.code == 200 && result.data.length) {
         const data = result.data;
+        console.log(data);
         const cardsContainer = $('#employee-cards');
         cardsContainer.empty();
 
@@ -291,6 +292,13 @@ const getFilteredPersonnel = (departmentSelect, locationSelect) => {
                   `;
           cardsContainer.append(cardHtml);
         });
+      } else {
+        const cardsContainer = $('#employee-cards');
+        cardsContainer.empty();
+        const messageHtml = `
+        <div class="d-flex flex-column align-items-center"><p class="">There were no personnel who matched the criteria</p></div>
+        `;
+        cardsContainer.append(messageHtml);
       }
     },
 
