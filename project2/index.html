@@ -171,7 +171,6 @@
       </div>
 
       <!--Add department modal-->
-
       <div id="addDepartmentModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" aria-labelledby="addDepartmentModalLabel" aria-hidden="true">        
         
         <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">             
@@ -200,14 +199,38 @@
             <div class="modal-footer">
               <button type="submit" form="addDepartmentForm" class="btn btn-outline-secondary btn-sm myBtn" id="addDepartment-submit">SAVE</button>
               <button type="button" class="btn btn-outline-secondary btn-sm myBtn" data-bs-dismiss="modal">CANCEL</button>
-            </div>
-       
-          </div>
-          
-        </div>
+            </div>       
+          </div>          
+        </div>              
+      </div>
 
+      <!--Add location modal-->
+      <div id="addLocationModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" aria-labelledby="addLocationModalLabel" aria-hidden="true">        
         
-        
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">             
+          <div class="modal-content shadow">             
+            <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+              <h5 class="modal-title">Add a location</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+      
+            <div class="modal-body">                
+              <form id="addLocationForm">      
+                <input type="hidden" id="">      
+                               
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="addLocationName"  required>
+                  <label for="addLocationName">Location name</label>
+                </div>                          
+              </form>      
+            </div>
+      
+            <div class="modal-footer">
+              <button type="submit" form="addLocationForm" class="btn btn-outline-secondary btn-sm myBtn" id="addLocation-submit">SAVE</button>
+              <button type="button" class="btn btn-outline-secondary btn-sm myBtn" data-bs-dismiss="modal">CANCEL</button>
+            </div>       
+          </div>          
+        </div>              
       </div>
           
       

@@ -323,10 +323,12 @@ const getFilteredPersonnel = (departmentSelect, locationSelect) => {
 
 $('#addBtn').click(function () {
   if ($('#personnelBtn').hasClass('active')) {
+    $('#addEmployeeModal').modal('show');
   } else {
     if ($('#departmentsBtn').hasClass('active')) {
       $('#addDepartmentModal').modal('show');
     } else {
+      $('#addLocationModal').modal('show');
     }
   }
 });
@@ -353,6 +355,36 @@ $('#addDepartmentForm').submit(function (e) {
         $('#addDepartmentSelect').val(
           $('#addDepartmentSelect option:first').val()
         );
+      } else {
+        alert(
+          'We are unable to process your request at the moment. Please try again later'
+        );
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+});
+
+$('#addLocationForm').submit(function (e) {
+  e.preventDefault();
+  const name = $('#addLocationName').val();
+  $.ajax({
+    url: 'libs/php/insertLocation.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      name,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        $('#addLocationModal').modal('hide');
+        getAllLocations();
+        // Clear the input field
+        $('#addLocationName').val('');
       } else {
         alert(
           'We are unable to process your request at the moment. Please try again later'
