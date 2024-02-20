@@ -1,3 +1,6 @@
+let departmentSelect;
+let locationSelect;
+
 const getAllPersonnel = () => {
   $.ajax({
     url: 'libs/php/getAll.php',
@@ -6,6 +9,7 @@ const getAllPersonnel = () => {
     success: function (result) {
       if (result.status.code == 200) {
         const data = result.data;
+        console.log(data);
         const cardsContainer = $('#employee-cards');
         cardsContainer.empty();
 
@@ -58,7 +62,7 @@ const getAllDepartments = () => {
 
         select.append(
           $('<option>', {
-            value: '',
+            value: 'all',
             text: 'Select department',
           })
         );
@@ -129,7 +133,7 @@ const getAllLocations = () => {
 
         select.append(
           $('<option>', {
-            value: '',
+            value: 'all',
             text: 'Select location',
           })
         );
@@ -217,6 +221,7 @@ $('#personnelBtn').click(function () {
   $('#departmentsBtn').removeClass('active');
 });
 
+//Refresh button event listner
 $('#refreshBtn').click(function () {
   if ($('#personnelBtn').hasClass('active')) {
     // Refresh personnel table
@@ -232,9 +237,69 @@ $('#refreshBtn').click(function () {
   }
 });
 
+$('#filterOptions').hide();
+
 $('#filterBtn').click(function () {
-  // Open a modal of your own design that allows the user to apply a filter to the personnel table on either department or location
+  $('#filterOptions').toggle();
 });
+
+$('#departmentFilter').on('change', function () {
+  departmentSelect = $(this).val();
+  getFilteredPersonnel(departmentSelect, locationSelect);
+});
+
+$('#locationFilter').on('change', function () {
+  locationSelect = $(this).val();
+  getFilteredPersonnel(departmentSelect, locationSelect);
+});
+
+const getFilteredPersonnel = (departmentSelect, locationSelect) => {
+  $.ajax({
+    url: 'libs/php/getFilteredPersonnel.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      department: departmentSelect,
+      location: locationSelect,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        const data = result.data;
+        const cardsContainer = $('#employee-cards');
+        cardsContainer.empty();
+
+        data.forEach((employee) => {
+          const cardHtml = `
+                      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                          <div class="card h-100 mx-6">
+                              <div class="card-body">
+                                  <h4 class="card-title mb-3">${employee.lastName}, ${employee.firstName}</h4>
+                                  <p class="card-text"><strong>Department:</strong> ${employee.department}</p>
+                                  <p class="card-text"><strong>Location:</strong> ${employee.location}</p>
+                                  <p class="card-text"><strong>Email:</strong> ${employee.email}</p>
+                              </div>
+                              <div class="card-footer d-flex justify-content-end">
+                              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
+                              <i class="fa-solid fa-pencil fa-fw text-secondary"></i>
+                            </button>
+                            <button type="button" class="btn btn-lg  deletePersonnelBtn" data-id="23">
+                              <i class="fa-solid fa-trash fa-fw text-secondary"></i>
+                            </button>
+                              </div>
+                          </div>
+                      </div>
+                  `;
+          cardsContainer.append(cardHtml);
+        });
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+};
 
 $('#addBtn').click(function () {
   // Replicate the logic of the refresh button click to open the add modal for the table that is currently on display
