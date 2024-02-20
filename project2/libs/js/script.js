@@ -76,6 +76,19 @@ const getAllDepartments = () => {
           );
         });
 
+        // Populate department options in the add employee modal
+        const addEmployeeselect = $('#addEmployeeDepartment');
+        addEmployeeselect.empty();
+
+        $.each(data, function (index, department) {
+          addEmployeeselect.append(
+            $('<option>', {
+              value: department.id,
+              text: department.Department,
+            })
+          );
+        });
+
         //Update Departments tab
         const tableBody = $('#departmentTable tbody');
         tableBody.empty();
@@ -331,6 +344,51 @@ $('#addBtn').click(function () {
       $('#addLocationModal').modal('show');
     }
   }
+});
+
+$('#addEmployeeForm').submit(function (e) {
+  e.preventDefault();
+  const firstName = $('#addEmployeeFirstName').val();
+  const lastName = $('#addEmployeeLastName').val();
+  const jobTitle = $('#addEmployeeJobTitle').val();
+  const email = $('#addEmployeeEmailAddress').val();
+  const departmentID = $('#addEmployeeDepartment').val();
+  $.ajax({
+    url: 'libs/php/insertEmployee.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      firstName,
+      lastName,
+      jobTitle,
+      email,
+      departmentID,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        $('#addEmployeeModal').modal('hide');
+        getAllPersonnel();
+        // Clear the input fields
+        $('#addEmployeeFirstName').val('');
+        $('#addEmployeeLastName').val('');
+        $('#addEmployeeJobTitle').val('');
+        $('#addEmployeeEmailAddress').val('');
+        // Reset the dropdown by setting its value to the first option
+        $('#addEmployeeDepartment').val(
+          $('#addEmployeeDepartment option:first').val()
+        );
+      } else {
+        alert(
+          'We are unable to process your request at the moment. Please try again later'
+        );
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
 });
 
 $('#addDepartmentForm').submit(function (e) {
