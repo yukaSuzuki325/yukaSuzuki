@@ -502,6 +502,61 @@
       </div>
     </div>
 
+    <!--Delete department modal-->
+    <div
+      id="deleteDepartmentModal"
+      class="modal fade"
+      tabindex="-1"
+      data-bs-backdrop="false"
+      data-bs-keyboard="false"
+      aria-labelledby="deleteDepartmentModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content shadow">
+          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+            <h5 class="modal-title">Delete department</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div id="deleteDepartmentAlarm"></div>
+            <div#
+            <form id="deleteDepartmentForm">
+              <input type="hidden" id="deleteDepartmentID" />
+              <p>Please confirm that you wish to delete this entry.</p>
+              <h6 id="deleteDepartmentName"></h6>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="submit"
+              form="deleteDepartmentForm"
+              class="btn btn-outline-secondary btn-sm myBtn deleteDepartmentBtn"
+              id="deleteDepartment-submit"
+            >
+              YES
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm myBtn deleteDepartmentBtn"
+              data-bs-dismiss="modal"
+            >
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!--Add location modal-->
     <div
       id="addLocationModal"

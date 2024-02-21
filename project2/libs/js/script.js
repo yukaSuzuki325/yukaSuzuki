@@ -105,12 +105,12 @@ const getAllDepartments = () => {
                   <tr>
                       <td>${department.Department}</td>
                       <td>${department.Location}</td>
-                      <td>${department.Personnel}</td>
+                      <td id="personnelInDepartment">${department.Personnel}</td>
                       <td>
                           <button class="btn btn-lg text-secondary" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${department.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn btn-lg text-secondary deleteDepartmentBtn" data-id=${department.id}>
+                          <button class="btn btn-lg text-secondary deleteDepartmentBtn" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal"data-id=${department.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>
@@ -571,7 +571,7 @@ $('#editPersonnelForm').on('submit', function (e) {
   });
 });
 
-//Update a department
+//Update a department record
 $('#editDepartmentModal').on('show.bs.modal', function (e) {
   $.ajax({
     url: 'libs/php/getDepartmentByID.php',
@@ -637,7 +637,7 @@ $('#editDepartmentForm').on('submit', function (e) {
           $('#editDepartmentModal').hide();
           $('.alert-success').remove();
           $('#editDepartmentForm, .editDepartmentBtn').show();
-        }, 4000);
+        }, 5000);
         getAllDepartments();
       } else {
         alert(
@@ -704,8 +704,88 @@ $('#editLocationForm').on('submit', function (e) {
           $('#editLocationModal').hide();
           $('.alert-success').remove();
           $('#editLocationForm, .editLocationBtn').show();
-        }, 4000);
+        }, 5000);
         getAllLocations();
+      } else {
+        alert(
+          'We are unable to process your request at the moment. Please try again later'
+        );
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+});
+
+//Delete a department record
+$('#deleteDepartmentModal').on('show.bs.modal', function (e) {
+  $.ajax({
+    url: 'libs/php/getDepartmentByID.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      id: $(e.relatedTarget).attr('data-id'),
+    },
+    success: function (result) {
+      var resultCode = result.status.code;
+      console.log(result.data);
+
+      if (resultCode == 200 && result.data.department[0].personnelCount === 0) {
+        $('#deleteDepartmentID').val(result.data.department[0].id);
+        $('#deleteDepartmentName').html(result.data.department[0].name);
+      } else if (
+        resultCode == 200 &&
+        result.data.department[0].personnelCount !== 0
+      ) {
+        $('#deleteDepartmentAlarm').html(
+          "<div class='alert alert-danger' role='alert'>A department with personnel cannot be deleted.</div>"
+        );
+        $('#deleteDepartmentForm, .deleteDepartmentBtn').hide();
+        setTimeout(function () {
+          $('#deleteDepartmentModal').hide();
+          $('.alert-danger').remove();
+          $('#deleteDepartmentForm, .deleteDepartmentBtn').show();
+        }, 5000);
+      } else {
+        $('#editDepartmentModal .modal-title').replaceWith(
+          'Error retrieving data'
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      $('#editDepartmentModal .modal-title').replaceWith(
+        'Error retrieving data'
+      );
+    },
+  });
+});
+
+$('#deleteDepartmentForm').on('submit', function (e) {
+  e.preventDefault();
+  const id = $('#deleteDepartmentID').val();
+
+  $.ajax({
+    url: 'libs/php/deleteDepartmentByID.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      id,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        $('#deleteDepartmentAlarm').html(
+          "<div class='alert alert-success' role='alert'>Record successfully deleted.</div>"
+        );
+        $('#deleteDepartmentForm, .deleteDepartmentBtn').hide();
+        setTimeout(function () {
+          $('#deleteDepartmentModal').hide();
+          $('.alert-success').remove();
+          $('#deleteDepartmentForm, .deleteDepartmentBtn').show();
+        }, 5000);
+        getAllDepartments();
       } else {
         alert(
           'We are unable to process your request at the moment. Please try again later'

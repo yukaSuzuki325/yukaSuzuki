@@ -25,11 +25,17 @@ if (mysqli_connect_errno()) {
     exit;
 }
 
-$query = $conn->prepare('SELECT id, name FROM location WHERE id =  ?');
+$query = $conn->prepare('
+    SELECT l.id, l.name, COUNT(d.id) AS departmentCount
+    FROM location l
+    LEFT JOIN department d ON l.id = d.locationID
+    WHERE l.id = ?
+    GROUP BY l.id
+');
 
 $query->bind_param("i", $_REQUEST['id']);
-
 $query->execute();
+
 
 if (false === $query) {
 
