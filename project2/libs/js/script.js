@@ -15,13 +15,13 @@ const getAllPersonnel = () => {
 
         data.forEach((employee) => {
           const cardHtml = `
-                      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
                           <div class="card h-100 mx-6">
                               <div class="card-body">
                                   <h4 class="card-title mb-3">${employee.lastName}, ${employee.firstName}</h4>
-                                  <p class="card-text"><strong>Department:</strong> ${employee.department}</p>
-                                  <p class="card-text"><strong>Location:</strong> ${employee.location}</p>
-                                  <p class="card-text"><strong>Email:</strong> ${employee.email}</p>
+                                  <p class="card-text">${employee.department}</p>
+                                  <p class="card-text">${employee.location}</p>
+                                  <p class="card-text">${employee.email}</p>
                               </div>
                               <div class="card-footer d-flex justify-content-end">
                               <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id=${employee.id}>
