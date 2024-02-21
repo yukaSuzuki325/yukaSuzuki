@@ -27,7 +27,7 @@ const getAllPersonnel = () => {
                               <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id=${employee.id}>
                               <i class="fa-solid fa-pencil fa-fw text-secondary"></i>
                             </button>
-                            <button type="button" class="btn btn-lg  deletePersonnelBtn" data-id=${employee.id}>
+                            <button type="button" class="btn btn-lg  deletePersonnelBtn" data-bs-toggle="modal" data-bs-target="#deletePersonnelModal" data-id=${employee.id}>
                               <i class="fa-solid fa-trash fa-fw text-secondary"></i>
                             </button>
                               </div>
@@ -720,6 +720,77 @@ $('#editLocationForm').on('submit', function (e) {
   });
 });
 
+//Delete an employee record
+$('#deletePersonnelModal').on('show.bs.modal', function (e) {
+  $.ajax({
+    url: 'libs/php/getPersonnelByID.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      id: $(e.relatedTarget).attr('data-id'),
+    },
+    success: function (result) {
+      var resultCode = result.status.code;
+      console.log(result.data);
+
+      if (resultCode == 200) {
+        $('#deletePersonnelID').val(result.data.personnel[0].id);
+        $('#deletePersonnelName').html(
+          result.data.personnel[0].firstName +
+            ' ' +
+            result.data.personnel[0].lastName
+        );
+      } else {
+        $('#deletePersonnelModal .modal-title').replaceWith(
+          'Error retrieving data'
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      $('#deletePersonnelModal .modal-title').replaceWith(
+        'Error retrieving data'
+      );
+    },
+  });
+});
+
+$('#deletePersonnelForm').on('submit', function (e) {
+  e.preventDefault();
+  const id = $('#deletePersonnelID').val();
+
+  $.ajax({
+    url: 'libs/php/deletePersonnelByID.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      id,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        $('#deletePersonnelAlarm').html(
+          "<div class='alert alert-success' role='alert'>Record successfully deleted.</div>"
+        );
+        $('#deletePersonnelForm, .deletePersonnelBtn').hide();
+        setTimeout(function () {
+          $('#deletePersonnelModal').hide();
+          $('.alert-success').remove();
+          $('#deletePersonnelForm, .deletePersonnelBtn').show();
+        }, 5000);
+        getAllPersonnel();
+      } else {
+        alert(
+          'We are unable to process your request at the moment. Please try again later'
+        );
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+});
+
 //Delete a department record
 $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
   $.ajax({
@@ -750,13 +821,13 @@ $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
           $('#deleteDepartmentForm, .deleteDepartmentBtn').show();
         }, 5000);
       } else {
-        $('#editDepartmentModal .modal-title').replaceWith(
+        $('#deleteDepartmentModal .modal-title').replaceWith(
           'Error retrieving data'
         );
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      $('#editDepartmentModal .modal-title').replaceWith(
+      $('#deleteDepartmentModal .modal-title').replaceWith(
         'Error retrieving data'
       );
     },
@@ -830,13 +901,15 @@ $('#deleteLocationModal').on('show.bs.modal', function (e) {
           $('#deleteLocationForm, .deleteLocationBtn').show();
         }, 5000);
       } else {
-        $('#editLocationModal .modal-title').replaceWith(
+        $('#deleteLocationModal .modal-title').replaceWith(
           'Error retrieving data'
         );
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      $('#editLocationModal .modal-title').replaceWith('Error retrieving data');
+      $('#deleteLocationModal .modal-title').replaceWith(
+        'Error retrieving data'
+      );
     },
   });
 });

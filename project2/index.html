@@ -366,6 +366,60 @@
       </div>
     </div>
 
+    <!--Delete personnel modal-->
+    <div
+      id="deletePersonnelModal"
+      class="modal fade"
+      tabindex="-1"
+      data-bs-backdrop="false"
+      data-bs-keyboard="false"
+      aria-labelledby="deletePersonnelModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content shadow">
+          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+            <h5 class="modal-title">Delete employee</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div id="deletePersonnelAlarm"></div>
+            <form id="deletePersonnelForm">
+              <input type="hidden" id="deletePersonnelID" />
+              <p>Please confirm that you wish to delete this entry.</p>
+              <h6 id="deletePersonnelName"></h6>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="submit"
+              form="deletePersonnelForm"
+              class="btn btn-outline-secondary btn-sm myBtn deletePersonnelBtn"
+              id="deletePersonnel-submit"
+            >
+              YES
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm myBtn deletePersonnelBtn"
+              data-bs-dismiss="modal"
+            >
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!--Add department modal-->
     <div
       id="addDepartmentModal"
@@ -528,7 +582,6 @@
 
           <div class="modal-body">
             <div id="deleteDepartmentAlarm"></div>
-            <div#
             <form id="deleteDepartmentForm">
               <input type="hidden" id="deleteDepartmentID" />
               <p>Please confirm that you wish to delete this entry.</p>
@@ -556,6 +609,8 @@
         </div>
       </div>
     </div>
+
+    <!----------------LOCATION TAB---------------->
 
     <!--Add location modal-->
     <div
@@ -706,7 +761,7 @@
           </div>
 
           <div class="modal-body">
-            <div id="deleteLocationAlarm"></div>            
+            <div id="deleteLocationAlarm"></div>
             <form id="deleteLocationForm">
               <input type="hidden" id="deleteLocationID" />
               <p>Please confirm that you wish to delete this entry.</p>
