@@ -9,7 +9,7 @@ const getAllPersonnel = () => {
     success: function (result) {
       if (result.status.code == 200) {
         const data = result.data;
-        console.log(data);
+
         const cardsContainer = $('#employee-cards');
         cardsContainer.empty();
 
@@ -472,6 +472,7 @@ $('#locationsBtn').click(function () {
   getAllLocations();
 });
 
+//Update an employee
 $('#editPersonnelModal').on('show.bs.modal', function (e) {
   $.ajax({
     url: 'libs/php/getPersonnelByID.php',
@@ -556,6 +557,88 @@ $('#editPersonnelForm').on('submit', function (e) {
           $('#editPersonnelForm, .editPersonnelBtn').show();
         }, 4000);
         getAllPersonnel();
+      } else {
+        alert(
+          'We are unable to process your request at the moment. Please try again later'
+        );
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+});
+
+//Update a department
+$('#editDepartmentModal').on('show.bs.modal', function (e) {
+  $.ajax({
+    url: 'libs/php/getDepartmentByID.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      id: $(e.relatedTarget).attr('data-id'),
+    },
+    success: function (result) {
+      var resultCode = result.status.code;
+
+      if (resultCode == 200) {
+        $('#editDepartmentID').val(result.data.department[0].id);
+        $('#editDepartmentName').val(result.data.department[0].name);
+        console.log(result.data.location);
+
+        $.each(result.data.location, function () {
+          $('#editDepartmentLocation').append(
+            $('<option>', {
+              value: this.id,
+              text: this.name,
+            })
+          );
+        });
+
+        $('#editDepartmentLocation').val(result.data.department[0].locationID);
+      } else {
+        $('#editDepartmentModal .modal-title').replaceWith(
+          'Error retrieving data'
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      $('#editDepartmentModal .modal-title').replaceWith(
+        'Error retrieving data'
+      );
+    },
+  });
+});
+
+$('#editDepartmentForm').on('submit', function (e) {
+  e.preventDefault();
+  const name = $('#editDepartmentName').val();
+  const location = $('#editDepartmentLocation').val();
+  const id = $('#editDepartmentID').val();
+
+  $.ajax({
+    url: 'libs/php/updateDepartment.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      name,
+      location,
+      id,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        $('#editDepartmentSuccess').html(
+          "<div class='alert alert-success' role='alert'>Record successfully updated.</div>"
+        );
+        $('#editDepartmentForm, .editDepartmentBtn').hide();
+        setTimeout(function () {
+          $('#editDepartmentModal').hide();
+          $('.alert-success').remove();
+          $('#editDepartmentForm, .editDepartmentBtn').show();
+        }, 4000);
+        getAllDepartments();
       } else {
         alert(
           'We are unable to process your request at the moment. Please try again later'
