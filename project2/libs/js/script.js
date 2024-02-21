@@ -189,10 +189,10 @@ const getAllLocations = () => {
                       <td>${location.Location}</td>
                       <td>${location.Personnel}</td>
                       <td>
-                          <button class="btn btn-lg text-secondary" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${location.id}>
+                          <button class="btn btn-lg text-secondary editLocationBtn" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id=${location.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn btn-lg text-secondary deleteDepartmentBtn" data-id=${location.id}>
+                          <button class="btn btn-lg text-secondary editLocationBtn" data-id=${location.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>
@@ -639,6 +639,73 @@ $('#editDepartmentForm').on('submit', function (e) {
           $('#editDepartmentForm, .editDepartmentBtn').show();
         }, 4000);
         getAllDepartments();
+      } else {
+        alert(
+          'We are unable to process your request at the moment. Please try again later'
+        );
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+});
+
+//Update a location
+$('#editLocationModal').on('show.bs.modal', function (e) {
+  $.ajax({
+    url: 'libs/php/getLocationByID.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      id: $(e.relatedTarget).attr('data-id'),
+    },
+    success: function (result) {
+      var resultCode = result.status.code;
+
+      if (resultCode == 200) {
+        $('#editLocationID').val(result.data.location[0].id);
+        $('#editLocationName').val(result.data.location[0].name);
+        console.log(result.data.location);
+      } else {
+        $('#editLocationModal .modal-title').replaceWith(
+          'Error retrieving data'
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      $('#editLocationModal .modal-title').replaceWith('Error retrieving data');
+    },
+  });
+});
+
+$('#editLocationForm').on('submit', function (e) {
+  e.preventDefault();
+  const name = $('#editLocationName').val();
+  const id = $('#editLocationID').val();
+
+  $.ajax({
+    url: 'libs/php/updateLocation.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      name,
+      id,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        $('#editLocationSuccess').html(
+          "<div class='alert alert-success' role='alert'>Record successfully updated.</div>"
+        );
+        $('#editLocationForm, .editLocationBtn').hide();
+        setTimeout(function () {
+          $('#editLocationModal').hide();
+          $('.alert-success').remove();
+          $('#editLocationForm, .editLocationBtn').show();
+        }, 4000);
+        getAllLocations();
       } else {
         alert(
           'We are unable to process your request at the moment. Please try again later'

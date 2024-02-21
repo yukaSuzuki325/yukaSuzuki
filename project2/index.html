@@ -563,6 +563,69 @@
       </div>
     </div>
 
+    <!--Edit location modal-->
+    <div
+      id="editLocationModal"
+      class="modal fade"
+      tabindex="-1"
+      data-bs-backdrop="false"
+      data-bs-keyboard="false"
+      aria-labelledby="editLocationModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content shadow">
+          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+            <h5 class="modal-title">Edit location</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div id="editLocationSuccess"></div>
+            <form id="editLocationForm">
+              <input type="hidden" id="editLocationID" />
+
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editLocationName"
+                  placeholder="Department name"
+                  required
+                />
+                <label for="editLocationName">Location name</label>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="submit"
+              form="editLocationForm"
+              class="btn btn-outline-secondary btn-sm myBtn editLocationBtn"
+              id="editLocation-submit"
+            >
+              SAVE
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm myBtn editLocationBtn"
+              data-bs-dismiss="modal"
+            >
+              CANCEL
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="libs/js/jquery-3.7.1.min.js"></script>
     <script src="libs/js/bootstrap.bundle.min.js"></script>
     <script src="libs/js/script.js"></script>
