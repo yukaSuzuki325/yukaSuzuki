@@ -194,7 +194,8 @@
 
           <div class="modal-body">
             <form id="addEmployeeForm">
-              <input type="hidden" id="editPersonnelEmployeeID" />
+              <input type="hidden" id="addPersonnelEmployeeID" />
+
               <div class="form-floating mb-3">
                 <input
                   type="text"
@@ -291,6 +292,7 @@
           </div>
 
           <div class="modal-body">
+            <div id="editPersonnelSuccess"></div>
             <form id="editPersonnelForm">
               <input type="hidden" id="editPersonnelEmployeeID" />
               <div class="form-floating mb-3">
@@ -348,13 +350,13 @@
             <button
               type="submit"
               form="editPersonnelForm"
-              class="btn btn-outline-secondary btn-sm myBtn"
+              class="btn btn-outline-secondary btn-sm myBtn editPersonnelBtn"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn"
+              class="btn btn-outline-secondary btn-sm myBtn editPersonnelBtn"
               data-bs-dismiss="modal"
             >
               CANCEL

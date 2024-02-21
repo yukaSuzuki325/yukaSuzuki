@@ -24,10 +24,10 @@ const getAllPersonnel = () => {
                                   <p class="card-text"><strong>Email:</strong> ${employee.email}</p>
                               </div>
                               <div class="card-footer d-flex justify-content-end">
-                              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
+                              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id=${employee.id}>
                               <i class="fa-solid fa-pencil fa-fw text-secondary"></i>
                             </button>
-                            <button type="button" class="btn btn-lg  deletePersonnelBtn" data-id="23">
+                            <button type="button" class="btn btn-lg  deletePersonnelBtn" data-id=${employee.id}>
                               <i class="fa-solid fa-trash fa-fw text-secondary"></i>
                             </button>
                               </div>
@@ -305,10 +305,10 @@ const getFilteredPersonnel = (departmentSelect, locationSelect) => {
                                   <p class="card-text"><strong>Email:</strong> ${employee.email}</p>
                               </div>
                               <div class="card-footer d-flex justify-content-end">
-                              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
+                              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id=${employee.id}>
                               <i class="fa-solid fa-pencil fa-fw text-secondary"></i>
                             </button>
-                            <button type="button" class="btn btn-lg  deletePersonnelBtn" data-id="23">
+                            <button type="button" class="btn btn-lg  deletePersonnelBtn" data-id=${employee.id}>
                               <i class="fa-solid fa-trash fa-fw text-secondary"></i>
                             </button>
                               </div>
@@ -409,7 +409,7 @@ $('#addDepartmentForm').submit(function (e) {
         getAllDepartments();
         // Clear the input field
         $('#addDepartmentName').val('');
-        // Reset the dropdown by setting its value to the first option
+        // Reset the dropdown value to the first option
         $('#addDepartmentSelect').val(
           $('#addDepartmentSelect option:first').val()
         );
@@ -459,19 +459,22 @@ $('#addLocationForm').submit(function (e) {
 
 $('#personnelBtn').click(function () {
   // Call function to refresh personnel table
+  getAllPersonnel();
 });
 
 $('#departmentsBtn').click(function () {
   // Call function to refresh department table
+  getAllDepartments();
 });
 
 $('#locationsBtn').click(function () {
   // Call function to refresh location table
+  getAllLocations();
 });
 
 $('#editPersonnelModal').on('show.bs.modal', function (e) {
   $.ajax({
-    url: 'https://coding.itcareerswitch.co.uk/companydirectory/libs/php/getPersonnelByID.php',
+    url: 'libs/php/getPersonnelByID.php',
     type: 'POST',
     dataType: 'json',
     data: {
@@ -522,10 +525,47 @@ $('#editPersonnelModal').on('show.bs.modal', function (e) {
 // Executes when the form button with type="submit" is clicked
 
 $('#editPersonnelForm').on('submit', function (e) {
-  // Executes when the form button with type="submit" is clicked
-  // stop the default browser behviour
-
   e.preventDefault();
+  const firstName = $('#editPersonnelFirstName').val();
+  const lastName = $('#editPersonnelLastName').val();
+  const jobTitle = $('#editPersonnelJobTitle').val();
+  const email = $('#editPersonnelEmailAddress').val();
+  const departmentID = $('#editPersonnelDepartment').val();
+  const employeeID = $('#editPersonnelEmployeeID').val();
+  $.ajax({
+    url: 'libs/php/updateEmployee.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      firstName,
+      lastName,
+      jobTitle,
+      email,
+      departmentID,
+      employeeID,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        $('#editPersonnelSuccess').html(
+          "<div class='alert alert-success' role='alert'>Record successfully updated.</div>"
+        );
+        $('#editPersonnelForm, .editPersonnelBtn').hide();
+        setTimeout(function () {
+          $('#editPersonnelModal').hide();
+          $('.alert-success').remove();
+          $('#editPersonnelForm, .editPersonnelBtn').show();
+        }, 4000);
+        getAllPersonnel();
+      } else {
+        alert(
+          'We are unable to process your request at the moment. Please try again later'
+        );
+      }
+    },
 
-  // AJAX call to save form data
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
 });
