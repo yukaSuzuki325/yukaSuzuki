@@ -681,6 +681,60 @@
       </div>
     </div>
 
+    <!--Delete location modal-->
+    <div
+      id="deleteLocationModal"
+      class="modal fade"
+      tabindex="-1"
+      data-bs-backdrop="false"
+      data-bs-keyboard="false"
+      aria-labelledby="deleteLocationModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content shadow">
+          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+            <h5 class="modal-title">Delete location</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div id="deleteLocationAlarm"></div>            
+            <form id="deleteLocationForm">
+              <input type="hidden" id="deleteLocationID" />
+              <p>Please confirm that you wish to delete this entry.</p>
+              <h6 id="deleteLocationName"></h6>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="submit"
+              form="deleteLocationForm"
+              class="btn btn-outline-secondary btn-sm myBtn deleteLocationBtn"
+              id="deleteLocation-submit"
+            >
+              YES
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm myBtn deleteLocationBtn"
+              data-bs-dismiss="modal"
+            >
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="libs/js/jquery-3.7.1.min.js"></script>
     <script src="libs/js/bootstrap.bundle.min.js"></script>
     <script src="libs/js/script.js"></script>

@@ -192,7 +192,7 @@ const getAllLocations = () => {
                           <button class="btn btn-lg text-secondary editLocationBtn" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id=${location.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn btn-lg text-secondary editLocationBtn" data-id=${location.id}>
+                          <button class="btn btn-lg text-secondary editLocationBtn" data-bs-toggle="modal" data-bs-target="#deleteLocationModal" data-id=${location.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>
@@ -786,6 +786,84 @@ $('#deleteDepartmentForm').on('submit', function (e) {
           $('#deleteDepartmentForm, .deleteDepartmentBtn').show();
         }, 5000);
         getAllDepartments();
+      } else {
+        alert(
+          'We are unable to process your request at the moment. Please try again later'
+        );
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+});
+
+//Delete a location record
+$('#deleteLocationModal').on('show.bs.modal', function (e) {
+  $.ajax({
+    url: 'libs/php/getLocationByID.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      id: $(e.relatedTarget).attr('data-id'),
+    },
+    success: function (result) {
+      var resultCode = result.status.code;
+      console.log(result.data);
+
+      if (resultCode == 200 && result.data.location[0].departmentCount === 0) {
+        $('#deleteLocationID').val(result.data.location[0].id);
+        $('#deleteLocationName').html(result.data.location[0].name);
+      } else if (
+        resultCode == 200 &&
+        result.data.location[0].locationCount !== 0
+      ) {
+        $('#deleteLocationAlarm').html(
+          "<div class='alert alert-danger' role='alert'>A location that has departments cannot be deleted.</div>"
+        );
+        $('#deleteLocationForm, .deleteLocationBtn').hide();
+        setTimeout(function () {
+          $('#deleteLocationModal').hide();
+          $('.alert-danger').remove();
+          $('#deleteLocationForm, .deleteLocationBtn').show();
+        }, 5000);
+      } else {
+        $('#editLocationModal .modal-title').replaceWith(
+          'Error retrieving data'
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      $('#editLocationModal .modal-title').replaceWith('Error retrieving data');
+    },
+  });
+});
+
+$('#deleteLocationForm').on('submit', function (e) {
+  e.preventDefault();
+  const id = $('#deleteLocationID').val();
+
+  $.ajax({
+    url: 'libs/php/deleteLocationByID.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      id,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        $('#deleteLocationAlarm').html(
+          "<div class='alert alert-success' role='alert'>Record successfully deleted.</div>"
+        );
+        $('#deleteLocationForm, .deleteLocationBtn').hide();
+        setTimeout(function () {
+          $('#deleteLocationModal').hide();
+          $('.alert-success').remove();
+          $('#deleteLocationForm, .deleteLocationBtn').show();
+        }, 5000);
+        getAllLocations();
       } else {
         alert(
           'We are unable to process your request at the moment. Please try again later'
