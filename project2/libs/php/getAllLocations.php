@@ -33,13 +33,11 @@ if (mysqli_connect_errno()) {
 $query = "SELECT 
 location.id, 
 location.name AS 'Location', 
-COUNT(personnel.id) AS 'Personnel'
+COUNT(department.id) AS 'Department'
 FROM 
 location
 LEFT JOIN 
 department ON department.locationID = location.id
-LEFT JOIN 
-personnel ON department.id = personnel.departmentID
 GROUP BY 
 location.id
 ORDER BY location.name ASC;

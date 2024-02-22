@@ -138,6 +138,7 @@ const getAllLocations = () => {
     success: function (result) {
       if (result.status.code == 200) {
         const data = result.data;
+        console.log(data);
 
         //Populate options in the location filter
         const select = $('#locationFilter');
@@ -177,7 +178,7 @@ const getAllLocations = () => {
         tableBody.empty();
         const headers = `<tr>        
         <th>Location</th>
-        <th>Personnel</th>
+        <th>Department</th>
         <th> Actions</th>
         </tr>`;
         tableBody.append(headers);
@@ -187,7 +188,7 @@ const getAllLocations = () => {
           const rowHtml = `
                   <tr>                      
                       <td>${location.Location}</td>
-                      <td>${location.Personnel}</td>
+                      <td>${location.Department}</td>
                       <td>
                           <button class="btn btn-lg text-secondary editLocationBtn" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id=${location.id}>
                               <i class="fa fa-pencil"></i>
