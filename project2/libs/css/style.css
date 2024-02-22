@@ -26,10 +26,14 @@ tr {
   width: 70px;
 }
 
+#searchInp {
+  min-width: 185px;
+}
+
 #refreshBtn,
 #filterBtn,
 #addBtn {
-  opacity: 0.75; /* Adjust the value as needed */
+  opacity: 0.75;
 }
 
 /*Personnel Tab*/
