@@ -57,15 +57,35 @@
             </div>
           </div>
 
-          <div class="col-6 text-end me-2">
-            <button class="btn btn-dark" data-bs-theme-value="dark">
-              Dark Mode
-            </button>
+          <nav class="navbar navbar-expand-md col-6 text-end me-2">
+            <!-- Change md to lg or sm based on when you want the hamburger to appear -->
+            <div class="container-fluid">
+              <!-- Hamburger Button -->
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarToggleContent"
+                aria-controls="navbarToggleContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
 
-            <button class="btn btn-light" data-bs-theme-value="light">
-              Light Mode
-            </button>
-          </div>
+              <!-- Navbar content that will be toggled -->
+              <div class="collapse navbar-collapse" id="navbarToggleContent">
+                <div class="d-flex justify-content-end">
+                  <button class="btn btn-dark" data-bs-theme-value="dark">
+                    Dark Mode
+                  </button>
+                  <button class="btn btn-light" data-bs-theme-value="light">
+                    Light Mode
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nav>
 
           <div id="filterOptions" class="mb-3">
             <select id="locationFilter" class="me-2">
