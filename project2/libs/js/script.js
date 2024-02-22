@@ -9,33 +9,39 @@ const getAllPersonnel = () => {
     success: function (result) {
       if (result.status.code == 200) {
         const data = result.data;
+        console.log(data);
 
-        const cardsContainer = $('#employee-cards');
-        cardsContainer.empty();
+        const tableBody = $('#personnelTable tbody');
+        tableBody.empty();
+        const headers = `<tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Location</th>
+        <th>Email Address</th>
+        <th> Actions</th>
+        </tr>`;
+        tableBody.append(headers);
 
         data.forEach((employee) => {
-          const cardHtml = `
-                      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
-                          <div class="card h-100 mx-6">
-                              <div class="card-body">
-                                  <h4 class="card-title mb-3">${employee.lastName}, ${employee.firstName}</h4>
-                                  <p class="card-text">${employee.department}</p>
-                                  <p class="card-text">${employee.location}</p>
-                                  <p class="card-text">${employee.email}</p>
-                              </div>
-                              <div class="card-footer d-flex justify-content-end">
-                              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id=${employee.id}>
-                              <i class="fa-solid fa-pencil fa-fw text-secondary"></i>
-                            </button>
-                            <button type="button" class="btn btn-lg  deletePersonnelBtn" data-bs-toggle="modal" data-bs-target="#deletePersonnelModal" data-id=${employee.id}>
-                              <i class="fa-solid fa-trash fa-fw text-secondary"></i>
-                            </button>
-                              </div>
-                          </div>
-                      </div>
-                  `;
-          cardsContainer.append(cardHtml);
+          const rowHtml = `
+                  <tr>
+                      <td>${employee.lastName}, ${employee.firstName}</td>
+                      <td>${employee.department}</td>
+                      <td>${employee.location}</td>
+                      <td>${employee.email}</td>
+                      <td>
+                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${employee.id}>
+                              <i class="fa fa-pencil"></i>
+                          </button>
+                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal"data-id=${employee.id}>
+                              <i class="fa fa-trash"></i>
+                          </button>
+                      </td>
+                  </tr>
+              `;
+          tableBody.append(rowHtml);
         });
+
         $('.preloader-container').fadeOut('slow');
       }
     },
@@ -108,10 +114,10 @@ const getAllDepartments = () => {
                       <td>${department.Location}</td>
                       <td id="personnelInDepartment">${department.Personnel}</td>
                       <td>
-                          <button class="btn btn-lg text-secondary" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${department.id}>
+                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${department.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn btn-lg text-secondary" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal"data-id=${department.id}>
+                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal"data-id=${department.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>
@@ -184,17 +190,16 @@ const getAllLocations = () => {
         </tr>`;
         tableBody.append(headers);
 
-        // Loop through each location and append a row to the table
         data.forEach((location) => {
           const rowHtml = `
                   <tr>                      
                       <td>${location.Location}</td>
                       <td>${location.Department}</td>
                       <td>
-                          <button class="btn btn-lg text-secondary editLocationBtn" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id=${location.id}>
+                          <button class="btn btn-primary btn-sm editLocationBtn" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id=${location.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn btn-lg text-secondary editLocationBtn" data-bs-toggle="modal" data-bs-target="#deleteLocationModal" data-id=${location.id}>
+                          <button class="btn btn-primary btn-sm editLocationBtn" data-bs-toggle="modal" data-bs-target="#deleteLocationModal" data-id=${location.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>

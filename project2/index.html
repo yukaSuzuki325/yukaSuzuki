@@ -47,65 +47,27 @@
 
     <section>
       <div class="appHeader">
-        <div class="row mb-2">
-          <div class="col d-flex align-items-center">
+        <div class="row">
+          <div class="col">
             <input
               id="searchInp"
-              class="form-control"
-              placeholder="Search by name"
+              class="form-control mb-3"
+              placeholder="search"
             />
           </div>
 
-          <div class="col d-flex align-items-center">
+          <div class="col-6 text-end me-2">
             <div class="btn-group" role="group" aria-label="buttons">
-              <button id="filterBtn" type="button" class="btn btn-secondary">
-                <i class="fa-solid fa-filter fa-fw"></i>
-              </button>
-              <button id="refreshBtn" type="button" class="btn btn-secondary">
+              <button id="refreshBtn" type="button" class="btn btn-primary">
                 <i class="fa-solid fa-refresh fa-fw"></i>
               </button>
-              <button id="addBtn" type="button" class="btn btn-secondary">
+              <button id="filterBtn" type="button" class="btn btn-primary">
+                <i class="fa-solid fa-filter fa-fw"></i>
+              </button>
+              <button id="addBtn" type="button" class="btn btn-primary">
                 <i class="fa-solid fa-plus fa-fw"></i>
               </button>
             </div>
-          </div>
-
-          <nav class="col navbar navbar-expand-md me-2">
-            <div class="container-fluid d-flex justify-content-end">
-              <!-- Hamburger Button -->
-              <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarToggleContent"
-                aria-controls="navbarToggleContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span class="navbar-toggler-icon"></span>
-              </button>
-
-              <!-- Navbar content -->
-              <div class="collapse navbar-collapse" id="navbarToggleContent">
-                <div class="ms-auto">
-                  <button class="btn btn-dark" data-bs-theme-value="dark">
-                    Dark Mode
-                  </button>
-                  <button class="btn btn-light" data-bs-theme-value="light">
-                    Light Mode
-                  </button>
-                </div>
-              </div>
-            </div>
-          </nav>
-
-          <div id="filterOptions" class="mb-3">
-            <select id="locationFilter" class="me-2">
-              <!-- <option value="">Select location</option> -->
-            </select>
-            <select id="departmentFilter" class="me-2">
-              <!-- <option value="">Select department</option> -->
-            </select>
           </div>
         </div>
 
@@ -121,8 +83,8 @@
               aria-controls="home-tab-pane"
               aria-selected="true"
             >
-              <i class="fa-solid fa-person fa-lg fa-fw text-secondary"></i
-              ><span class="d-none d-sm-block text-secondary">Personnel</span>
+              <i class="fa-solid fa-person fa-lg fa-fw text-primary"></i
+              ><span class="d-none d-sm-block text-primary">Personnel</span>
             </button>
           </li>
           <li class="nav-item" role="presentation">
@@ -136,8 +98,8 @@
               aria-controls="profile-tab-pane"
               aria-selected="false"
             >
-              <i class="fa-solid fa-building fa-lg fa-fw text-secondary"></i
-              ><span class="d-none d-sm-block text-secondary">Departments</span>
+              <i class="fa-solid fa-building fa-lg fa-fw text-primary"></i
+              ><span class="d-none d-sm-block text-primary">Departments</span>
             </button>
           </li>
           <li class="nav-item" role="presentation">
@@ -152,25 +114,27 @@
               aria-selected="false"
             >
               <i
-                class="fa-solid fa-map-location-dot fa-lg fa-fw text-secondary"
+                class="fa-solid fa-map-location-dot fa-lg fa-fw text-primary"
               ></i
-              ><span class="d-none d-sm-block text-secondary">Locations</span>
+              ><span class="d-none d-sm-block text-primary">Locations</span>
             </button>
           </li>
         </ul>
       </div>
 
-      <div class="tab-content">
+      <div class="tab-content bg-white">
         <!--Personnel Tab-->
 
         <div
-          class="tab-pane show active container"
+          class="tab-pane show active"
           id="personnel-tab-pane"
           role="tabpanel"
           aria-labelledby="home-tab"
           tabindex="0"
         >
-          <div class="row m-5" id="employee-cards"></div>
+          <table class="table table-hover" id="personnelTable">
+            <tbody></tbody>
+          </table>
         </div>
 
         <!--Department Tab-->
@@ -182,11 +146,9 @@
           aria-labelledby="profile-tab"
           tabindex="0"
         >
-          <div class="m-5">
-            <table class="table" id="departmentTable">
-              <tbody></tbody>
-            </table>
-          </div>
+          <table class="table table-hover" id="departmentTable">
+            <tbody></tbody>
+          </table>
         </div>
 
         <!--Locations Tab-->
@@ -197,11 +159,9 @@
           aria-labelledby="contact-tab"
           tabindex="0"
         >
-          <div class="m-5">
-            <table class="table" id="locationsTable">
-              <tbody></tbody>
-            </table>
-          </div>
+          <table class="table table-hover" id="locationsTable">
+            <tbody></tbody>
+          </table>
         </div>
       </div>
 
@@ -209,6 +169,8 @@
         <p class="fw-light my-3">Company Directory version 1.0</p>
       </footer>
     </section>
+
+    <!---------------------Modals------------------------------->
 
     <!--Add employee modal-->
     <div
@@ -224,7 +186,7 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
             <h5 class="modal-title">Add an employee</h5>
             <button
               type="button"
@@ -293,13 +255,13 @@
             <button
               type="submit"
               form="addEmployeeForm"
-              class="btn btn-outline-secondary btn-sm myBtn"
+              class="btn btn-outline-primary btn-sm myBtn"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn"
+              class="btn btn-outline-primary btn-sm myBtn"
               data-bs-dismiss="modal"
             >
               CANCEL
@@ -323,7 +285,7 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
             <h5 class="modal-title">Edit employee</h5>
             <button
               type="button"
@@ -392,20 +354,20 @@
             <button
               type="submit"
               form="editPersonnelForm"
-              class="btn btn-outline-secondary btn-sm myBtn editPersonnelBtn"
+              class="btn btn-outline-primary btn-sm myBtn editPersonnelBtn"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn editPersonnelBtn"
+              class="btn btn-outline-primary btn-sm myBtn editPersonnelBtn"
               data-bs-dismiss="modal"
             >
               CANCEL
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn okBtn"
+              class="btn btn-outline-primary btn-sm myBtn okBtn"
               data-bs-dismiss="modal"
             >
               OK
@@ -429,7 +391,7 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
             <h5 class="modal-title">Delete employee</h5>
             <button
               type="button"
@@ -452,21 +414,21 @@
             <button
               type="submit"
               form="deletePersonnelForm"
-              class="btn btn-outline-secondary btn-sm myBtn deletePersonnelBtn"
+              class="btn btn-outline-primary btn-sm myBtn deletePersonnelBtn"
               id="deletePersonnel-submit"
             >
               YES
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn deletePersonnelBtn"
+              class="btn btn-outline-primary btn-sm myBtn deletePersonnelBtn"
               data-bs-dismiss="modal"
             >
               NO
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn okBtn"
+              class="btn btn-outline-primary btn-sm myBtn okBtn"
               data-bs-dismiss="modal"
             >
               OK
@@ -490,7 +452,7 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
             <h5 class="modal-title">Add a department</h5>
             <button
               type="button"
@@ -525,14 +487,14 @@
             <button
               type="submit"
               form="addDepartmentForm"
-              class="btn btn-outline-secondary btn-sm myBtn"
+              class="btn btn-outline-primary btn-sm myBtn"
               id="addDepartment-submit"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn"
+              class="btn btn-outline-primary btn-sm myBtn"
               data-bs-dismiss="modal"
             >
               CANCEL
@@ -556,7 +518,7 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
             <h5 class="modal-title">Edit department</h5>
             <button
               type="button"
@@ -595,21 +557,21 @@
             <button
               type="submit"
               form="editDepartmentForm"
-              class="btn btn-outline-secondary btn-sm myBtn editDepartmentBtn"
+              class="btn btn-outline-primary btn-sm myBtn editDepartmentBtn"
               id="editDepartment-submit"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn editDepartmentBtn"
+              class="btn btn-outline-primary btn-sm myBtn editDepartmentBtn"
               data-bs-dismiss="modal"
             >
               CANCEL
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn okBtn"
+              class="btn btn-outline-primary btn-sm myBtn okBtn"
               data-bs-dismiss="modal"
             >
               OK
@@ -633,7 +595,7 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
             <h5 class="modal-title">Delete department</h5>
             <button
               type="button"
@@ -656,21 +618,21 @@
             <button
               type="submit"
               form="deleteDepartmentForm"
-              class="btn btn-outline-secondary btn-sm myBtn deleteDepartmentBtn"
+              class="btn btn-outline-primary btn-sm myBtn deleteDepartmentBtn"
               id="deleteDepartment-submit"
             >
               YES
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn deleteDepartmentBtn"
+              class="btn btn-outline-primary btn-sm myBtn deleteDepartmentBtn"
               data-bs-dismiss="modal"
             >
               NO
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn okBtn"
+              class="btn btn-outline-primary btn-sm myBtn okBtn"
               data-bs-dismiss="modal"
             >
               OK
@@ -696,7 +658,7 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
             <h5 class="modal-title">Add a location</h5>
             <button
               type="button"
@@ -726,14 +688,14 @@
             <button
               type="submit"
               form="addLocationForm"
-              class="btn btn-outline-secondary btn-sm myBtn"
+              class="btn btn-outline-primary btn-sm myBtn"
               id="addLocation-submit"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn"
+              class="btn btn-outline-primary btn-sm myBtn"
               data-bs-dismiss="modal"
             >
               CANCEL
@@ -757,7 +719,7 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
             <h5 class="modal-title">Edit location</h5>
             <button
               type="button"
@@ -789,21 +751,21 @@
             <button
               type="submit"
               form="editLocationForm"
-              class="btn btn-outline-secondary btn-sm myBtn editLocationBtn"
+              class="btn btn-outline-primary btn-sm myBtn editLocationBtn"
               id="editLocation-submit"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn editLocationBtn"
+              class="btn btn-outline-primary btn-sm myBtn editLocationBtn"
               data-bs-dismiss="modal"
             >
               CANCEL
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn okBtn"
+              class="btn btn-outline-primary btn-sm myBtn okBtn"
               data-bs-dismiss="modal"
             >
               OK
@@ -827,7 +789,7 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-secondary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
             <h5 class="modal-title">Delete location</h5>
             <button
               type="button"
@@ -850,21 +812,21 @@
             <button
               type="submit"
               form="deleteLocationForm"
-              class="btn btn-outline-secondary btn-sm myBtn deleteLocationBtn"
+              class="btn btn-outline-primary btn-sm myBtn deleteLocationBtn"
               id="deleteLocation-submit"
             >
               YES
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn deleteLocationBtn"
+              class="btn btn-outline-primary btn-sm myBtn deleteLocationBtn"
               data-bs-dismiss="modal"
             >
               NO
             </button>
             <button
               type="button"
-              class="btn btn-outline-secondary btn-sm myBtn okBtn"
+              class="btn btn-outline-primary btn-sm myBtn okBtn"
               data-bs-dismiss="modal"
             >
               OK
@@ -876,7 +838,6 @@
 
     <script src="libs/js/jquery-3.7.1.min.js"></script>
     <script src="libs/js/bootstrap.bundle.min.js"></script>
-    <script src="libs/js/darkmodetoggle.js"></script>
     <script src="libs/js/script.js"></script>
   </body>
 </html>
