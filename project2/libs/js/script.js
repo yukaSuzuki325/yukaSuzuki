@@ -10,36 +10,7 @@ const getAllPersonnel = () => {
       if (result.status.code == 200) {
         const data = result.data;
 
-        const tableBody = $('#personnelTable tbody');
-        tableBody.empty();
-        const headers = `<tr>
-        <th>Name</th>
-        <th>Department</th>
-        <th>Location</th>
-        <th>Email Address</th>
-        <th> Actions</th>
-        </tr>`;
-        tableBody.append(headers);
-
-        data.forEach((employee) => {
-          const rowHtml = `
-                  <tr>
-                      <td>${employee.lastName}, ${employee.firstName}</td>
-                      <td>${employee.department}</td>
-                      <td>${employee.location}</td>
-                      <td>${employee.email}</td>
-                      <td>
-                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${employee.id}>
-                              <i class="fa fa-pencil"></i>
-                          </button>
-                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal"data-id=${employee.id}>
-                              <i class="fa fa-trash"></i>
-                          </button>
-                      </td>
-                  </tr>
-              `;
-          tableBody.append(rowHtml);
-        });
+        populatePersonnelTable(data);
 
         $('.preloader-container').fadeOut('slow');
       }
