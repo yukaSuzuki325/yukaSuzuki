@@ -110,7 +110,7 @@ const getAllDepartments = () => {
                           <button class="btn btn-lg text-secondary" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${department.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn btn-lg text-secondary deleteDepartmentBtn" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal"data-id=${department.id}>
+                          <button class="btn btn-lg text-secondary" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal"data-id=${department.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>
@@ -816,11 +816,11 @@ $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
           "<div class='alert alert-danger' role='alert'>A department with personnel cannot be deleted.</div>"
         );
         $('#deleteDepartmentForm, .deleteDepartmentBtn').hide();
-        setTimeout(function () {
-          $('#deleteDepartmentModal').hide();
+
+        $('#deleteDepartmentModal').on('hide.bs.modal', function () {
           $('.alert-danger').remove();
           $('#deleteDepartmentForm, .deleteDepartmentBtn').show();
-        }, 5000);
+        });
       } else {
         $('#deleteDepartmentModal .modal-title').replaceWith(
           'Error retrieving data'
@@ -896,11 +896,11 @@ $('#deleteLocationModal').on('show.bs.modal', function (e) {
           "<div class='alert alert-danger' role='alert'>A location that has departments cannot be deleted.</div>"
         );
         $('#deleteLocationForm, .deleteLocationBtn').hide();
-        setTimeout(function () {
-          $('#deleteLocationModal').hide();
+
+        $('#deleteLocationModal').on('hide.bs.modal', function () {
           $('.alert-danger').remove();
           $('#deleteLocationForm, .deleteLocationBtn').show();
-        }, 5000);
+        });
       } else {
         $('#deleteLocationModal .modal-title').replaceWith(
           'Error retrieving data'
