@@ -555,12 +555,13 @@ $('#editPersonnelForm').on('submit', function (e) {
         );
         $('#editPersonnelForm, .editPersonnelBtn').hide();
         $('.okBtn').show();
-        setTimeout(function () {
-          $('#editPersonnelModal').hide();
+
+        $('#editPersonnelModal').on('hide.bs.modal', function () {
           $('.alert-success').remove();
           $('#editPersonnelForm, .editPersonnelBtn').show();
           $('.okBtn').hide();
-        }, 4000);
+        });
+
         getAllPersonnel();
       } else {
         alert(
@@ -640,12 +641,13 @@ $('#editDepartmentForm').on('submit', function (e) {
         );
         $('#editDepartmentForm, .editDepartmentBtn').hide();
         $('.okBtn').show();
-        setTimeout(function () {
-          $('#editDepartmentModal').hide();
+
+        $('#editDepartmentModal').on('hide.bs.modal', function () {
           $('.alert-success').remove();
           $('#editDepartmentForm, .editDepartmentBtn').show();
           $('.okBtn').hide();
-        }, 5000);
+        });
+
         getAllDepartments();
       } else {
         alert(
@@ -710,12 +712,13 @@ $('#editLocationForm').on('submit', function (e) {
         );
         $('#editLocationForm, .editLocationBtn').hide();
         $('.okBtn').show();
-        setTimeout(function () {
-          $('#editLocationModal').hide();
+
+        $('#editLocationModal').on('hide.bs.modal', function () {
           $('.alert-success').remove();
           $('#editLocationForm, .editLocationBtn').show();
           $('.okBtn').hide();
-        }, 5000);
+        });
+
         getAllLocations();
       } else {
         alert(
@@ -783,12 +786,13 @@ $('#deletePersonnelForm').on('submit', function (e) {
         );
         $('#deletePersonnelForm, .deletePersonnelBtn').hide();
         $('.okBtn').show();
-        setTimeout(function () {
-          $('#deletePersonnelModal').hide();
+
+        $('#deletePersonnelModal').on('hide.bs.modal', function () {
           $('.alert-success').remove();
           $('#deletePersonnelForm, .deletePersonnelBtn').show();
           $('.okBtn').hide();
-        }, 5000);
+        });
+
         getAllPersonnel();
       } else {
         alert(
@@ -868,12 +872,13 @@ $('#deleteDepartmentForm').on('submit', function (e) {
         );
         $('#deleteDepartmentForm, .deleteDepartmentBtn').hide();
         $('.okBtn').show();
-        setTimeout(function () {
-          $('#deleteDepartmentModal').hide();
+
+        $('#deleteDepartmentModal').on('hide.bs.modal', function (e) {
           $('.alert-success').remove();
           $('#deleteDepartmentForm, .deleteDepartmentBtn').show();
           $('.okBtn').hide();
-        }, 5000);
+        });
+
         getAllDepartments();
       } else {
         alert(
@@ -952,12 +957,13 @@ $('#deleteLocationForm').on('submit', function (e) {
         );
         $('#deleteLocationForm, .deleteLocationBtn').hide();
         $('.okBtn').show();
-        setTimeout(function () {
-          $('#deleteLocationModal').hide();
+
+        $('#deleteLocationModal').on('hide.bs.modal', function (e) {
           $('.alert-success').remove();
           $('#deleteLocationForm, .deleteLocationBtn').show();
           $('.okBtn').hide();
-        }, 5000);
+        });
+
         getAllLocations();
       } else {
         alert(
