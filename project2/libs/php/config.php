@@ -9,8 +9,8 @@ $cd_socket = "";
 
 // database name, username and password
 
-$cd_dbname = "companydirectory";
-$cd_user = "companydirectory";
-$cd_password = "companydirectory";
+$cd_dbname = "u310605623_companyD";
+$cd_user = "u310605623_companyD";
+$cd_password = "companydirectory2202KL";
 
 ?>
