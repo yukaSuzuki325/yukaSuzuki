@@ -9,7 +9,6 @@ const getAllPersonnel = () => {
     success: function (result) {
       if (result.status.code == 200) {
         const data = result.data;
-        console.log(data);
 
         const tableBody = $('#personnelTable tbody');
         tableBody.empty();
@@ -53,6 +52,39 @@ const getAllPersonnel = () => {
 };
 
 getAllPersonnel();
+
+const populatePersonnelTable = (data) => {
+  const tableBody = $('#personnelTable tbody');
+  tableBody.empty();
+  const headers = `<tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Location</th>
+        <th>Email Address</th>
+        <th> Actions</th>
+        </tr>`;
+  tableBody.append(headers);
+
+  data.forEach((employee) => {
+    const rowHtml = `
+                  <tr>
+                      <td>${employee.lastName}, ${employee.firstName}</td>
+                      <td>${employee.department}</td>
+                      <td>${employee.location}</td>
+                      <td>${employee.email}</td>
+                      <td>
+                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${employee.id}>
+                              <i class="fa fa-pencil"></i>
+                          </button>
+                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal"data-id=${employee.id}>
+                              <i class="fa fa-trash"></i>
+                          </button>
+                      </td>
+                  </tr>
+              `;
+    tableBody.append(rowHtml);
+  });
+};
 
 const getAllDepartments = () => {
   $.ajax({
@@ -297,33 +329,7 @@ const getFilteredPersonnel = (departmentSelect, locationSelect) => {
     success: function (result) {
       if (result.status.code == 200 && result.data.length) {
         const data = result.data;
-        console.log(data);
-        const cardsContainer = $('#employee-cards');
-        cardsContainer.empty();
-
-        data.forEach((employee) => {
-          const cardHtml = `
-                      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                          <div class="card h-100 mx-6">
-                              <div class="card-body">
-                                  <h4 class="card-title mb-3">${employee.lastName}, ${employee.firstName}</h4>
-                                  <p class="card-text"><strong>Department:</strong> ${employee.department}</p>
-                                  <p class="card-text"><strong>Location:</strong> ${employee.location}</p>
-                                  <p class="card-text"><strong>Email:</strong> ${employee.email}</p>
-                              </div>
-                              <div class="card-footer d-flex justify-content-end">
-                              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id=${employee.id}>
-                              <i class="fa-solid fa-pencil fa-fw text-secondary"></i>
-                            </button>
-                            <button type="button" class="btn btn-lg  deletePersonnelBtn" data-id=${employee.id}>
-                              <i class="fa-solid fa-trash fa-fw text-secondary"></i>
-                            </button>
-                              </div>
-                          </div>
-                      </div>
-                  `;
-          cardsContainer.append(cardHtml);
-        });
+        populatePersonnelTable(data);
       } else {
         const cardsContainer = $('#employee-cards');
         cardsContainer.empty();
