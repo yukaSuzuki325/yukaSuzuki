@@ -36,6 +36,7 @@ const getAllPersonnel = () => {
                   `;
           cardsContainer.append(cardHtml);
         });
+        $('.preloader-container').fadeOut('slow');
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
