@@ -498,6 +498,7 @@ $('#editPersonnelModal').on('show.bs.modal', function (e) {
         $('#editPersonnelEmailAddress').val(result.data.personnel[0].email);
 
         $('#editPersonnelDepartment').html('');
+        $('.okBtn').hide();
 
         $.each(result.data.department, function () {
           $('#editPersonnelDepartment').append(
@@ -553,10 +554,12 @@ $('#editPersonnelForm').on('submit', function (e) {
           "<div class='alert alert-success' role='alert'>Record successfully updated.</div>"
         );
         $('#editPersonnelForm, .editPersonnelBtn').hide();
+        $('.okBtn').show();
         setTimeout(function () {
           $('#editPersonnelModal').hide();
           $('.alert-success').remove();
           $('#editPersonnelForm, .editPersonnelBtn').show();
+          $('.okBtn').hide();
         }, 4000);
         getAllPersonnel();
       } else {
@@ -588,7 +591,8 @@ $('#editDepartmentModal').on('show.bs.modal', function (e) {
       if (resultCode == 200) {
         $('#editDepartmentID').val(result.data.department[0].id);
         $('#editDepartmentName').val(result.data.department[0].name);
-        console.log(result.data.location);
+        $('.okBtn').hide();
+        // console.log(result.data.location);
 
         $.each(result.data.location, function () {
           $('#editDepartmentLocation').append(
@@ -635,10 +639,12 @@ $('#editDepartmentForm').on('submit', function (e) {
           "<div class='alert alert-success' role='alert'>Record successfully updated.</div>"
         );
         $('#editDepartmentForm, .editDepartmentBtn').hide();
+        $('.okBtn').show();
         setTimeout(function () {
           $('#editDepartmentModal').hide();
           $('.alert-success').remove();
           $('#editDepartmentForm, .editDepartmentBtn').show();
+          $('.okBtn').hide();
         }, 5000);
         getAllDepartments();
       } else {
@@ -670,7 +676,8 @@ $('#editLocationModal').on('show.bs.modal', function (e) {
       if (resultCode == 200) {
         $('#editLocationID').val(result.data.location[0].id);
         $('#editLocationName').val(result.data.location[0].name);
-        console.log(result.data.location);
+        $('.okBtn').hide();
+        // console.log(result.data.location);
       } else {
         $('#editLocationModal .modal-title').replaceWith(
           'Error retrieving data'
@@ -702,10 +709,12 @@ $('#editLocationForm').on('submit', function (e) {
           "<div class='alert alert-success' role='alert'>Record successfully updated.</div>"
         );
         $('#editLocationForm, .editLocationBtn').hide();
+        $('.okBtn').show();
         setTimeout(function () {
           $('#editLocationModal').hide();
           $('.alert-success').remove();
           $('#editLocationForm, .editLocationBtn').show();
+          $('.okBtn').hide();
         }, 5000);
         getAllLocations();
       } else {
@@ -773,10 +782,12 @@ $('#deletePersonnelForm').on('submit', function (e) {
           "<div class='alert alert-success' role='alert'>Record successfully deleted.</div>"
         );
         $('#deletePersonnelForm, .deletePersonnelBtn').hide();
+        $('.okBtn').show();
         setTimeout(function () {
           $('#deletePersonnelModal').hide();
           $('.alert-success').remove();
           $('#deletePersonnelForm, .deletePersonnelBtn').show();
+          $('.okBtn').hide();
         }, 5000);
         getAllPersonnel();
       } else {
@@ -804,11 +815,12 @@ $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
     },
     success: function (result) {
       var resultCode = result.status.code;
-      console.log(result.data);
+      // console.log(result.data);
 
       if (resultCode == 200 && result.data.department[0].personnelCount === 0) {
         $('#deleteDepartmentID').val(result.data.department[0].id);
         $('#deleteDepartmentName').html(result.data.department[0].name);
+        $('.okBtn').hide();
       } else if (
         resultCode == 200 &&
         result.data.department[0].personnelCount !== 0
@@ -817,10 +829,12 @@ $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
           "<div class='alert alert-danger' role='alert'>A department with personnel cannot be deleted.</div>"
         );
         $('#deleteDepartmentForm, .deleteDepartmentBtn').hide();
+        $('.okBtn').show();
 
         $('#deleteDepartmentModal').on('hide.bs.modal', function () {
           $('.alert-danger').remove();
           $('#deleteDepartmentForm, .deleteDepartmentBtn').show();
+          $('.okBtn').hide();
         });
       } else {
         $('#deleteDepartmentModal .modal-title').replaceWith(
@@ -853,10 +867,12 @@ $('#deleteDepartmentForm').on('submit', function (e) {
           "<div class='alert alert-success' role='alert'>Record successfully deleted.</div>"
         );
         $('#deleteDepartmentForm, .deleteDepartmentBtn').hide();
+        $('.okBtn').show();
         setTimeout(function () {
           $('#deleteDepartmentModal').hide();
           $('.alert-success').remove();
           $('#deleteDepartmentForm, .deleteDepartmentBtn').show();
+          $('.okBtn').hide();
         }, 5000);
         getAllDepartments();
       } else {
@@ -884,7 +900,7 @@ $('#deleteLocationModal').on('show.bs.modal', function (e) {
     },
     success: function (result) {
       var resultCode = result.status.code;
-      console.log(result.data);
+      // console.log(result.data);
 
       if (resultCode == 200 && result.data.location[0].departmentCount === 0) {
         $('#deleteLocationID').val(result.data.location[0].id);
@@ -897,9 +913,11 @@ $('#deleteLocationModal').on('show.bs.modal', function (e) {
           "<div class='alert alert-danger' role='alert'>A location that has departments cannot be deleted.</div>"
         );
         $('#deleteLocationForm, .deleteLocationBtn').hide();
+        $('.okBtn').show();
 
         $('#deleteLocationModal').on('hide.bs.modal', function () {
           $('.alert-danger').remove();
+          $('.okBtn').hide();
           $('#deleteLocationForm, .deleteLocationBtn').show();
         });
       } else {
@@ -933,10 +951,12 @@ $('#deleteLocationForm').on('submit', function (e) {
           "<div class='alert alert-success' role='alert'>Record successfully deleted.</div>"
         );
         $('#deleteLocationForm, .deleteLocationBtn').hide();
+        $('.okBtn').show();
         setTimeout(function () {
           $('#deleteLocationModal').hide();
           $('.alert-success').remove();
           $('#deleteLocationForm, .deleteLocationBtn').show();
+          $('.okBtn').hide();
         }, 5000);
         getAllLocations();
       } else {
