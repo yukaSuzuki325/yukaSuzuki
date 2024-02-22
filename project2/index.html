@@ -71,15 +71,6 @@
           </div>
         </div>
 
-        <div id="filterOptions" class="mb-3">
-          <select id="locationFilter" class="me-2">
-            <!-- <option value="">Select location</option> -->
-          </select>
-          <select id="departmentFilter" class="me-2">
-            <!-- <option value="">Select department</option> -->
-          </select>
-        </div>
-
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
             <button
@@ -180,6 +171,56 @@
     </section>
 
     <!---------------------Modals------------------------------->
+
+    <!--Filter Modal-->
+    <div
+      id="filterModal"
+      class="modal fade"
+      tabindex="-1"
+      data-bs-backdrop="false"
+      data-bs-keyboard="false"
+      aria-labelledby="filterModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content shadow">
+          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
+            <h5>Filter employee</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <form>
+              <div class="form-floating mb-2">
+                <select class="form-select" id="locationSelect"></select>
+                <label for="locationSelect">Location</label>
+              </div>
+              <div class="form-floating">
+                <select class="form-control" id="departmentSelect"></select>
+                <label for="departmentSelect">Department</label>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-sm myBtn"
+                  data-bs-dismiss="modal"
+                >
+                  CLOSE
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!--Add employee modal-->
     <div

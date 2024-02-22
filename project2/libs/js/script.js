@@ -38,16 +38,16 @@ const populatePersonnelTable = (data) => {
 
   data.forEach((employee) => {
     const rowHtml = `
-                  <tr>
-                      <td>${employee.lastName}, ${employee.firstName}</td>
+                  <tr class="employeeRow">
+                      <td class="employeeName">${employee.lastName}, ${employee.firstName}</td>
                       <td>${employee.department}</td>
                       <td>${employee.location}</td>
                       <td>${employee.email}</td>
                       <td>
-                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${employee.id}>
+                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id=${employee.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal"data-id=${employee.id}>
+                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deletePersonnelModal"data-id=${employee.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>
@@ -67,13 +67,13 @@ const getAllDepartments = () => {
         const data = result.data;
 
         // Populate department options in the filter options
-        const select = $('#departmentFilter');
+        const select = $('#departmentSelect');
         select.empty();
 
         select.append(
           $('<option>', {
             value: 'all',
-            text: 'Select department',
+            text: 'All',
           })
         );
 
@@ -151,13 +151,13 @@ const getAllLocations = () => {
         console.log(data);
 
         //Populate options in the location filter
-        const select = $('#locationFilter');
+        const select = $('#locationSelect');
         select.empty();
 
         select.append(
           $('<option>', {
             value: 'all',
-            text: 'Select location',
+            text: 'All',
           })
         );
 
@@ -225,9 +225,9 @@ getAllLocations();
 $('#searchInp').on('keyup', function () {
   const searchTerm = $(this).val().toLowerCase();
 
-  // Filter employee cards based on the name
-  $('.card').each(function () {
-    const name = $(this).find('.card-title').text().toLowerCase();
+  // Filter employee rows based on the input
+  $('.employeeRow').each(function () {
+    const name = $(this).find('.employeeName').text().toLowerCase();
 
     if (name.includes(searchTerm)) {
       $(this).parent().show();
@@ -275,15 +275,15 @@ $('#refreshBtn').click(function () {
 $('#filterOptions').hide();
 
 $('#filterBtn').click(function () {
-  $('#filterOptions').toggle();
+  $('#filterModal').modal('show');
 });
 
-$('#departmentFilter').on('change', function () {
+$('#departmentSelect').on('change', function () {
   departmentSelect = $(this).val();
   getFilteredPersonnel(departmentSelect, locationSelect);
 });
 
-$('#locationFilter').on('change', function () {
+$('#locationSelect').on('change', function () {
   locationSelect = $(this).val();
   getFilteredPersonnel(departmentSelect, locationSelect);
 });
