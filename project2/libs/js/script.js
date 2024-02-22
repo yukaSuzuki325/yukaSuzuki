@@ -230,9 +230,9 @@ $('#searchInp').on('keyup', function () {
     const name = $(this).find('.employeeName').text().toLowerCase();
 
     if (name.includes(searchTerm)) {
-      $(this).parent().show();
+      $(this).show();
     } else {
-      $(this).parent().hide();
+      $(this).hide();
     }
   });
 });
@@ -276,6 +276,7 @@ $('#filterOptions').hide();
 
 $('#filterBtn').click(function () {
   $('#filterModal').modal('show');
+  $('#filterModalAlarm').hide();
 });
 
 $('#departmentSelect').on('change', function () {
@@ -302,12 +303,11 @@ const getFilteredPersonnel = (departmentSelect, locationSelect) => {
         const data = result.data;
         populatePersonnelTable(data);
       } else {
-        const cardsContainer = $('#employee-cards');
-        cardsContainer.empty();
-        const messageHtml = `
-        <div class="d-flex flex-column align-items-center"><p class="">There were no personnel who matched the criteria</p></div>
-        `;
-        cardsContainer.append(messageHtml);
+        $('#personnelTable tbody').empty();
+        $('#filterModalAlarm').show();
+        $('#filterModal').on('hide.bs.modal', function () {
+          getAllPersonnel();
+        });
       }
     },
 
