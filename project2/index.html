@@ -44,6 +44,20 @@
           </div>
 
           <div class="col">
+            <div class="btn-group" role="group" aria-label="buttons">
+              <button id="filterBtn" type="button" class="btn btn-secondary">
+                <i class="fa-solid fa-filter fa-fw"></i>
+              </button>
+              <button id="refreshBtn" type="button" class="btn btn-secondary">
+                <i class="fa-solid fa-refresh fa-fw"></i>
+              </button>
+              <button id="addBtn" type="button" class="btn btn-secondary">
+                <i class="fa-solid fa-plus fa-fw"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="col-6 text-end me-2">
             <button class="btn btn-dark" data-bs-theme-value="dark">
               Dark Mode
             </button>
@@ -53,26 +67,12 @@
             </button>
           </div>
 
-          <div class="col-6 text-end me-2">
-            <div class="btn-group" role="group" aria-label="buttons">
-              <button id="refreshBtn" type="button" class="btn btn-secondary">
-                <i class="fa-solid fa-refresh fa-fw"></i>
-              </button>
-              <button id="filterBtn" type="button" class="btn btn-secondary">
-                <i class="fa-solid fa-filter fa-fw"></i>
-              </button>
-              <button id="addBtn" type="button" class="btn btn-secondary">
-                <i class="fa-solid fa-plus fa-fw"></i>
-              </button>
-            </div>
-          </div>
-
-          <div id="filterOptions" class="text-end">
-            <select id="departmentFilter" class="me-2">
-              <!-- <option value="">Select department</option> -->
-            </select>
+          <div id="filterOptions" class="mb-3">
             <select id="locationFilter" class="me-2">
               <!-- <option value="">Select location</option> -->
+            </select>
+            <select id="departmentFilter" class="me-2">
+              <!-- <option value="">Select department</option> -->
             </select>
           </div>
         </div>
