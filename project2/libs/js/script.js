@@ -179,7 +179,7 @@ const getAllLocations = () => {
         const headers = `<tr>        
         <th>Location</th>
         <th>Department</th>
-        <th> Actions</th>
+        <th>Actions</th>
         </tr>`;
         tableBody.append(headers);
 
