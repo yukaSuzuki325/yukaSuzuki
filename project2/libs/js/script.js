@@ -808,7 +808,7 @@ $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
       ) {
         //If the department has employees, alert the user
         $('#deleteDepartmentAlarm').html(
-          '<div class="mb-3 ms-2">Number of personnel: ' +
+          '<div class="mb-3 ms-2 numberOfPersonnel">Number of personnel: ' +
             result.data.department[0].personnelCount +
             '</div>' +
             '<div class="alert alert-danger" role="alert">A department with personnel cannot be deleted.</div>'
@@ -818,7 +818,7 @@ $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
         $('.okBtn').show();
 
         $('#deleteDepartmentModal').on('hide.bs.modal', function () {
-          $('.alert-danger').remove();
+          $('.alert-danger, .numberOfPersonnel').remove();
           $('#deleteDepartmentForm, .deleteDepartmentBtn').show();
           $('.okBtn').hide();
         });
@@ -898,7 +898,7 @@ $('#deleteLocationModal').on('show.bs.modal', function (e) {
       ) {
         //If the location has departments, alert the user
         $('#deleteLocationAlarm').html(
-          '<div class="ms-2 mb-3">Number of departments: ' +
+          '<div class="ms-2 mb-3 numberOfDepartments">Number of departments: ' +
             result.data.location[0].departmentCount +
             '</div>' +
             "<div class='alert alert-danger' role='alert'>A location that has departments cannot be deleted.</div>"
@@ -907,7 +907,7 @@ $('#deleteLocationModal').on('show.bs.modal', function (e) {
         $('.okBtn').show();
 
         $('#deleteLocationModal').on('hide.bs.modal', function () {
-          $('.alert-danger').remove();
+          $('.alert-danger, .numberOfDepartments').remove();
           $('.okBtn').hide();
           $('#deleteLocationForm, .deleteLocationBtn').show();
         });
