@@ -135,7 +135,6 @@ const getAllLocations = () => {
     success: function (result) {
       if (result.status.code == 200) {
         const data = result.data;
-        console.log(data);
 
         //Populate options in the location filter
         const select = $('#locationSelect');
@@ -657,7 +656,6 @@ $('#editLocationModal').on('show.bs.modal', function (e) {
         $('#editLocationID').val(result.data.location[0].id);
         $('#editLocationName').val(result.data.location[0].name);
         $('.okBtn').hide();
-        // console.log(result.data.location);
       } else {
         $('#editLocationModal .modal-title').replaceWith(
           'Error retrieving data'
@@ -725,7 +723,6 @@ $('#deletePersonnelModal').on('show.bs.modal', function (e) {
     },
     success: function (result) {
       var resultCode = result.status.code;
-      console.log(result.data);
 
       if (resultCode == 200) {
         $('#deletePersonnelID').val(result.data.personnel[0].id);
@@ -800,7 +797,7 @@ $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
     },
     success: function (result) {
       var resultCode = result.status.code;
-      console.log(result.data);
+
       if (resultCode == 200 && result.data.department[0].personnelCount === 0) {
         $('#deleteDepartmentID').val(result.data.department[0].id);
         $('#deleteDepartmentName').html(result.data.department[0].name);
@@ -811,8 +808,12 @@ $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
       ) {
         //If the department has employees, alert the user
         $('#deleteDepartmentAlarm').html(
-          "<div class='alert alert-danger' role='alert'>A department with personnel cannot be deleted.</div>"
+          '<div class="mb-3 ms-2">Number of personnel: ' +
+            result.data.department[0].personnelCount +
+            '</div>' +
+            '<div class="alert alert-danger" role="alert">A department with personnel cannot be deleted.</div>'
         );
+
         $('#deleteDepartmentForm, .deleteDepartmentBtn').hide();
         $('.okBtn').show();
 
@@ -893,10 +894,14 @@ $('#deleteLocationModal').on('show.bs.modal', function (e) {
         $('#deleteLocationName').html(result.data.location[0].name);
       } else if (
         resultCode == 200 &&
-        result.data.location[0].locationCount !== 0
+        result.data.location[0].departmentCount !== 0
       ) {
+        //If the location has departments, alert the user
         $('#deleteLocationAlarm').html(
-          "<div class='alert alert-danger' role='alert'>A location that has departments cannot be deleted.</div>"
+          '<div class="ms-2 mb-3">Number of departments: ' +
+            result.data.location[0].departmentCount +
+            '</div>' +
+            "<div class='alert alert-danger' role='alert'>A location that has departments cannot be deleted.</div>"
         );
         $('#deleteLocationForm, .deleteLocationBtn').hide();
         $('.okBtn').show();
