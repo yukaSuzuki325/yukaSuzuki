@@ -1,6 +1,8 @@
 let departmentSelect;
 let locationSelect;
 
+//////// READ operation //////////
+
 const getAllPersonnel = () => {
   $.ajax({
     url: 'libs/php/getAll.php',
@@ -66,7 +68,7 @@ const getAllDepartments = () => {
       if (result.status.code == 200) {
         const data = result.data;
 
-        // Populate department options in the filter options
+        // Populate department select options in the filter modal
         const select = $('#departmentSelect');
         select.empty();
 
@@ -222,6 +224,7 @@ const getAllLocations = () => {
 
 getAllLocations();
 
+//Search input
 $('#searchInp').on('keyup', function () {
   const searchTerm = $(this).val().toLowerCase();
 
@@ -272,12 +275,17 @@ $('#refreshBtn').click(function () {
   }
 });
 
-$('#filterOptions').hide();
+//Filter button functionality
 
 $('#filterBtn').click(function () {
+  // Show filter modal, and resetting the values of elements in the modal to default
   $('#filterModal').modal('show');
   $('#filterModalAlarm').hide();
+  $('#departmentSelect').val($('#departmentSelect option:first').val());
+  $('#locationSelect').val($('#locationSelect option:first').val());
 });
+
+//When a department/location is selected, call a function to make a AJAX call to filter personnel by department and location
 
 $('#departmentSelect').on('change', function () {
   departmentSelect = $(this).val();
@@ -318,6 +326,8 @@ const getFilteredPersonnel = (departmentSelect, locationSelect) => {
   });
 };
 
+//////// CREATE operation /////////
+
 $('#addBtn').click(function () {
   if ($('#personnelBtn').hasClass('active')) {
     $('#addEmployeeModal').modal('show');
@@ -329,6 +339,8 @@ $('#addBtn').click(function () {
     }
   }
 });
+
+//Add an employee
 
 $('#addEmployeeForm').submit(function (e) {
   e.preventDefault();
@@ -375,6 +387,8 @@ $('#addEmployeeForm').submit(function (e) {
   });
 });
 
+//Add a department
+
 $('#addDepartmentForm').submit(function (e) {
   e.preventDefault();
   const name = $('#addDepartmentName').val();
@@ -410,6 +424,8 @@ $('#addDepartmentForm').submit(function (e) {
     },
   });
 });
+
+//Add a location
 
 $('#addLocationForm').submit(function (e) {
   e.preventDefault();
@@ -456,7 +472,9 @@ $('#locationsBtn').click(function () {
   getAllLocations();
 });
 
-//Update an employee
+///////// UPDATE operation /////////////
+
+//Update an employee record
 $('#editPersonnelModal').on('show.bs.modal', function (e) {
   $.ajax({
     url: 'libs/php/getPersonnelByID.php',
@@ -575,7 +593,6 @@ $('#editDepartmentModal').on('show.bs.modal', function (e) {
         $('#editDepartmentID').val(result.data.department[0].id);
         $('#editDepartmentName').val(result.data.department[0].name);
         $('.okBtn').hide();
-        // console.log(result.data.location);
 
         $.each(result.data.location, function () {
           $('#editDepartmentLocation').append(
@@ -645,7 +662,8 @@ $('#editDepartmentForm').on('submit', function (e) {
   });
 });
 
-//Update a location
+//Update a location record
+
 $('#editLocationModal').on('show.bs.modal', function (e) {
   $.ajax({
     url: 'libs/php/getLocationByID.php',
@@ -715,6 +733,8 @@ $('#editLocationForm').on('submit', function (e) {
     },
   });
 });
+
+/////////// DELETE operation //////////////
 
 //Delete an employee record
 $('#deletePersonnelModal').on('show.bs.modal', function (e) {
@@ -791,6 +811,7 @@ $('#deletePersonnelForm').on('submit', function (e) {
 });
 
 //Delete a department record
+
 $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
   $.ajax({
     url: 'libs/php/getDepartmentByID.php',
@@ -801,7 +822,6 @@ $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
     },
     success: function (result) {
       var resultCode = result.status.code;
-      // console.log(result.data);
 
       if (resultCode == 200 && result.data.department[0].personnelCount === 0) {
         $('#deleteDepartmentID').val(result.data.department[0].id);
@@ -877,6 +897,7 @@ $('#deleteDepartmentForm').on('submit', function (e) {
 });
 
 //Delete a location record
+
 $('#deleteLocationModal').on('show.bs.modal', function (e) {
   $.ajax({
     url: 'libs/php/getLocationByID.php',
@@ -887,7 +908,6 @@ $('#deleteLocationModal').on('show.bs.modal', function (e) {
     },
     success: function (result) {
       var resultCode = result.status.code;
-      // console.log(result.data);
 
       if (resultCode == 200 && result.data.location[0].departmentCount === 0) {
         $('#deleteLocationID').val(result.data.location[0].id);
