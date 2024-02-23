@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
+// ini_set('display_errors', 'On');
+// error_reporting(E_ALL);
 
 $executionStartTime = microtime(true);
 
@@ -29,7 +29,7 @@ if (mysqli_connect_errno()) {
 
 $query = $conn->prepare('INSERT INTO personnel (firstName, lastName, jobTitle, email, departmentID) VALUES(?,?,?,?,?)');
 
-$query->bind_param("ssssi", $_REQUEST['firstName'], $_REQUEST['lastName'], $_REQUEST['jobTitle'], $_REQUEST['email'], $_REQUEST['departmentID']);
+$query->bind_param("ssssi", $_POST['firstName'], $_POST['lastName'], $_POST['jobTitle'], $_POST['email'], $_POST['departmentID']);
 
 $query->execute();
 

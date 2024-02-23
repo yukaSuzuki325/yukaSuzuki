@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
+// ini_set('display_errors', 'On');
+// error_reporting(E_ALL);
 
 $executionStartTime = microtime(true);
 
@@ -31,9 +31,9 @@ $query = $conn->prepare('UPDATE department SET name = ?, locationID = ? WHERE id
 
 $query->bind_param(
     "sii",
-    $_REQUEST['name'],
-    $_REQUEST['location'],
-    $_REQUEST['id']
+    $_POST['name'],
+    $_POST['location'],
+    $_POST['id']
 );
 
 $query->execute();

@@ -4,8 +4,8 @@
 // use insertDepartment.php first to create new dummy record and then specify it's id in the command below
 // http://localhost/companydirectory/libs/php/deleteDepartmentByID.php?id=<id>
 
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
+// ini_set('display_errors', 'On');
+// error_reporting(E_ALL);
 
 $executionStartTime = microtime(true);
 
@@ -35,7 +35,7 @@ if (mysqli_connect_errno()) {
 
 $query = $conn->prepare('DELETE FROM department WHERE id = ?');
 
-$query->bind_param("i", $_REQUEST['id']);
+$query->bind_param("i", $_POST['id']);
 
 $query->execute();
 

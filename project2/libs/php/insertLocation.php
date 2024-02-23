@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
+// ini_set('display_errors', 'On');
+// error_reporting(E_ALL);
 
 $executionStartTime = microtime(true);
 
@@ -29,7 +29,7 @@ if (mysqli_connect_errno()) {
 
 $query = $conn->prepare('INSERT INTO location (name) VALUES(?)');
 
-$query->bind_param("s", $_REQUEST['name']);
+$query->bind_param("s", $_POST['name']);
 
 $query->execute();
 

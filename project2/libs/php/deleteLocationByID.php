@@ -1,7 +1,7 @@
 <?php
 
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
+// ini_set('display_errors', 'On');
+// error_reporting(E_ALL);
 
 $executionStartTime = microtime(true);
 
@@ -31,7 +31,7 @@ if (mysqli_connect_errno()) {
 
 $query = $conn->prepare('DELETE FROM location WHERE id = ?');
 
-$query->bind_param("i", $_REQUEST['id']);
+$query->bind_param("i", $_POST['id']);
 
 $query->execute();
 
