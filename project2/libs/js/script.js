@@ -29,14 +29,6 @@ getAllPersonnel();
 const populatePersonnelTable = (data) => {
   const tableBody = $('#personnelTable tbody');
   tableBody.empty();
-  const headers = `<tr>
-        <th>Name</th>
-        <th>Department</th>
-        <th>Location</th>
-        <th>Email Address</th>
-        <th> Actions</th>
-        </tr>`;
-  tableBody.append(headers);
 
   data.forEach((employee) => {
     const rowHtml = `
@@ -101,23 +93,16 @@ const getAllDepartments = () => {
           );
         });
 
-        //Update Departments tab
+        //Populate departments table
         const tableBody = $('#departmentTable tbody');
         tableBody.empty();
-        const headers = `<tr>
-        <th>Department</th>
-        <th>Location</th>
-        <th>Personnel</th>
-        <th> Actions</th>
-        </tr>`;
-        tableBody.append(headers);
 
         data.forEach((department) => {
           const rowHtml = `
                   <tr>
                       <td>${department.Department}</td>
                       <td>${department.Location}</td>
-                      <td id="personnelInDepartment">${department.Personnel}</td>
+                      
                       <td>
                           <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${department.id}>
                               <i class="fa fa-pencil"></i>
@@ -185,21 +170,14 @@ const getAllLocations = () => {
           );
         });
 
-        //Update location tab
+        //Populate locations table
         const tableBody = $('#locationsTable tbody');
         tableBody.empty();
-        const headers = `<tr>        
-        <th>Location</th>
-        <th>Department</th>
-        <th>Actions</th>
-        </tr>`;
-        tableBody.append(headers);
 
         data.forEach((location) => {
           const rowHtml = `
                   <tr>                      
-                      <td>${location.Location}</td>
-                      <td>${location.Department}</td>
+                      <td>${location.Location}</td>                      
                       <td>
                           <button class="btn btn-primary btn-sm editLocationBtn" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id=${location.id}>
                               <i class="fa fa-pencil"></i>
@@ -822,7 +800,7 @@ $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
     },
     success: function (result) {
       var resultCode = result.status.code;
-
+      console.log(result.data);
       if (resultCode == 200 && result.data.department[0].personnelCount === 0) {
         $('#deleteDepartmentID').val(result.data.department[0].id);
         $('#deleteDepartmentName').html(result.data.department[0].name);
@@ -831,6 +809,7 @@ $('#deleteDepartmentModal').on('show.bs.modal', function (e) {
         resultCode == 200 &&
         result.data.department[0].personnelCount !== 0
       ) {
+        //If the department has employees, alert the user
         $('#deleteDepartmentAlarm').html(
           "<div class='alert alert-danger' role='alert'>A department with personnel cannot be deleted.</div>"
         );
