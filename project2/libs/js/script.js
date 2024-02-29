@@ -235,18 +235,27 @@ $('#departmentsBtn').click(function () {
   $('#departmentsBtn').addClass('active');
   $('#personnelBtn').removeClass('active');
   $('#locationsBtn').removeClass('active');
+  $('#filterBtn').attr('disabled', true);
+  // Call function to refresh department table
+  getAllDepartments();
 });
 
 $('#locationsBtn').click(function () {
   $('#locationsBtn').addClass('active');
   $('#personnelBtn').removeClass('active');
   $('#departmentsBtn').removeClass('active');
+  $('#filterBtn').attr('disabled', true);
+  // Call function to refresh location table
+  getAllLocations();
 });
 
 $('#personnelBtn').click(function () {
   $('#personnelBtn').addClass('active');
   $('#locationsBtn').removeClass('active');
   $('#departmentsBtn').removeClass('active');
+  $('#filterBtn').attr('disabled', false);
+  // Call function to refresh personnel table
+  getAllPersonnel();
 });
 
 //Refresh button event listner
@@ -446,21 +455,6 @@ $('#addLocationForm').submit(function (e) {
       alert('Data not available');
     },
   });
-});
-
-$('#personnelBtn').click(function () {
-  // Call function to refresh personnel table
-  getAllPersonnel();
-});
-
-$('#departmentsBtn').click(function () {
-  // Call function to refresh department table
-  getAllDepartments();
-});
-
-$('#locationsBtn').click(function () {
-  // Call function to refresh location table
-  getAllLocations();
 });
 
 ///////// UPDATE operation /////////////
