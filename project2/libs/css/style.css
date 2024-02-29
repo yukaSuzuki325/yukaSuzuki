@@ -25,11 +25,9 @@ tr {
   width: 70px;
 }
 
-/*Personnel Tab*/
-
-/*Department Tab*/
-.table tbody th {
-  font-size: 1.2em;
+.footer {
+  position: fixed;
+  bottom: 0;
 }
 
 /*Preloader*/
@@ -128,4 +126,22 @@ tr {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/*Department Tab*/
+.equal-width-columns > thead > tr > th,
+.equal-width-columns > tbody > tr > td {
+  width: 33.3333%;
+}
+
+#departmentTable .depLocation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#departmentTable .depLocation > div {
+  justify-content: flex-start;
+  width: 18%;
+  margin: 0 auto;
 }

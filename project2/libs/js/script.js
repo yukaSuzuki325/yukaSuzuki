@@ -100,16 +100,29 @@ const getAllDepartments = () => {
         data.forEach((department) => {
           const rowHtml = `
                   <tr>
-                      <td class="align-middle text-nowrap">${department.Department}</td>
-                      <td class="align-middle text-nowrap d-none d-md-table-cell">${department.Location}</td>
-                      
-                      <td class="align-middle text-end text-nowrap">
-                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${department.id}>
-                              <i class="fa fa-pencil"></i>
-                          </button>
-                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal"data-id=${department.id}>
-                              <i class="fa fa-trash"></i>
-                          </button>
+                    <td class="align-middle text-nowrap">${department.Department}</td>
+                    <td class="align-middle text-nowrap d-none d-md-table-cell depLocation">
+                <div class="d-flex align-items-center">${department.Location}</div>
+            </td>                                          
+                    <td class="align-middle text-end text-nowrap">
+                    <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editDepartmentModal"
+                    data-id=${department.id}
+                  >
+                    <i class="fa-solid fa-pencil fa-fw"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal"
+                    data-id=${department.id}
+                  >
+                    <i class="fa-solid fa-trash fa-fw"></i>
+                  </button>   
+                          
                       </td>
                   </tr>
               `;
