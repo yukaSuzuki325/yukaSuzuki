@@ -186,11 +186,11 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
-            <h5>Filter employee</h5>
+          <div class="modal-header bg-primary bg-gradient text-white">
+            <h5 class="modal-title">Filter employees</h5>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -209,16 +209,16 @@
               <div id="filterModalAlarm" class="my-2 text-danger">
                 There were no personnel who matched the criteria
               </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-outline-primary btn-sm myBtn"
-                  data-bs-dismiss="modal"
-                >
-                  CLOSE
-                </button>
-              </div>
             </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm myBtn"
+              data-bs-dismiss="modal"
+            >
+              CLOSE
+            </button>
           </div>
         </div>
       </div>
@@ -238,11 +238,11 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient text-white">
             <h5 class="modal-title">Add an employee</h5>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -307,13 +307,13 @@
             <button
               type="submit"
               form="addEmployeeForm"
-              class="btn btn-outline-primary btn-sm myBtn"
+              class="btn btn-outline-secondary btn-sm myBtn"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn"
+              class="btn btn-outline-secondary btn-sm myBtn"
               data-bs-dismiss="modal"
             >
               CANCEL
@@ -337,11 +337,11 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient text-white">
             <h5 class="modal-title">Edit employee</h5>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -406,20 +406,20 @@
             <button
               type="submit"
               form="editPersonnelForm"
-              class="btn btn-outline-primary btn-sm myBtn editPersonnelBtn"
+              class="btn btn-outline-secondary btn-sm myBtn editPersonnelBtn"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn editPersonnelBtn"
+              class="btn btn-outline-secondary btn-sm myBtn editPersonnelBtn"
               data-bs-dismiss="modal"
             >
               CANCEL
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn okBtn"
+              class="btn btn-outline-secondary btn-sm myBtn okBtn"
               data-bs-dismiss="modal"
             >
               OK
@@ -443,11 +443,11 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient text-white">
             <h5 class="modal-title">Delete employee</h5>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -457,8 +457,10 @@
             <div id="deletePersonnelAlarm"></div>
             <form id="deletePersonnelForm">
               <input type="hidden" id="deletePersonnelID" />
-              <p>Please confirm that you wish to delete this entry.</p>
-              <h6 id="deletePersonnelName"></h6>
+              <p>
+                Are you sure that you want to remove entry for
+                <span id="deletePersonnelName" class="fw-bold"></span>?
+              </p>
             </form>
           </div>
 
@@ -466,21 +468,21 @@
             <button
               type="submit"
               form="deletePersonnelForm"
-              class="btn btn-outline-primary btn-sm myBtn deletePersonnelBtn"
+              class="btn btn-outline-secondary btn-sm myBtn deletePersonnelBtn"
               id="deletePersonnel-submit"
             >
               YES
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn deletePersonnelBtn"
+              class="btn btn-outline-secondary btn-sm myBtn deletePersonnelBtn"
               data-bs-dismiss="modal"
             >
               NO
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn okBtn"
+              class="btn btn-outline-secondary btn-sm myBtn okBtn"
               data-bs-dismiss="modal"
             >
               OK
@@ -504,11 +506,11 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient text-white">
             <h5 class="modal-title">Add a department</h5>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -539,14 +541,14 @@
             <button
               type="submit"
               form="addDepartmentForm"
-              class="btn btn-outline-primary btn-sm myBtn"
+              class="btn btn-outline-secondary btn-sm myBtn"
               id="addDepartment-submit"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn"
+              class="btn btn-outline-secondary btn-sm myBtn"
               data-bs-dismiss="modal"
             >
               CANCEL
@@ -570,11 +572,11 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient text-white">
             <h5 class="modal-title">Edit department</h5>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -609,21 +611,21 @@
             <button
               type="submit"
               form="editDepartmentForm"
-              class="btn btn-outline-primary btn-sm myBtn editDepartmentBtn"
+              class="btn btn-outline-secondary btn-sm myBtn editDepartmentBtn"
               id="editDepartment-submit"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn editDepartmentBtn"
+              class="btn btn-outline-secondary btn-sm myBtn editDepartmentBtn"
               data-bs-dismiss="modal"
             >
               CANCEL
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn okBtn"
+              class="btn btn-outline-secondary btn-sm myBtn okBtn"
               data-bs-dismiss="modal"
             >
               OK
@@ -647,11 +649,11 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient text-white">
             <h5 class="modal-title">Delete department</h5>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -661,8 +663,10 @@
             <div id="deleteDepartmentAlarm"></div>
             <form id="deleteDepartmentForm">
               <input type="hidden" id="deleteDepartmentID" />
-              <p>Please confirm that you wish to delete this entry.</p>
-              <h6 id="deleteDepartmentName"></h6>
+              <p>
+                Are you sure that you want to remove entry for
+                <span id="deleteDepartmentName" class="fw-bold"></span>?
+              </p>
             </form>
           </div>
 
@@ -670,21 +674,21 @@
             <button
               type="submit"
               form="deleteDepartmentForm"
-              class="btn btn-outline-primary btn-sm myBtn deleteDepartmentBtn"
+              class="btn btn-outline-secondary btn-sm myBtn deleteDepartmentBtn"
               id="deleteDepartment-submit"
             >
               YES
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn deleteDepartmentBtn"
+              class="btn btn-outline-secondary btn-sm myBtn deleteDepartmentBtn"
               data-bs-dismiss="modal"
             >
               NO
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn okBtn"
+              class="btn btn-outline-secondary btn-sm myBtn okBtn"
               data-bs-dismiss="modal"
             >
               OK
@@ -710,11 +714,11 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient text-white">
             <h5 class="modal-title">Add a location</h5>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -740,14 +744,14 @@
             <button
               type="submit"
               form="addLocationForm"
-              class="btn btn-outline-primary btn-sm myBtn"
+              class="btn btn-outline-secondary btn-sm myBtn"
               id="addLocation-submit"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn"
+              class="btn btn-outline-secondary btn-sm myBtn"
               data-bs-dismiss="modal"
             >
               CANCEL
@@ -771,11 +775,11 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient text-white">
             <h5 class="modal-title">Edit location</h5>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -803,21 +807,21 @@
             <button
               type="submit"
               form="editLocationForm"
-              class="btn btn-outline-primary btn-sm myBtn editLocationBtn"
+              class="btn btn-outline-secondary btn-sm myBtn editLocationBtn"
               id="editLocation-submit"
             >
               SAVE
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn editLocationBtn"
+              class="btn btn-outline-secondary btn-sm myBtn editLocationBtn"
               data-bs-dismiss="modal"
             >
               CANCEL
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn okBtn"
+              class="btn btn-outline-secondary btn-sm myBtn okBtn"
               data-bs-dismiss="modal"
             >
               OK
@@ -841,11 +845,11 @@
         class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
       >
         <div class="modal-content shadow">
-          <div class="modal-header bg-primary bg-gradient bg-opacity-10">
+          <div class="modal-header bg-primary bg-gradient text-white">
             <h5 class="modal-title">Delete location</h5>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close btn-close-white"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -855,8 +859,10 @@
             <div id="deleteLocationAlarm"></div>
             <form id="deleteLocationForm">
               <input type="hidden" id="deleteLocationID" />
-              <p>Please confirm that you wish to delete this entry.</p>
-              <h6 id="deleteLocationName"></h6>
+              <p>
+                Are you sure that you want to remove entry for
+                <span id="deleteLocationName" class="fw-bold"></span>?
+              </p>
             </form>
           </div>
 
@@ -864,21 +870,21 @@
             <button
               type="submit"
               form="deleteLocationForm"
-              class="btn btn-outline-primary btn-sm myBtn deleteLocationBtn"
+              class="btn btn-outline-secondary btn-sm myBtn deleteLocationBtn"
               id="deleteLocation-submit"
             >
               YES
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn deleteLocationBtn"
+              class="btn btn-outline-secondary btn-sm myBtn deleteLocationBtn"
               data-bs-dismiss="modal"
             >
               NO
             </button>
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm myBtn okBtn"
+              class="btn btn-outline-secondary btn-sm myBtn okBtn"
               data-bs-dismiss="modal"
             >
               OK
