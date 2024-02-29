@@ -27,28 +27,31 @@ const getAllPersonnel = () => {
 getAllPersonnel();
 
 const populatePersonnelTable = (data) => {
-  const tableBody = $('#personnelTable tbody');
-  tableBody.empty();
+  $('#personnelTable').empty();
+  $('#personnelTable').html('<tbody>');
+
+  let rows = '';
 
   data.forEach((employee) => {
-    const rowHtml = `
+    rows += `
                   <tr class="employeeRow">
-                      <td class="employeeName">${employee.lastName}, ${employee.firstName}</td>
-                      <td>${employee.department}</td>
-                      <td>${employee.location}</td>
-                      <td>${employee.email}</td>
-                      <td>
-                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id=${employee.id}>
+                      <td class="employeeName align-middle text-nowrap">${employee.lastName}, ${employee.firstName}</td>
+                      <td class="align-middle text-nowrap d-none d-md-table-cell">${employee.department}</td>
+                      <td class="align-middle text-nowrap d-none d-md-table-cell">${employee.location}</td>
+                      <td class="align-middle text-nowrap d-none d-md-table-cell">${employee.email}</td>
+                      <td class="text-end text-nowrap">
+                          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id=${employee.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deletePersonnelModal"data-id=${employee.id}>
+                          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deletePersonnelModal"data-id=${employee.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>
                   </tr>
               `;
-    tableBody.append(rowHtml);
   });
+
+  $('#personnelTable').append(rows + '</tbody>');
 };
 
 const getAllDepartments = () => {
