@@ -100,10 +100,10 @@ const getAllDepartments = () => {
         data.forEach((department) => {
           const rowHtml = `
                   <tr>
-                      <td>${department.Department}</td>
-                      <td>${department.Location}</td>
+                      <td class="align-middle text-nowrap">${department.Department}</td>
+                      <td class="align-middle text-nowrap d-none d-md-table-cell">${department.Location}</td>
                       
-                      <td>
+                      <td class="align-middle text-end text-nowrap">
                           <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id=${department.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
@@ -176,8 +176,8 @@ const getAllLocations = () => {
         data.forEach((location) => {
           const rowHtml = `
                   <tr>                      
-                      <td>${location.Location}</td>                      
-                      <td>
+                      <td class="align-middle text-nowrap">${location.Location}</td>                      
+                      <td class="align-middle text-end text-nowrap">
                           <button class="btn btn-primary btn-sm editLocationBtn" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id=${location.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
@@ -240,6 +240,7 @@ $('#personnelBtn').click(function () {
 $('#refreshBtn').click(function () {
   if ($('#personnelBtn').hasClass('active')) {
     // Refresh personnel table
+    $('#searchInp').val('');
     getAllPersonnel();
   } else {
     if ($('#departmentsBtn').hasClass('active')) {
