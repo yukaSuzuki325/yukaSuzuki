@@ -23,7 +23,7 @@ if (mysqli_connect_errno()) {
 $departmentSelect = $_POST['department'] ?? 'all';
 $locationSelect = $_POST['location'] ?? 'all';
 
-$query = "SELECT p.*, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON p.departmentID = d.id LEFT JOIN location l ON d.locationID = l.id";
+$query = "SELECT p.id as id, p.firstName as firstName, p.lastName as lastName, p.jobTitle as jobTitle, p.email as email, p.departmentID as departmentID, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON p.departmentID = d.id LEFT JOIN location l ON d.locationID = l.id";
 
 // Add where conditions if needed
 $whereClauses = [];

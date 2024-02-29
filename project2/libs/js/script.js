@@ -312,6 +312,7 @@ const getFilteredPersonnel = (departmentSelect, locationSelect) => {
     success: function (result) {
       if (result.status.code == 200 && result.data.length) {
         const data = result.data;
+
         populatePersonnelTable(data);
       } else {
         $('#personnelTable tbody').empty();
