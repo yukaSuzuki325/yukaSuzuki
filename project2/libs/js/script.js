@@ -30,7 +30,7 @@ const populatePersonnelTable = (data) => {
   $('#personnelTable').empty();
   $('#personnelTable').html('<tbody>');
 
-  let rows = '';
+  var rows = '';
 
   data.forEach((employee) => {
     rows += `
@@ -97,16 +97,17 @@ const getAllDepartments = () => {
         });
 
         //Populate departments table
-        const tableBody = $('#departmentTable tbody');
-        tableBody.empty();
+
+        $('#departmentTable').empty();
+        $('#departmentTable').html('<tbody>');
+
+        var rows = '';
 
         data.forEach((department) => {
-          const rowHtml = `
+          rows += `
                   <tr>
                     <td class="align-middle text-nowrap">${department.Department}</td>
-                    <td class="align-middle text-nowrap d-none d-md-table-cell depLocation">
-                <div class="d-flex align-items-center">${department.Location}</div>
-            </td>                                          
+                    <td class="align-middle text-nowrap d-none d-md-table-cell">${department.Location}</td>                                          
                     <td class="align-middle text-end text-nowrap">
                     <button
                     type="button"
@@ -129,8 +130,8 @@ const getAllDepartments = () => {
                       </td>
                   </tr>
               `;
-          tableBody.append(rowHtml);
         });
+        $('#departmentTable').append(rows + '</tbody>');
       }
     },
 
@@ -186,25 +187,28 @@ const getAllLocations = () => {
         });
 
         //Populate locations table
-        const tableBody = $('#locationsTable tbody');
-        tableBody.empty();
+        $('#locationsTable').empty();
+        $('#locationsTable').html('<tbody>');
+
+        var rows = '';
 
         data.forEach((location) => {
-          const rowHtml = `
+          rows += `
                   <tr>                      
                       <td class="align-middle text-nowrap">${location.Location}</td>                      
                       <td class="align-middle text-end text-nowrap">
-                          <button class="btn btn-primary btn-sm editLocationBtn" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id=${location.id}>
+                          <button type="button" class="btn btn-primary btn-sm editLocationBtn" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id=${location.id}>
                               <i class="fa fa-pencil"></i>
                           </button>
-                          <button class="btn btn-primary btn-sm editLocationBtn" data-bs-toggle="modal" data-bs-target="#deleteLocationModal" data-id=${location.id}>
+                          <button type="button" class="btn btn-primary btn-sm editLocationBtn" data-bs-toggle="modal" data-bs-target="#deleteLocationModal" data-id=${location.id}>
                               <i class="fa fa-trash"></i>
                           </button>
                       </td>
                   </tr>
               `;
-          tableBody.append(rowHtml);
         });
+
+        $('#locationsTable').append(rows + '</tbody>');
       }
     },
 

@@ -127,21 +127,3 @@ tr {
     transform: rotate(360deg);
   }
 }
-
-/*Department Tab*/
-.equal-width-columns > thead > tr > th,
-.equal-width-columns > tbody > tr > td {
-  width: 33.3333%;
-}
-
-#departmentTable .depLocation {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#departmentTable .depLocation > div {
-  justify-content: flex-start;
-  width: 18%;
-  margin: 0 auto;
-}
