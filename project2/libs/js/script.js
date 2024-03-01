@@ -292,11 +292,17 @@ $('#filterBtn').click(function () {
 
 $('#departmentSelect').on('change', function () {
   departmentSelect = $(this).val();
+  $('#locationSelect').val('all');
+  locationSelect = 'all';
+
   getFilteredPersonnel(departmentSelect, locationSelect);
 });
 
 $('#locationSelect').on('change', function () {
   locationSelect = $(this).val();
+  $('#departmentSelect').val('all');
+  departmentSelect = 'all';
+
   getFilteredPersonnel(departmentSelect, locationSelect);
 });
 
