@@ -109,7 +109,7 @@ const getAllDepartments = () => {
   });
 };
 
-getAllDepartments();
+// getAllDepartments();
 
 const getAllLocations = () => {
   $.ajax({
@@ -153,7 +153,7 @@ const getAllLocations = () => {
   });
 };
 
-getAllLocations();
+// getAllLocations();
 
 //Search input
 $('#searchInp').on('keyup', function () {
@@ -225,15 +225,15 @@ $('#filterBtn').click(function () {
 });
 
 $('#filterModal').on('show.bs.modal', function (e) {
+  //Get all locations and populate options in the location select options
   $.ajax({
-    url: 'libs/php/getAllDepartments.php',
+    url: 'libs/php/getAllLocations.php',
     type: 'POST',
     dataType: 'json',
     success: function (result) {
       if (result.status.code == 200) {
         const data = result.data;
 
-        //Populate options in the location select options
         $('#locationSelect').empty();
         $('#locationSelect').append(
           $('<option>', {
@@ -250,8 +250,26 @@ $('#filterModal').on('show.bs.modal', function (e) {
             })
           );
         });
+      }
+    },
 
-        // Populate department select options
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+
+  // Get all departments and populate department select options
+  $.ajax({
+    url: 'libs/php/getAllDepartments.php',
+    type: 'POST',
+    dataType: 'json',
+    success: function (result) {
+      if (result.status.code == 200) {
+        const data = result.data;
+
+        console.log(data);
+
         $('#departmentSelect').empty();
         $('#departmentSelect').append(
           $('<option>', {
@@ -301,6 +319,7 @@ $('#locationSelect').on('change', function () {
 });
 
 const getFilteredPersonnel = (departmentSelect, locationSelect) => {
+  $('#filterModalAlarm').hide();
   $.ajax({
     url: 'libs/php/getFilteredPersonnel.php',
     type: 'POST',
@@ -315,11 +334,8 @@ const getFilteredPersonnel = (departmentSelect, locationSelect) => {
 
         populatePersonnelTable(data);
       } else {
-        $('#personnelTable tbody').empty();
+        $('#personnelTable').empty();
         $('#filterModalAlarm').show();
-        $('#filterModal').on('hide.bs.modal', function () {
-          getAllPersonnel();
-        });
       }
     },
 
