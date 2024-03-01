@@ -63,39 +63,6 @@ const getAllDepartments = () => {
       if (result.status.code == 200) {
         const data = result.data;
 
-        // Populate department select options in the filter modal
-        const select = $('#departmentSelect');
-        select.empty();
-
-        select.append(
-          $('<option>', {
-            value: 'all',
-            text: 'All',
-          })
-        );
-
-        $.each(data, function (index, department) {
-          select.append(
-            $('<option>', {
-              value: department.id,
-              text: department.Department,
-            })
-          );
-        });
-
-        // Populate department options in the add employee modal
-        const addEmployeeselect = $('#addEmployeeDepartment');
-        addEmployeeselect.empty();
-
-        $.each(data, function (index, department) {
-          addEmployeeselect.append(
-            $('<option>', {
-              value: department.id,
-              text: department.Department,
-            })
-          );
-        });
-
         //Populate departments table
 
         $('#departmentTable').empty();
@@ -152,39 +119,6 @@ const getAllLocations = () => {
     success: function (result) {
       if (result.status.code == 200) {
         const data = result.data;
-
-        //Populate options in the location filter
-        const select = $('#locationSelect');
-        select.empty();
-
-        select.append(
-          $('<option>', {
-            value: 'all',
-            text: 'All',
-          })
-        );
-
-        $.each(data, function (index, location) {
-          select.append(
-            $('<option>', {
-              value: location.id,
-              text: location.Location,
-            })
-          );
-        });
-
-        //Populate locations in add department modal
-        const addDepartmentSelect = $('#addDepartmentSelect');
-        addDepartmentSelect.empty();
-
-        $.each(data, function (index, location) {
-          addDepartmentSelect.append(
-            $('<option>', {
-              value: location.id,
-              text: location.Location,
-            })
-          );
-        });
 
         //Populate locations table
         $('#locationsTable').empty();
@@ -285,11 +219,67 @@ $('#refreshBtn').click(function () {
 //Filter button functionality
 
 $('#filterBtn').click(function () {
-  // Show filter modal, and resetting the values of elements in the modal to default
+  // Show filter modal
   $('#filterModal').modal('show');
   $('#filterModalAlarm').hide();
-  $('#departmentSelect').val($('#departmentSelect option:first').val());
-  $('#locationSelect').val($('#locationSelect option:first').val());
+});
+
+$('#filterModal').on('show.bs.modal', function (e) {
+  $.ajax({
+    url: 'libs/php/getAllDepartments.php',
+    type: 'POST',
+    dataType: 'json',
+    success: function (result) {
+      if (result.status.code == 200) {
+        const data = result.data;
+
+        //Populate options in the location select options
+        $('#locationSelect').empty();
+        $('#locationSelect').append(
+          $('<option>', {
+            value: 'all',
+            text: 'All',
+          })
+        );
+
+        $.each(data, function (index, location) {
+          $('#locationSelect').append(
+            $('<option>', {
+              value: location.id,
+              text: location.Location,
+            })
+          );
+        });
+
+        // Populate department select options
+        $('#departmentSelect').empty();
+        $('#departmentSelect').append(
+          $('<option>', {
+            value: 'all',
+            text: 'All',
+          })
+        );
+
+        $.each(data, function (index, department) {
+          $('#departmentSelect').append(
+            $('<option>', {
+              value: department.id,
+              text: department.Department,
+            })
+          );
+        });
+
+        //Reset the values of selects to default
+        $('#departmentSelect').val($('#departmentSelect option:first').val());
+        $('#locationSelect').val($('#locationSelect option:first').val());
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
 });
 
 //When a department/location is selected, call a function to make a AJAX call to filter personnel by department and location
@@ -356,6 +346,37 @@ $('#addBtn').click(function () {
 
 //Add an employee
 
+$('#addEmployeeModal').on('show.bs.modal', function () {
+  $.ajax({
+    url: 'libs/php/getAllDepartments.php',
+    type: 'POST',
+    dataType: 'json',
+    success: function (result) {
+      if (result.status.code == 200) {
+        const data = result.data;
+
+        // Populate department options in the select
+        const addEmployeeselect = $('#addEmployeeDepartment');
+        addEmployeeselect.empty();
+
+        $.each(data, function (index, department) {
+          addEmployeeselect.append(
+            $('<option>', {
+              value: department.id,
+              text: department.Department,
+            })
+          );
+        });
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+});
+
 $('#addEmployeeForm').submit(function (e) {
   e.preventDefault();
   const firstName = $('#addEmployeeFirstName').val();
@@ -402,6 +423,37 @@ $('#addEmployeeForm').submit(function (e) {
 });
 
 //Add a department
+
+$('#addDepartmentModal').on('show.bs.modal', function () {
+  $.ajax({
+    url: 'libs/php/getAllLocations.php',
+    type: 'POST',
+    dataType: 'json',
+    success: function (result) {
+      if (result.status.code == 200) {
+        const data = result.data;
+
+        //Populate locations in the select element
+        const addDepartmentSelect = $('#addDepartmentSelect');
+        addDepartmentSelect.empty();
+
+        $.each(data, function (index, location) {
+          addDepartmentSelect.append(
+            $('<option>', {
+              value: location.id,
+              text: location.Location,
+            })
+          );
+        });
+      }
+    },
+
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(jqXHR);
+      alert('Data not available');
+    },
+  });
+});
 
 $('#addDepartmentForm').submit(function (e) {
   e.preventDefault();
