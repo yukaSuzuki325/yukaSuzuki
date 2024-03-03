@@ -32,23 +32,31 @@ const populatePersonnelTable = (data) => {
 
   var rows = '';
 
-  data.forEach((employee) => {
+  data.forEach(function (employee, index) {
     rows += `
-                  <tr class="employeeRow">
-                      <td class="employeeName align-middle text-nowrap">${employee.lastName}, ${employee.firstName}</td>
-                      <td class="align-middle text-nowrap d-none d-md-table-cell">${employee.department}</td>
-                      <td class="align-middle text-nowrap d-none d-md-table-cell">${employee.location}</td>
-                      <td class="align-middle text-nowrap d-none d-md-table-cell">${employee.email}</td>
-                      <td class="text-end text-nowrap">
-                          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id=${employee.id}>
-                              <i class="fa fa-pencil"></i>
-                          </button>
-                          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deletePersonnelModal"data-id=${employee.id}>
-                              <i class="fa fa-trash"></i>
-                          </button>
-                      </td>
-                  </tr>
-              `;
+    <tr class="employeeRow">
+                <td class="align-middle text-nowrap">
+                ${employee.lastName}, ${employee.firstName}
+                </td>
+                <td class="align-middle text-nowrap d-none d-md-table-cell">
+                ${employee.department}
+                </td>
+                <td class="align-middle text-nowrap d-none d-md-table-cell">
+                ${employee.location}
+                </td>
+                <td class="align-middle text-nowrap d-none d-md-table-cell">
+                ${employee.email}
+                </td>
+                <td class="text-end text-nowrap">
+                  <button type="button" class="btn btn-primary btn-sm rowBtn" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id=${employee.id}>
+                    <i class="fa-solid fa-pencil fa-fw"></i>
+                  </button>
+                  <button type="button" class="btn btn-primary btn-sm rowBtn" data-bs-toggle="modal" data-bs-target="#deletePersonnelModal" data-id=${employee.id}>
+                    <i class="fa-solid fa-trash fa-fw"></i>
+                  </button>
+                </td>
+              </tr>
+    `;
   });
 
   $('#personnelTable').append(rows + '</tbody>');
@@ -73,12 +81,12 @@ const getAllDepartments = () => {
         data.forEach((department) => {
           rows += `
                   <tr>
-                    <td class="align-middle text-nowrap">${department.Department}</td>
+                    <td class="align-middle text-nowrap departmentColumn">${department.Department}</td>
                     <td class="align-middle text-nowrap d-none d-md-table-cell">${department.Location}</td>                                          
                     <td class="align-middle text-end text-nowrap">
                     <button
                     type="button"
-                    class="btn btn-primary btn-sm"
+                    class="btn btn-primary btn-sm rowBtn"
                     data-bs-toggle="modal"
                     data-bs-target="#editDepartmentModal"
                     data-id=${department.id}
@@ -87,7 +95,7 @@ const getAllDepartments = () => {
                   </button>
                   <button
                     type="button"
-                    class="btn btn-primary btn-sm"
+                    class="btn btn-primary btn-sm rowBtn"
                     data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal"
                     data-id=${department.id}
                   >
@@ -127,19 +135,35 @@ const getAllLocations = () => {
         var rows = '';
 
         data.forEach((location) => {
+          // rows += `
+          //         <tr>
+          //             <td class="align-middle text-nowrap">${location.Location}</td>
+          //             <td class="align-middle text-end text-nowrap">
+          //                 <button type="button" class="btn btn-primary btn-sm editLocationBtn" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id=${location.id}>
+          //                     <i class="fa fa-pencil"></i>
+          //                 </button>
+          //                 <button type="button" class="btn btn-primary btn-sm editLocationBtn" data-bs-toggle="modal" data-bs-target="#deleteLocationModal" data-id=${location.id}>
+          //                     <i class="fa fa-trash"></i>
+          //                 </button>
+          //             </td>
+          //         </tr>
+          //     `;
+
           rows += `
-                  <tr>                      
-                      <td class="align-middle text-nowrap">${location.Location}</td>                      
-                      <td class="align-middle text-end text-nowrap">
-                          <button type="button" class="btn btn-primary btn-sm editLocationBtn" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id=${location.id}>
-                              <i class="fa fa-pencil"></i>
-                          </button>
-                          <button type="button" class="btn btn-primary btn-sm editLocationBtn" data-bs-toggle="modal" data-bs-target="#deleteLocationModal" data-id=${location.id}>
-                              <i class="fa fa-trash"></i>
-                          </button>
-                      </td>
-                  </tr>
-              `;
+          <tr>
+              <td class="align-middle text-nowrap">
+              ${location.Location}
+              </td>
+              <td class="align-middle text-end text-nowrap">
+                <button type="button" class="btn btn-primary btn-sm editLocationBtn rowBtn" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id=${location.id}>
+                  <i class="fa-solid fa-pencil fa-fw"></i>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm deleteLocationBtn rowBtn"  data-bs-toggle="modal" data-bs-target="#deleteLocationModal" data-id=${location.id}>
+                  <i class="fa-solid fa-trash fa-fw"></i>
+                </button>
+              </td>
+            </tr>
+          `;
         });
 
         $('#locationsTable').append(rows + '</tbody>');
@@ -815,6 +839,7 @@ $('#deletePersonnelModal').on('show.bs.modal', function (e) {
       var resultCode = result.status.code;
 
       if (resultCode == 200) {
+        $('.deletePersonnelOkBtn').hide();
         $('#deletePersonnelID').val(result.data.personnel[0].id);
         $('#deletePersonnelName').html(
           result.data.personnel[0].firstName +

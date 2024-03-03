@@ -30,6 +30,20 @@ tr {
   bottom: 0;
 }
 
+.departmentColumn {
+  width: 48%;
+}
+
+.rowBtn {
+  background-color: #0d6efd !important;
+  color: #fff !important;
+}
+
+.rowBtn:hover {
+  background-color: #0b5ed7 !important;
+  color: #fff !important;
+}
+
 /*Preloader*/
 .preloader-container {
   display: flex;
