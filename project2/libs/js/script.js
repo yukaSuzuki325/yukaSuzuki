@@ -196,31 +196,49 @@ $('#searchInp').on('keyup', function () {
 });
 
 //Toggle class 'active' on Personnel, Departments and Locations tabs
+$('#personnelBtn').click(function () {
+  $(this).addClass('active').find('i, span').removeClass('text-primary');
+  $('#locationsBtn')
+    .removeClass('active')
+    .find('i, span')
+    .addClass('text-primary');
+  $('#departmentsBtn')
+    .removeClass('active')
+    .find('i, span')
+    .addClass('text-primary');
+  $('#filterBtn').attr('disabled', false);
+  // Call function to refresh personnel table
+  getAllPersonnel();
+});
+
 $('#departmentsBtn').click(function () {
-  $('#departmentsBtn').addClass('active');
-  $('#personnelBtn').removeClass('active');
-  $('#locationsBtn').removeClass('active');
+  $(this).addClass('active').find('i, span').removeClass('text-primary');
+  $('#personnelBtn')
+    .removeClass('active')
+    .find('i, span')
+    .addClass('text-primary');
+  $('#locationsBtn')
+    .removeClass('active')
+    .find('i, span')
+    .addClass('text-primary');
   $('#filterBtn').attr('disabled', true);
   // Call function to refresh department table
   getAllDepartments();
 });
 
 $('#locationsBtn').click(function () {
-  $('#locationsBtn').addClass('active');
-  $('#personnelBtn').removeClass('active');
-  $('#departmentsBtn').removeClass('active');
+  $(this).addClass('active').find('i, span').removeClass('text-primary');
+  $('#personnelBtn')
+    .removeClass('active')
+    .find('i, span')
+    .addClass('text-primary');
+  $('#departmentsBtn')
+    .removeClass('active')
+    .find('i, span')
+    .addClass('text-primary');
   $('#filterBtn').attr('disabled', true);
   // Call function to refresh location table
   getAllLocations();
-});
-
-$('#personnelBtn').click(function () {
-  $('#personnelBtn').addClass('active');
-  $('#locationsBtn').removeClass('active');
-  $('#departmentsBtn').removeClass('active');
-  $('#filterBtn').attr('disabled', false);
-  // Call function to refresh personnel table
-  getAllPersonnel();
 });
 
 //Refresh button event listner
