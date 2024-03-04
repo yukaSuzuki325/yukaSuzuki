@@ -35,7 +35,7 @@ const populatePersonnelTable = (data) => {
   data.forEach(function (employee, index) {
     rows += `
     <tr class="employeeRow">
-                <td class="align-middle text-nowrap">
+                <td class="align-middle text-nowrap employeeName">
                 ${employee.lastName}, ${employee.firstName}
                 </td>
                 <td class="align-middle text-nowrap d-none d-md-table-cell">
